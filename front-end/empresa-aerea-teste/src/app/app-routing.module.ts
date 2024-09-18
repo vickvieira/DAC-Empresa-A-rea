@@ -10,7 +10,7 @@ const routes: Routes = [
   // Passando o clienteId como parte da rota
   { path: 'cliente/:id', component: HomeClienteComponent },
   
-  // rota inicial ou outras rotas
+  // // rota inicial ou outras rotas
   { path: '', redirectTo: '/cliente/1', pathMatch: 'full' }, // Exemplo de redirecionamento para o clienteId 1
   // mais rotas
 ];
