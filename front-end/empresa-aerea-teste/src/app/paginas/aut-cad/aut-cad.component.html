@@ -1,0 +1,75 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card p-4 shadow-sm">
+          <h2 class="mb-4 text-center">Cadastro</h2>
+          <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="cpf" class="form-label">CPF</label>
+              <input id="cpf" formControlName="cpf" type="text" class="form-control" placeholder="Digite seu CPF">
+              <div *ngIf="formGroup.get('cpf')?.invalid && formGroup.get('cpf')?.touched" class="text-danger">
+                CPF inválido (deve ter 11 dígitos)
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input id="nome" formControlName="nome" type="text" class="form-control" placeholder="Digite seu nome">
+              <div *ngIf="formGroup.get('nome')?.invalid && formGroup.get('nome')?.touched" class="text-danger">
+                Nome é obrigatório
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="email" class="form-label">E-mail</label>
+              <input id="email" formControlName="email" type="email" class="form-control" placeholder="Digite seu e-mail">
+              <div *ngIf="formGroup.get('email')?.invalid && formGroup.get('email')?.touched" class="text-danger">
+                E-mail inválido
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="ruaNumero" class="form-label">Rua/Número</label>
+              <input id="ruaNumero" formControlName="ruaNumero" type="text" class="form-control" placeholder="Digite sua rua e número">
+              <div *ngIf="formGroup.get('ruaNumero')?.invalid && formGroup.get('ruaNumero')?.touched" class="text-danger">
+                Rua e número são obrigatórios
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="complemento" class="form-label">Complemento</label>
+              <input id="complemento" formControlName="complemento" type="text" class="form-control" placeholder="Complemento (opcional)">
+            </div>
+  
+            <div class="mb-3">
+              <label for="cep" class="form-label">CEP</label>
+              <input id="cep" formControlName="cep" type="text" class="form-control" placeholder="Digite seu CEP">
+              <div *ngIf="formGroup.get('cep')?.invalid && formGroup.get('cep')?.touched" class="text-danger">
+                CEP inválido (formato 00000-000)
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="cidade" class="form-label">Cidade</label>
+              <input id="cidade" formControlName="cidade" type="text" class="form-control" placeholder="Digite sua cidade">
+              <div *ngIf="formGroup.get('cidade')?.invalid && formGroup.get('cidade')?.touched" class="text-danger">
+                Cidade é obrigatória
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="estado" class="form-label">Estado</label>
+              <input id="estado" formControlName="estado" type="text" class="form-control" placeholder="Digite seu estado">
+              <div *ngIf="formGroup.get('estado')?.invalid && formGroup.get('estado')?.touched" class="text-danger">
+                Estado é obrigatório
+              </div>
+            </div>
+  
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
