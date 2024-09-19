@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
-import { HomeClienteComponent } from './paginas/cliente/home-cliente/home-cliente.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ClienteModule } from './modules/cliente/cliente/cliente.module';
+import { provideHttpClient } from '@angular/common/http';
+import { CompartilhadoModule } from './modules/compartilhado/compartilhado.module';
+
 
 @NgModule({
   declarations: [
@@ -15,11 +17,12 @@ import { ClienteModule } from './modules/cliente/cliente/cliente.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ClienteModule,
+    ClienteModule
+   
     
     // outros módulos
   ],
-  providers: [],
+  providers: [[provideHttpClient()]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
