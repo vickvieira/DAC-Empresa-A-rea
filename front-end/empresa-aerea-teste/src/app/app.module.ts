@@ -12,13 +12,14 @@ import { CompartilhadoModule } from './modules/compartilhado/compartilhado.modul
   declarations: [
     AppComponent,
     NavbarComponent,
+    
     // outros componentes
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ClienteModule
-   
+    ClienteModule,
+    CompartilhadoModule
     
     // outros módulos
   ],
