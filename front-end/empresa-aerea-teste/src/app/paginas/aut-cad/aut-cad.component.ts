@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Para utilizar diretivas como *ngIf
-import { ReactiveFormsModule } from '@angular/forms'; // Importar ReactiveFormsModule
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../services/User/user.service';
 
 @Component({
   selector: 'app-aut-cad',
@@ -13,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms'; // Importar ReactiveFormsM
 export class AutCadComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private userService: UserService) {
     this.formGroup = this.formBuilder.group({
       cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]], // CPF com 11 dígitos
       nome: ['', Validators.required],
@@ -32,7 +33,11 @@ export class AutCadComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formGroup.valid) {
-      console.log('Formulário enviado', this.formGroup.value);
+      this.userService.adicionarUsuario(this.usuario).subscribe(response => {
+        console.log('Usuário adicionado:', response);
+        // Limpar o formulário após o envio
+        this.usuario = { nome: '', email: '' };
+      });
     } else {
       console.log('Formulário inválido');
     }
