@@ -1,59 +1,59 @@
-{
-    "clientes": [
-      {
-        "id": 1,
-        "nome": "João Silva",
-        "email": "joao.silva@example.com"
+{  
+  "usuarios": [],
+  "clientes": [
+    {
+      "id": 1,
+      "nome": "João Silva",
+      "email": "joao.silva@example.com"
+    },
+    {
+      "id": 2,
+      "nome": "Maria Silva",
+      "email": "silva@example.com"
+    }
+  ],
+  "milhas": [
+    {
+      "clienteId": 1,
+      "saldo": 5000
+    },
+    {
+      "clienteId": 2,
+      "saldo": 5
+    }
+  ],
+  "reservas": [
+    {
+      "codigo": "RES1234",
+      "dataHoraReserva": "2024-09-15T14:00:00",
+      "clienteId": 1,
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-09-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.50,
+        "milhasNecessarias": 3200
       },
-      {
-        "id": 2,
-        "nome": "Maria Silva",
-        "email": "silva@example.com"
-      }
-    ],
-    "milhas": [
-      {
-        "clienteId": 1,
-        "saldo": 5000
+      "valorGasto": 1090.50,
+      "milhasUtilizadas": 3200,
+      "status": "Aguardando check-in"
+    },
+    {
+      "codigo": "RES5678",
+      "dataHoraReserva": "2024-09-12T10:30:00",
+      "clienteId": 1,
+      "voo": {
+        "codigo": "ABC5678",
+        "dataHora": "2024-09-12T10:30:00",
+        "origem": "BSB",
+        "destino": "CWB",
+        "valorPassagem": 750.20,
+        "milhasNecessarias": 2500
       },
-      {
-        "clienteId": 2,
-        "saldo": 5
-      }
-    ],
-    "reservas": [
-      {
-        "codigo": "RES1234",
-        "dataHoraReserva": "2024-09-15T14:00:00",
-        "clienteId": 1,
-        "voo": {
-          "codigo": "XYZ1234",
-          "dataHora": "2024-09-15T14:00:00",
-          "origem": "CWB",
-          "destino": "GRU",
-          "valorPassagem": 1090.50,
-          "milhasNecessarias": 3200
-        },
-        "valorGasto": 1090.50,
-        "milhasUtilizadas": 3200,
-        "status": "Aguardando check-in"
-      },
-      {
-        "codigo": "RES5678",
-        "dataHoraReserva": "2024-09-12T10:30:00",
-        "clienteId": 1,
-        "voo": {
-          "codigo": "ABC5678",
-          "dataHora": "2024-09-12T10:30:00",
-          "origem": "BSB",
-          "destino": "CWB",
-          "valorPassagem": 750.20,
-          "milhasNecessarias": 2500
-        },
-        "valorGasto": 750.20,
-        "milhasUtilizadas": 2500,
-        "status": "Voo realizado"
-      }
-    ]
-  }
-  
+      "valorGasto": 750.20,
+      "milhasUtilizadas": 2500,
+      "status": "Voo realizado"
+    }
+  ]
+}
