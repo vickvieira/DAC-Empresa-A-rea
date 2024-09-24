@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from '../../services/User/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-aut-cad',
@@ -33,11 +33,12 @@ export class AutCadComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formGroup.valid) {
-      this.userService.adicionarUsuario(this.usuario).subscribe(response => {
-        console.log('Usuário adicionado:', response);
-        // Limpar o formulário após o envio
-        this.usuario = { nome: '', email: '' };
-      });
+      console.log('Formulário enviado', this.formGroup.value);
+      // this.userService.adicionarUsuario(this.usuario).subscribe(response => {
+      //   console.log('Usuário adicionado:', response);
+      //   // Limpar o formulário após o envio
+      //   this.usuario = { nome: '', email: '' };
+      // });
     } else {
       console.log('Formulário inválido');
     }
