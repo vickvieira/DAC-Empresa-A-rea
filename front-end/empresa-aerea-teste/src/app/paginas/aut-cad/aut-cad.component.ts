@@ -38,7 +38,7 @@ export class AutCadComponent implements OnInit {
       //   console.log('Usuário adicionado:', response);
       //   // Limpar o formulário após o envio
       //   this.usuario = { nome: '', email: '' };
-      // });
+      // }); ULTIMO COMMIT DO R01N FOI ESSE ^, PORÉM ESTAVA DANDO ERROS ENTÃO EU (VICTORIA) TIREI POR ENQUANTO PARA FAZER O MERGE.
     } else {
       console.log('Formulário inválido');
     }
