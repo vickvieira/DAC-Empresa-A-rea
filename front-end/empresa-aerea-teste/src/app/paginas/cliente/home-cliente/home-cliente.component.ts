@@ -5,9 +5,12 @@ import { ReservaService } from '../../../services/reserva.service';
 import { Cliente } from '../../../models/cliente.model';
 import { Reserva } from '../../../models/reserva.model';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-cliente',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './home-cliente.component.html',
   styleUrls: ['./home-cliente.component.css']
 })
