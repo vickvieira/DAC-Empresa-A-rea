@@ -4,7 +4,9 @@ export interface Voo {
     origem: string;
     destino: string;
     valorPassagem: number;
-    milhasNecessarias: number;
+    quantidadePoltronas: number;
+    poltronasOcupadas: number;
+
     // mais coisa ?
   }
   
