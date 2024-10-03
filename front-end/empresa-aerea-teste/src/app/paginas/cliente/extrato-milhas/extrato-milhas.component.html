@@ -1,3 +1,21 @@
 <p>extrato-milhas works!</p>
+<div class="container-md container-fluid" *ngIf="cliente">
+    <p>Saldo atual: {{milhasSaldo}} </p>
 
-<p>Saldo atual: </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Data / Hora</th>
+                <th scope="col">Operação</th>
+                <th scope="col">Saldo Anterior</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let extratoMilha of extratoMilhas">
+                <td>{{ extratoMilha.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ extratoMilha.saldo }}</td>
+                <td>"{{ extratoMilha.clienteId }}"</td>
+                
+        </tbody>
+    </table>
+</div>
