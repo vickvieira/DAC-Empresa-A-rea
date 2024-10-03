@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Buscar Voos</h2>
+  
+    <!-- Formulário de busca -->
+    <div class="form-group">
+      <label for="origem">Aeroporto Origem:</label>
+      <input type="text" id="origem" #origem class="form-control" />
+    </div>
+  
+    <div class="form-group">
+      <label for="destino">Aeroporto Destino:</label>
+      <input type="text" id="destino" #destino class="form-control" />
+    </div>
+  
+    <button (click)="buscarVoos(origem.value, destino.value)" class="btn btn-primary">
+      Buscar
+    </button>
+  
+    <!-- Mensagem de erro se nenhum voo for encontrado -->
+    <div *ngIf="mensagemErro" class="alert alert-danger mt-3">
+      {{ mensagemErro }}
+    </div>
+  
+    <!-- Tabela de voos encontrados -->
+    <table *ngIf="voosFiltrados.length > 0" class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Origem</th>
+          <th>Destino</th>
+          <th>Data/Hora</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let voo of voosFiltrados">
+          <td>{{ voo.codigo }}</td>
+          <td>{{ voo.origem }}</td>
+          <td>{{ voo.destino }}</td>
+          <td>{{ voo.dataHora | date: 'short' }}</td>
+          <td>{{ voo.valorPassagem | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
