@@ -24,7 +24,7 @@ export class HomeClienteComponent implements OnInit {
     private milhasService: MilhasService,
     private reservaService: ReservaService,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const clienteId = Number(this.route.snapshot.paramMap.get('id'));
@@ -54,6 +54,7 @@ export class HomeClienteComponent implements OnInit {
   getReservas(clienteId: number): void {
     this.reservaService.getReservasByClienteId(clienteId).subscribe((data: Reserva[]) => {
       this.reservas = data;
+
     });
   }
 
@@ -62,4 +63,10 @@ export class HomeClienteComponent implements OnInit {
       this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
     });
   }
+
+  toggleDetalhes(reserva: any) {
+    reserva.expandido = !reserva.expandido;
+  }
+
+
 }
