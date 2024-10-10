@@ -28,7 +28,8 @@ export class ExtratoMilhasComponent implements OnInit {
   ngOnInit(): void {
     //const clienteId = Number(this.route.snapshot.paramMap.get('id'));
     this.checaCliente();
-    this.listarTodosExtratos();
+    //this.listarTodosExtratos();
+    this.listarTodosExtratoByCliente(1);
   }
 
   checaCliente() {
@@ -67,13 +68,15 @@ export class ExtratoMilhasComponent implements OnInit {
   }
   */
   listarTodosExtratoByCliente(clienteId: number): Milhas[] {
-    this.milhasService.getExtratobyClienteId(clienteId).subscribe({
+    
+    this.milhasService.getExtratoPorClienteId(String(clienteId)).subscribe({
       next: (data: Milhas[]) => {
         if (data == null) {
           this.extratoMilhas = [];
         }
         else {
           this.extratoMilhas = data;
+         
         }
       }
     });

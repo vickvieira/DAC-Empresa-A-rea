@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Milhas } from '../models/milhas.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, pipe } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,20 +34,28 @@ export class MilhasService {
     return this.httpClient.get<number>(this.apiUrl);
   }
   */
-  
-  //precisa arrumar esse aqui ainda
-  getExtratobyClienteId(clienteId: number): Observable<Milhas[]> {
-    return this.httpClient.get<Milhas[]>(`${this.apiUrlTransacoes}?clienteId=${clienteId}`)
-    //.pipe(map(data ))
 
-    /*
-    //return this.httpClient.get<Milhas[]>(`${this.apiUrlTransacoes}?clienteId=${clienteId}`);
-    console.log("valor clienteID =  " + clienteId);
-    return this.httpClient.get<Milhas[]>(this.apiUrlTransacoes, this.httpOption)
-    */
+  //precisa arrumar esse aqui ainda
+  
+ 
+  private log(message: string) {
+    console.log(`erro: ${message}`);
   }
 
 
+  /* GET heroes whose name contains search term */
+  getExtratoPorClienteId(term: string): Observable<Milhas[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.httpClient.get<Milhas[]>(`${this.apiUrlTransacoes}/?clienteId=${term}`).pipe(
+      tap(x => x.length ?
+        this.log(`found heroes matching "${term}"`) :
+        this.log(`no heroes matching "${term}"`)),
+    
+    );
+  }
   // mais metodos
 
   getTodosExtratos(): Observable<Milhas[]> {
