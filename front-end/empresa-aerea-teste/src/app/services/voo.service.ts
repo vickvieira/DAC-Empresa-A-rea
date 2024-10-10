@@ -15,16 +15,17 @@ export class VooService {
 
   constructor(private http: HttpClient) {}
   
-buscarVoos(origem: string, destino: string): Observable<Voo[]> {
-  let queryParams = '';
-  if (origem) {
-    queryParams += `&origem=${origem}`;
+  buscarVoos(origem: string, destino: string): Observable<Voo[]> {
+    let queryParams = '';
+    if (origem) {
+      queryParams += `&origem=${origem}`;
+    }
+    if (destino) {
+      queryParams += `&destino=${destino}`;
+    }
+  
+    // sem dataHora no parâmetro... por enquanto
+    return this.http.get<Voo[]>(`${this.apiUrl}?${queryParams}`);
   }
-  if (destino) {
-    queryParams += `&destino=${destino}`;
-  }
-
-  // Adiciona dataHora_gte para garantir que a busca traga apenas voos futuros
-  return this.http.get<Voo[]>(`${this.apiUrl}?dataHora_gte=${new Date().toISOString()}${queryParams}`);
-}
-}
+  
+}  

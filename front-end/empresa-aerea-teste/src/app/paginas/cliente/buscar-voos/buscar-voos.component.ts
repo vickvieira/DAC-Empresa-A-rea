@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { VooService } from '../../services/voo.service';
+import { VooService } from '../../../services/voo.service';
 import { Router } from '@angular/router';
-import { Voo } from '../../models/voo.model';
+import { Voo } from '../../../models/voo.model';
 import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,22 +23,24 @@ export class BuscarVoosComponent {
   constructor(private vooService: VooService, private router: Router) {}
 
   ngOnInit(): void {
-    // Inicialmente, busca todos os voos ou configure para buscar por um critério padrão se preferir
-    this.buscarVoos('', '');
+    // não é para aparecer nenhum voo no carregamento? se for o caso deixar o ngOnInit vazio
+    // this.buscarVoos('', ''); -> para que mostre todos os voos ao carregar a página
   }
 
   buscarVoos(origem: string, destino: string): void {
     this.vooService.buscarVoos(origem, destino).subscribe((voos: Voo[]) => {
       const dataAtual = new Date();
+      
+      // filtro no front (apenas) garantir que só os futuros sejam exibidos
       this.voosFiltrados = voos.filter(voo => {
         const dataVoo = new Date(voo.dataHora);
         const origemMatch = !origem || voo.origem === origem;
         const destinoMatch = !destino || voo.destino === destino;
         const dataMatch = dataVoo >= dataAtual;
-
+  
         return origemMatch && destinoMatch && dataMatch;
       });
-
+  
       if (this.voosFiltrados.length === 0) {
         this.mensagemErro = "Nenhum voo encontrado com os critérios de busca.";
       } else {
@@ -46,6 +48,7 @@ export class BuscarVoosComponent {
       }
     });
   }
+  
   
   selecionarVoo(voo: Voo) {
     this.router.navigate(['/detalhes-voo', voo.codigo]);
