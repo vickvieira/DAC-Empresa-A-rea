@@ -10,4 +10,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Comando json server
 No diretório 'DAC-Empresa-Aerea\front-end\empresa-aerea-teste\src\api' rodar o comando:
 npx json-server --watch db.json
-Em seguida, testar acessando a página: 
+Em seguida, testar acessando a página: http://localhost:4200/cliente/id (substituir id pelo id do cliente)
