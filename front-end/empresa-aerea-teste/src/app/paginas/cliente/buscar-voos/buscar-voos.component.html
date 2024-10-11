@@ -37,9 +37,9 @@
           <td>{{ voo.codigo }}</td>
           <td>{{ voo.origem }}</td>
           <td>{{ voo.destino }}</td>
-          <td>{{ voo.dataHora | date: 'short' }}</td>
-          <td>{{ voo.valorPassagem | currency }}</td>
-          <td><button class="btn btn-secondary">Selecionar</button></td>
+          <td>{{ voo.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ voo.valorPassagem | currency:'BRL':'symbol':'1.2-2' }}</td>
+          <td><button (click)="selecionarVoo(voo.codigo)"class="btn btn-secondary">Selecionar</button></td>
         </tr>
       </tbody>
     </table>

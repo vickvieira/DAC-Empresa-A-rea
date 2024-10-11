@@ -1,4 +1,5 @@
 export interface Voo {
+    length: number;
     codigo: string;
     dataHora: string;
     origem: string;

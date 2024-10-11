@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Voo } from '../../../models/voo.model';
 import { CurrencyPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Cliente } from '../../../models/cliente.model';
 
 @Component({
   selector: 'app-buscar-voos',
@@ -20,18 +21,24 @@ export class BuscarVoosComponent {
   voosFiltrados: Voo[] = [];
 
 
+
   constructor(private vooService: VooService, private router: Router) {}
 
   ngOnInit(): void {
-    // não é para aparecer nenhum voo no carregamento? se for o caso deixar o ngOnInit vazio
+    // não é para aparecer nenhum voo no carregamento? se for o caso deixar o ngOnInit vazio ou se não:
     // this.buscarVoos('', ''); -> para que mostre todos os voos ao carregar a página
+
+    // const clienteId = 1;
+    // this.clienteService.getClienteById(clienteId).subscribe(cliente => {
+    //   this.cliente = cliente; // Aqui teria acesso ao cliente ?
+    // });
   }
 
   buscarVoos(origem: string, destino: string): void {
     this.vooService.buscarVoos(origem, destino).subscribe((voos: Voo[]) => {
       const dataAtual = new Date();
       
-      // filtro no front (apenas) garantir que só os futuros sejam exibidos
+      // filtro no front (apenas) p garantir que só os futuros sejam exibidos
       this.voosFiltrados = voos.filter(voo => {
         const dataVoo = new Date(voo.dataHora);
         const origemMatch = !origem || voo.origem === origem;
@@ -50,8 +57,8 @@ export class BuscarVoosComponent {
   }
   
   
-  selecionarVoo(voo: Voo) {
-    this.router.navigate(['/detalhes-voo', voo.codigo]);
+  selecionarVoo(codigo: string): void {
+    this.router.navigate(['/efetuar-reserva', codigo]);
   }
 
 }
