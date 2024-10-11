@@ -3,10 +3,13 @@ import { HomeClienteComponent } from './paginas/cliente/home-cliente/home-client
 import { AutCadComponent } from './paginas/aut-cad/aut-cad.component';
 import { BuscarVoosComponent } from './paginas/cliente/buscar-voos/buscar-voos.component';
 import { EfetuarReservaComponent } from './paginas/cliente/efetuar-reserva/efetuar-reserva.component';
+import { LoginComponent } from './paginas/login/login/login.component';
 
 export const routes: Routes = [
-    { path: 'cliente/:id', component: HomeClienteComponent },
+    { path: 'cliente', component: HomeClienteComponent },
     { path: 'cadastrar', component: AutCadComponent},
     { path: 'buscar-voos', component: BuscarVoosComponent },
-    { path: 'efetuar-reserva/:codigo', component: EfetuarReservaComponent}
+    { path: 'efetuar-reserva/:codigo', component: EfetuarReservaComponent},
+    { path: 'login', component: LoginComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

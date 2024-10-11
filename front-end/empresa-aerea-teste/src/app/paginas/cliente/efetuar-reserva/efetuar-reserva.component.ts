@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VooService } from '../../../services/voo.service';
 import { MilhasService } from '../../../services/milhas.service';
 import { CommonModule, NgIf } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-efetuar-reserva',
@@ -14,35 +15,34 @@ import { CommonModule, NgIf } from '@angular/common';
 export class EfetuarReservaComponent implements OnInit {
     voo: any;
     saldoMilhas: number | null = null;
-    clienteId = 1; // Substituir AQUI pelo ID real do cliente autenticado
+    // clienteId = 1; // Substituir AQUI pelo ID real do cliente autenticado
   
     constructor(
       private route: ActivatedRoute,
       private vooService: VooService,
-      private milhasService: MilhasService
+      private milhasService: MilhasService,
+      private authService: AuthService
     ) {}
   
     ngOnInit(): void {
       const codigoVoo = this.route.snapshot.paramMap.get('codigo');
-      const clienteId = this.route.snapshot.paramMap.get('id'); 
+      const cliente = this.authService.getClienteId();
   
-      if (codigoVoo) {
+      if (cliente && codigoVoo) {
         this.vooService.getVooByCodigo(codigoVoo).subscribe((voo) => {
           if (voo) {
-            this.voo = voo; // já foi feito o map do array no serviço, p/ q apareça um unico voo
+            this.voo = voo; // Voo encontrado
           } else {
             console.error('Voo não encontrado.');
           }
         });
-      }
-      if (clienteId) {
-        this.milhasService.getMilhasByClienteId(+clienteId).subscribe((saldo) => {
+  
+        // Buscar saldo de milhas do cliente
+        this.milhasService.getMilhasByClienteId(cliente).subscribe((saldo) => {
           this.saldoMilhas = saldo;
         });
+      } else {
+        console.error('Cliente não logado ou código de voo não encontrado.');
       }
-  
-      this.milhasService.getMilhasByClienteId(this.clienteId).subscribe((saldo) => {
-        this.saldoMilhas = saldo;
-      });
     }
   }
