@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router'; // Importar Router
+import { ToastrService } from 'ngx-toastr'; // Exemplo de serviço para mensagens (se estiver usando Toastr)
 
 @Component({
   selector: 'app-aut-cad',
@@ -15,15 +17,15 @@ import { LoginService } from '../../services/login.service';
 export class AutCadComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private loginService: LoginService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private loginService: LoginService, private router: Router, private toastr: ToastrService){ // Injete o serviço de mensagens) {
     this.formGroup = this.formBuilder.group({
-      cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]], // CPF com 11 dígitos
+      cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]],
       rua: ['', Validators.required],
-      numero: ['', Validators.required],
-      cep: ['', [Validators.required, Validators.pattern('^[0-9]{5}-[0-9]{3}$')]], // CEP no formato 00000-000
+      numero: ['', [Validators.required, Validators.pattern('^[0-9]+[a-zA-Z]?$')]],
+      cep: ['', [Validators.required, Validators.pattern('^[0-9]{5}-[0-9]{3}$')]],
       cidade: ['', Validators.required],
       estado: ['', Validators.required],
       complemento: ['', Validators.required]
@@ -31,7 +33,6 @@ export class AutCadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Aqui você pode manter a inicialização, caso precise modificar o grupo de controles
   }
 
   onSubmit(): void {
@@ -39,9 +40,12 @@ export class AutCadComponent implements OnInit {
       console.log('Formulário enviado', this.formGroup.value);
       
       this.loginService.adicionarUsuario(this.formGroup.value).subscribe(response => {
-        console.log('Usuário adicionado:', response);
-        // Limpar o formulário após o envio
-        this.formGroup.reset();
+          // Exibir mensagem de sucesso
+          this.toastr.success('Usuário adicionado com sucesso!', 'Sucesso');
+          // Redirecionar para a rota de login
+           //this.router.navigate(['/login']); // Ajuste a rota conforme necessário
+          // Limpar o formulário após o envio
+          this.formGroup.reset();
       }, error => {
         console.error('Erro ao adicionar usuário:', error);
       });
