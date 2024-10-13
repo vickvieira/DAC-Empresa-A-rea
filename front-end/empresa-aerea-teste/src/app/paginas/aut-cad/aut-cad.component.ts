@@ -41,10 +41,9 @@ export class AutCadComponent implements OnInit {
       
       this.loginService.adicionarUsuario(this.formGroup.value).subscribe(response => {
           // Exibir mensagem de sucesso
-          this.toastr.success('Usuário adicionado com sucesso!', 'Sucesso');
+          this.toastr.success('Cadastro realizado com sucesso!', 'Sucesso');
           // Redirecionar para a rota de login
-           //this.router.navigate(['/login']); // Ajuste a rota conforme necessário
-          // Limpar o formulário após o envio
+           //this.router.navigate(['/login']);
           this.formGroup.reset();
       }, error => {
         console.error('Erro ao adicionar usuário:', error);
