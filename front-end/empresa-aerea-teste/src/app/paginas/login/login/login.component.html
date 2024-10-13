@@ -1,11 +1,22 @@
-<div class="container">
-    <h2>Login Simulado</h2>
-    
-    <div class="form-group">
-      <label for="clienteId">ID do Cliente</label>
-      <input type="number" id="clienteId" [(ngModel)]="clienteId" class="form-control" placeholder="Insira o ID do cliente">
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        <small>Email inválido</small>
+      </div>
     </div>
-  
-    <button (click)="login()" class="btn btn-primary">Login</button>
-  </div>
-  
+
+    <div>
+      <label for="senha">Senha</label>
+      <input id="senha" formControlName="senha" type="password" />
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div>
