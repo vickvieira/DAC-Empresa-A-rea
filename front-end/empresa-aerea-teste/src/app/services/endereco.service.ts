@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Cliente } from '../models/cliente.model';
 import { Observable } from 'rxjs';
+import { Endereco } from '../models/endereco.models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
-  private apiUrl = 'http://localhost:3000/clientes';
+export class EnderecoService {
+  private apiUrl = 'http://localhost:3000/endereco';
 
   constructor(private http: HttpClient) {}
 
@@ -15,9 +16,9 @@ export class ClienteService {
     return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
   }
 
-  addCliente(usuario: any): Observable<any>{
-    console.log(usuario)
-    return this.http.post<any>(this.apiUrl, usuario);
+  addEndereco(endereco: Endereco): Observable<Endereco>{
+    console.log(endereco)
+    return this.http.post<any>(this.apiUrl, endereco);
   }
   // Outros métodos relacionados ao cliente
 }

@@ -29,10 +29,18 @@
             </div>
   
             <div class="mb-3">
-              <label for="ruaNumero" class="form-label">Rua/Número</label>
-              <input id="ruaNumero" formControlName="ruaNumero" type="text" class="form-control" placeholder="Digite sua rua e número">
-              <div *ngIf="formGroup.get('ruaNumero')?.invalid && formGroup.get('ruaNumero')?.touched" class="text-danger">
-                Rua e número são obrigatórios
+              <label for="rua" class="form-label">Rua</label>
+              <input id="rua" formControlName="rua" type="text" class="form-control" placeholder="Digite sua rua">
+              <div *ngIf="formGroup.get('rua')?.invalid && formGroup.get('rua')?.touched" class="text-danger">
+                Rua é obrigatória
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="numero" class="form-label">Número</label>
+              <input id="numero" formControlName="numero" type="text" class="form-control" placeholder="Digite o número">
+              <div *ngIf="formGroup.get('numero')?.invalid && formGroup.get('numero')?.touched" class="text-danger">
+                Número é obrigatório
               </div>
             </div>
   

@@ -1,25 +1,77 @@
-{  
-  "usuarios": [],
-  "clientes": [
+{
+  "login": [
     {
-      "id": 1,
-      "nome": "João Silva",
-      "email": "joao.silva@example.com"
+      "id": "367b"
     },
     {
-      "id": 2,
-      "nome": "Maria Silva",
-      "email": "silva@example.com"
+      "id": "1bc1",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "2355",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "3c47",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "04b9",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "c903",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "0ebe",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    },
+    {
+      "id": "0cd9",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
+    }
+  ],
+  "clientes": [
+    {
+      "id": "b7c1",
+      "nome": "é o testas nao tem como",
+      "email": "rqreewrwq@email.com",
+      "cpf": "00000000000",
+      "telefone": "40008"
+    },
+    {
+      "id": "66c8",
+      "nome": "é o testas nao tem como",
+      "email": "rqreewrwq@email.com",
+      "cpf": "00000000000",
+      "telefone": "40008"
+    },
+    {
+      "id": "2197",
+      "nome": "é o testas nao tem como",
+      "email": "rqreewrwq@email.com",
+      "cpf": "00000000000",
+      "telefone": "40008"
     }
   ],
   "milhas": [
     {
       "clienteId": 1,
-      "saldo": 5000
+      "saldo": 5000,
+      "id": "89b9"
     },
     {
       "clienteId": 2,
-      "saldo": 5
+      "saldo": 5,
+      "id": "c1af"
     }
   ],
   "reservas": [
@@ -32,12 +84,13 @@
         "dataHora": "2024-09-15T14:00:00",
         "origem": "CWB",
         "destino": "GRU",
-        "valorPassagem": 1090.50,
+        "valorPassagem": 1090.5,
         "milhasNecessarias": 3200
       },
-      "valorGasto": 1090.50,
+      "valorGasto": 1090.5,
       "milhasUtilizadas": 3200,
-      "status": "Aguardando check-in"
+      "status": "Aguardando check-in",
+      "id": "1cec"
     },
     {
       "codigo": "RES5678",
@@ -48,12 +101,24 @@
         "dataHora": "2024-09-12T10:30:00",
         "origem": "BSB",
         "destino": "CWB",
-        "valorPassagem": 750.20,
+        "valorPassagem": 750.2,
         "milhasNecessarias": 2500
       },
-      "valorGasto": 750.20,
+      "valorGasto": 750.2,
       "milhasUtilizadas": 2500,
-      "status": "Voo realizado"
+      "status": "Voo realizado",
+      "id": "f4cd"
+    }
+  ],
+  "endereco": [
+    {
+      "id": "90bd",
+      "rua": "rua",
+      "numero": "teste",
+      "complemento": "complementas",
+      "cidade": "cidade",
+      "estado": "estado",
+      "cep": "80000-000"
     }
   ]
 }
