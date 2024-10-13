@@ -37,6 +37,11 @@
       "id": "0cd9",
       "email": "rqreewrwq@email.com",
       "senha": "senha"
+    },
+    {
+      "id": "389c",
+      "email": "rqreewrwq@email.com",
+      "senha": "senha"
     }
   ],
   "clientes": [
@@ -60,6 +65,13 @@
       "email": "rqreewrwq@email.com",
       "cpf": "00000000000",
       "telefone": "40008"
+    },
+    {
+      "id": "62f5",
+      "nome": "é o testas nao tem como",
+      "email": "rqreewrwq@email.com",
+      "cpf": "00000000000",
+      "telefone": "66666"
     }
   ],
   "milhas": [
@@ -113,6 +125,15 @@
   "endereco": [
     {
       "id": "90bd",
+      "rua": "rua",
+      "numero": "teste",
+      "complemento": "complementas",
+      "cidade": "cidade",
+      "estado": "estado",
+      "cep": "80000-000"
+    },
+    {
+      "id": "e8e2",
       "rua": "rua",
       "numero": "teste",
       "complemento": "complementas",

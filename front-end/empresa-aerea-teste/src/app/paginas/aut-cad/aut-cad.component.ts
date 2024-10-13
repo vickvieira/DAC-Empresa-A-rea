@@ -20,6 +20,7 @@ export class AutCadComponent implements OnInit {
       cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]], // CPF com 11 dígitos
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      telefone: ['', Validators.required],
       rua: ['', Validators.required],
       numero: ['', Validators.required],
       cep: ['', [Validators.required, Validators.pattern('^[0-9]{5}-[0-9]{3}$')]], // CEP no formato 00000-000

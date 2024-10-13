@@ -27,6 +27,14 @@
                 E-mail inválido
               </div>
             </div>
+
+            <div class="mb-3">
+              <label for="telefone" class="form-label">Telefone</label>
+              <input id="telefone" formControlName="telefone" type="tel" class="form-control" placeholder="Digite seu telefone">
+              <div *ngIf="formGroup.get('telefone')?.invalid && formGroup.get('telefone')?.touched" class="text-danger">
+                Telefone inválido
+              </div>
+            </div>
   
             <div class="mb-3">
               <label for="rua" class="form-label">Rua</label>
