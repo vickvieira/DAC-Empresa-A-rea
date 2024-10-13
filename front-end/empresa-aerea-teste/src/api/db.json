@@ -59,7 +59,6 @@
       "senha": "senha"
     }
   ],
-{
   "usuarios": [],
   "clientes": [
     {
@@ -114,12 +113,12 @@
   ],
   "milhas": [
     {
-      "clienteId": 1,
+      "clienteId": "1",
       "saldo": 5000,
       "id": "89b9"
     },
     {
-      "clienteId": 2,
+      "clienteId": "2",
       "saldo": 5,
       "id": "c1af"
     }
@@ -128,7 +127,7 @@
     {
       "codigo": "RES1234",
       "dataHoraReserva": "2024-09-15T14:00:00",
-      "clienteId": 1,
+      "clienteId": "1",
       "voo": {
         "codigo": "XYZ1234",
         "dataHora": "2024-12-15T14:00:00",
@@ -145,7 +144,7 @@
     {
       "codigo": "RES5678",
       "dataHoraReserva": "2024-12-12T10:30:00",
-      "clienteId": 1,
+      "clienteId": "1",
       "voo": {
         "codigo": "ABC5678",
         "dataHora": "2024-12-12T10:30:00",
