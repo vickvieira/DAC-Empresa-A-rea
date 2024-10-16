@@ -36,6 +36,7 @@ export class LoginComponent {
           if (response.success) {
             // Se a senha estiver correta, redireciona para outra página ou realiza uma ação
             this.authService.login(email);
+            console.log('foi')
             this.router.navigate(['/cliente']);
           } else {
             this.errorMessage = 'Credenciais inválidas. Tente novamente.';

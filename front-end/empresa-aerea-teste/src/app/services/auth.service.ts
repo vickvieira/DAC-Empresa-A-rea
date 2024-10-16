@@ -28,15 +28,11 @@ export class AuthService {
 
   // Método para obter o cliente logado
   getCliente(): Cliente | null {
-    console.log('dentro')
-    console.log(this.cliente)
     if (this.cliente) {
       return this.cliente;
     } else {
       // Tenta recuperar o cliente do localStorage
       const storedCliente = localStorage.getItem('cliente');
-      console.log('stored')
-      console.log(storedCliente)
       if (storedCliente) {
         this.cliente = JSON.parse(storedCliente);
         return this.cliente;

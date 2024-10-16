@@ -31,7 +31,8 @@ export class LoginService {
       nome: formCliente.nome,
       email: formCliente.email,
       cpf: formCliente.cpf,
-      telefone: formCliente.telefone
+      telefone: formCliente.telefone,
+      tipo: 'C'
     }
 
     const endereco: Endereco = {

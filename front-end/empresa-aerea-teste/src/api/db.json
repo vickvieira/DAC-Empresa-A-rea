@@ -1,60 +1,7 @@
 {
   "login": [
     {
-      "id": "367b"
-    },
-    {
-      "id": "1bc1",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "2355",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "3c47",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "04b9",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "c903",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "0ebe",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "0cd9",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "389c",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "4c06",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "4fdd",
-      "email": "rqreewrwq@email.com",
-      "senha": "senha"
-    },
-    {
-      "id": "084b",
+      "id": "99ff",
       "email": "rqreewrwq@email.com",
       "senha": "senha"
     }
@@ -62,53 +9,12 @@
   "usuarios": [],
   "clientes": [
     {
-      "id": "b7c1",
+      "id": "e8ac",
       "nome": "é o testas nao tem como",
       "email": "rqreewrwq@email.com",
       "cpf": "00000000000",
-      "telefone": "40008"
-    },
-    {
-      "id": "66c8",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "40008"
-    },
-    {
-      "id": "2197",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "40008"
-    },
-    {
-      "id": "62f5",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "66666"
-    },
-    {
-      "id": "9af0",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "1234567891"
-    },
-    {
-      "id": "20b3",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "1234567891"
-    },
-    {
-      "id": "4fd8",
-      "nome": "é o testas nao tem como",
-      "email": "rqreewrwq@email.com",
-      "cpf": "00000000000",
-      "telefone": "1234567891"
+      "telefone": "1234567891",
+      "tipo": "C"
     }
   ],
   "milhas": [
@@ -204,6 +110,24 @@
       "cidade": "cidade",
       "estado": "estado",
       "cep": "80000-000"
+    },
+    {
+      "id": "6a02",
+      "rua": "rua",
+      "numero": "989",
+      "complemento": "complementas",
+      "cidade": "cidade",
+      "estado": "estado",
+      "cep": "80000-000"
+    },
+    {
+      "id": "da7f",
+      "rua": "rua",
+      "numero": "989",
+      "complemento": "complementas",
+      "cidade": "cidade",
+      "estado": "estado",
+      "cep": "80000-000"
     }
   ],
   "aeroportos": [
@@ -211,25 +135,29 @@
       "codigo": "CWB",
       "nomeAero": "Aeroporto Afonso Pena",
       "cidade": "Curitiba",
-      "estado": "PR"
+      "estado": "PR",
+      "id": "8297"
     },
     {
       "codigo": "GRU",
       "nomeAero": "Aeroporto Internacional de São Paulo",
       "cidade": "Guarulhos",
-      "estado": "SP"
+      "estado": "SP",
+      "id": "2377"
     },
     {
       "codigo": "BSB",
       "nomeAero": "Aeroporto Internacional de Brasília",
       "cidade": "Brasília",
-      "estado": "DF"
+      "estado": "DF",
+      "id": "6d62"
     },
     {
       "codigo": "GIG",
       "nomeAero": "Aeroporto Internacional do Galeão",
       "cidade": "Rio de Janeiro",
-      "estado": "RJ"
+      "estado": "RJ",
+      "id": "78ce"
     }
   ],
   "voos": [
@@ -238,27 +166,30 @@
       "dataHora": "2024-12-15T14:00:00",
       "origem": "CWB",
       "destino": "GRU",
-      "valorPassagem": 1090.50,
+      "valorPassagem": 1090.5,
       "quantidadePoltronas": 200,
-      "poltronasOcupadas": 150
+      "poltronasOcupadas": 150,
+      "id": "0fa0"
     },
     {
       "codigo": "ABC5678",
       "dataHora": "2024-12-12T10:30:00",
       "origem": "BSB",
       "destino": "CWB",
-      "valorPassagem": 750.20,
+      "valorPassagem": 750.2,
       "quantidadePoltronas": 180,
-      "poltronasOcupadas": 130
+      "poltronasOcupadas": 130,
+      "id": "7ec2"
     },
     {
       "codigo": "DEF9101",
       "dataHora": "2024-12-01T08:00:00",
       "origem": "CWB",
       "destino": "GIG",
-      "valorPassagem": 950.00,
+      "valorPassagem": 950,
       "quantidadePoltronas": 150,
-      "poltronasOcupadas": 50
+      "poltronasOcupadas": 50,
+      "id": "b714"
     },
     {
       "codigo": "GHI2345",
@@ -267,16 +198,18 @@
       "destino": "BSB",
       "valorPassagem": 1200.75,
       "quantidadePoltronas": 220,
-      "poltronasOcupadas": 180
+      "poltronasOcupadas": 180,
+      "id": "ccfd"
     },
     {
       "codigo": "JKL6789",
       "dataHora": "2024-12-25T20:00:00",
       "origem": "GIG",
       "destino": "CWB",
-      "valorPassagem": 1000.60,
+      "valorPassagem": 1000.6,
       "quantidadePoltronas": 170,
-      "poltronasOcupadas": 90
+      "poltronasOcupadas": 90,
+      "id": "0c42"
     }
   ]
 }
