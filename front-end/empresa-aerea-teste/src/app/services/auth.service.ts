@@ -38,6 +38,10 @@ export class AuthService {
     return null;
   }
 
+  isLoggedIn(): boolean {
+    return this.getCliente() !== null; // Retorna true se houver um cliente válido
+  }
+
   // Método de logout
   logout(): void {
     this.cliente = null;

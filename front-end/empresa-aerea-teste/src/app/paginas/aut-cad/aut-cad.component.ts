@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router'; // Importar Router
-import { ToastrService } from 'ngx-toastr'; // Exemplo de serviço para mensagens (se estiver usando Toastr)
+import { Router } from '@angular/router'; 
+import { ToastrService } from 'ngx-toastr'; 
 
 @Component({
   selector: 'app-aut-cad',
