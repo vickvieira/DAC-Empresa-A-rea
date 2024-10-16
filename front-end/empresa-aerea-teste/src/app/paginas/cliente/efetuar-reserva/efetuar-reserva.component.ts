@@ -26,9 +26,9 @@ export class EfetuarReservaComponent implements OnInit {
   
     ngOnInit(): void {
       const codigoVoo = this.route.snapshot.paramMap.get('codigo');
-      const cliente = this.authService.getClienteId();
+      const cliente = this.authService.getCliente();
   
-      if (cliente && codigoVoo) {
+      if (cliente?.id && codigoVoo) {
         this.vooService.getVooByCodigo(codigoVoo).subscribe((voo) => {
           if (voo) {
             this.voo = voo; // Voo encontrado
@@ -38,7 +38,7 @@ export class EfetuarReservaComponent implements OnInit {
         });
   
         // Buscar saldo de milhas do cliente
-        this.milhasService.getMilhasByClienteId(cliente).subscribe((saldo) => {
+        this.milhasService.getMilhasByClienteId(cliente.id).subscribe((saldo) => {
           this.saldoMilhas = saldo;
         });
       } else {

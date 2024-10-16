@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,of } from 'rxjs';
 import { ClienteService } from './cliente.service'; // Importar o ClienteService
 import { Login } from '../models/login.models';
 import { Cliente } from '../models/cliente.model';
 import { Endereco } from '../models/endereco.models';
 import { EnderecoService } from './endereco.service';
+import { map, catchError } from 'rxjs/operators';  // Importe o map e catchError corretamente
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +31,8 @@ export class LoginService {
       nome: formCliente.nome,
       email: formCliente.email,
       cpf: formCliente.cpf,
-      telefone: formCliente.telefone
+      telefone: formCliente.telefone,
+      tipo: 'C'
     }
 
     const endereco: Endereco = {
@@ -61,4 +64,19 @@ export class LoginService {
     );
     return this.http.post<any>(this.apiUrl, login);
   }
+
+  login(email: string, senha: string): Observable<any> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(users => {
+        const user = users.find(u => u.email === email && u.senha === senha);
+        if (user) {
+          return { success: true, user };
+        } else {
+          return { success: false, message: 'Email ou senha incorretos' };
+        }
+      }),
+      catchError(() => of({ success: false, message: 'Erro ao conectar com o servidor' }))
+    );
+  }
+
 }

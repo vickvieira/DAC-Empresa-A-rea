@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router'; // Importar Router
-import { ToastrService } from 'ngx-toastr'; // Exemplo de serviço para mensagens (se estiver usando Toastr)
+import { Router } from '@angular/router'; 
+import { ToastrService } from 'ngx-toastr'; 
 
 @Component({
   selector: 'app-aut-cad',
@@ -40,16 +40,14 @@ export class AutCadComponent implements OnInit {
       console.log('Formulário enviado', this.formGroup.value);
       
       this.loginService.adicionarUsuario(this.formGroup.value).subscribe(response => {
-          // Exibir mensagem de sucesso
-          this.toastr.success('Cadastro realizado com sucesso!', 'Sucesso');
-          // Redirecionar para a rota de login
-           //this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
           this.formGroup.reset();
       }, error => {
-        console.error('Erro ao adicionar usuário:', error);
+        const errorMessage = error.error?.message || 'Erro ao adicionar usuário. Tente novamente mais tarde.';
+        this.toastr.error(errorMessage, 'Erro');
       });
     } else {
-      console.log('Formulário inválido');
+      this.toastr.error('Erro ao preencher o cadastro.', 'Erro');
     }
   }
 }

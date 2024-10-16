@@ -4,12 +4,14 @@ import { AutCadComponent } from './paginas/aut-cad/aut-cad.component';
 import { BuscarVoosComponent } from './paginas/cliente/buscar-voos/buscar-voos.component';
 import { EfetuarReservaComponent } from './paginas/cliente/efetuar-reserva/efetuar-reserva.component';
 import { LoginComponent } from './paginas/login/login/login.component';
+import { authClienteGuard } from './guard/auth-cliente.guard';
+import { authNaoLogadoGuard } from './guard/auth-nao-logado.guard';
 
 export const routes: Routes = [
-    { path: 'cliente', component: HomeClienteComponent },
-    { path: 'cadastrar', component: AutCadComponent},
-    { path: 'buscar-voos', component: BuscarVoosComponent },
-    { path: 'efetuar-reserva/:codigo', component: EfetuarReservaComponent},
-    { path: 'login', component: LoginComponent},
+    { path: 'cliente', component: HomeClienteComponent, canActivate: [authClienteGuard] },
+    { path: 'cadastrar', component: AutCadComponent, canActivate: [authNaoLogadoGuard]},
+    { path: 'buscar-voos', component: BuscarVoosComponent, canActivate: [authClienteGuard] },
+    { path: 'efetuar-reserva/:codigo', component: EfetuarReservaComponent, canActivate: [authClienteGuard]},
+    { path: 'login', component: LoginComponent, canActivate: [authNaoLogadoGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

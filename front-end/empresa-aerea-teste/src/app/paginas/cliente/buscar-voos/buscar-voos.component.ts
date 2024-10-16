@@ -52,8 +52,8 @@ export class BuscarVoosComponent {
 
   selecionarVoo(codigo: string): void {
     //
-    const cliente = this.authService.getClienteId();
-    if (cliente) {
+    const cliente = this.authService.getCliente();
+    if (cliente?.id) {
       this.router.navigate(['/efetuar-reserva', codigo]); // Passa o ID do cliente logado e o código do voo
     } else {
       console.error('Cliente não logado.');
