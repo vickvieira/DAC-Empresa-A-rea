@@ -30,14 +30,18 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, senha } = this.loginForm.value;
-
+  
       this.loginService.login(email, senha).subscribe(
         response => {
           if (response.success) {
-            // Se a senha estiver correta, redireciona para outra página ou realiza uma ação
-            this.authService.login(email);
-            console.log('foi')
-            this.router.navigate(['/cliente']);
+            this.authService.login(email).subscribe(
+              cliente => {
+                this.router.navigate(['/cliente']);
+              },
+              error => {
+                this.errorMessage = 'Erro ao buscar informações do cliente. Tente novamente.';
+              }
+            );
           } else {
             this.errorMessage = 'Credenciais inválidas. Tente novamente.';
           }
@@ -47,5 +51,9 @@ export class LoginComponent {
         }
       );
     }
+  }
+
+  navigateToSignup() {
+    this.router.navigate(['/cadastrar']);  // Ajuste a rota conforme o seu sistema
   }
 }

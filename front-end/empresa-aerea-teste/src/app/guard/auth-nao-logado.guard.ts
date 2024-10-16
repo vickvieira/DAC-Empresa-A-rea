@@ -1,7 +1,11 @@
+import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Cliente } from '../models/cliente.model';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class authNaoLogadoGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -10,10 +14,9 @@ export class authNaoLogadoGuard implements CanActivate {
     const cliente: Cliente | null = this.authService.getCliente();
 
     if (!cliente) {  // Se o cliente NÃO está logado
-      return true;  
+      return true; 
     } else {
-      this.router.navigate(['/cliente']);  // Redireciona para a rota principal se o cliente estiver logado
-      return false;  
+      return false; 
     }
   }
 }
