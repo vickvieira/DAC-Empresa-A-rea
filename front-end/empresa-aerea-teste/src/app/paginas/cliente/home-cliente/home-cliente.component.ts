@@ -29,13 +29,13 @@ export class HomeClienteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const clienteId = this.authService.getClienteId();
-
-    if (clienteId !== null) {
-      this.getCliente(clienteId);
-      this.getMilhasSaldo(clienteId);
-      this.getReservas(clienteId);
-      console.log('Cliente ID capturado:', clienteId);
+    const clienteId = this.authService.getCliente();
+    console.log(clienteId)
+    if (clienteId && clienteId.id) {
+      this.getCliente(clienteId.id);
+      this.getMilhasSaldo(clienteId.id);
+      this.getReservas(clienteId.id);
+      console.log('Cliente ID capturado:', clienteId.id);
     } else {
       console.error('Cliente ID não encontrado no serviço de autenticação');
     }

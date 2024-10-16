@@ -46,10 +46,11 @@ export class AutCadComponent implements OnInit {
            //this.router.navigate(['/login']);
           this.formGroup.reset();
       }, error => {
-        console.error('Erro ao adicionar usuário:', error);
+        const errorMessage = error.error?.message || 'Erro ao adicionar usuário. Tente novamente mais tarde.';
+        this.toastr.error(errorMessage, 'Erro');
       });
     } else {
-      console.log('Formulário inválido');
+      this.toastr.error('Erro ao preencher o cadastro.', 'Erro');
     }
   }
 }
