@@ -1,8 +1,5 @@
 export interface Milhas {
-    clienteId: number;
-    dataHora: string;
-    saldo: number;
-    //mais coisa
-    
-  }
-  
+  clienteId: number;
+  saldo: number;
+  //mais coisa
+}

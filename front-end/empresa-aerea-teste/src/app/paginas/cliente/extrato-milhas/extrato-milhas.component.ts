@@ -3,7 +3,8 @@ import { ClienteService } from '../../../services/cliente.service';
 import { MilhasService } from '../../../services/milhas.service';
 import { Cliente } from '../../../models/cliente.model';
 import { ActivatedRoute } from '@angular/router';
-import { Milhas } from '../../../models/milhas.model';
+import { ExtratoMilhas } from '../../../models/extrato-milhas.model';
+
 
 
 @Component({
@@ -15,8 +16,7 @@ import { Milhas } from '../../../models/milhas.model';
 export class ExtratoMilhasComponent implements OnInit {
   cliente: Cliente | undefined;
   milhasSaldo: number = 0;
-  extratoMilhas: Milhas[] = [];
-
+  extratoMilhas: ExtratoMilhas[] = [];
 
   constructor(
     private clienteService: ClienteService,
@@ -28,23 +28,28 @@ export class ExtratoMilhasComponent implements OnInit {
   ngOnInit(): void {
     //const clienteId = Number(this.route.snapshot.paramMap.get('id'));
     this.checaCliente();
+    this.getMilhasSaldo(1);
+
     //this.listarTodosExtratos();
-    this.listarTodosExtratoByCliente(1);
+    //this.listarTodosExtratoByCliente(1);
   }
 
   checaCliente() {
     let clienteId = 1;
 
     this.getCliente(clienteId);
-    this.getMilhasSaldo(clienteId);
+    //this.getMilhasSaldo(clienteId);
+    this.listarTodosExtratoByCliente(clienteId);
+
 
     if (this.cliente) { //ve se o id do cliente foi capturado corretamente
       console.log('Cliente ID:' + this.cliente);
       //this.listarTodosExtratos();
       this.listarTodosExtratoByCliente(clienteId);
       this.getMilhasSaldo(clienteId);
+
     } else {
-      console.error('Cliente ID não encontrado na rota asdsasas');
+      console.error('Cliente ID não encontrado na rota VALOR CLIENTE:' + this.cliente);
     }
   }
 
@@ -60,37 +65,46 @@ export class ExtratoMilhasComponent implements OnInit {
     });
   }
 
-  /*
-  getMilhasExtrato(clienteId: number) {
-    this.milhasService.getExtratobyClienteId(clienteId).subscribe((extrato: Milhas[]) => {
-      this.extratoMilhas = extrato;
-    });
+  getSomaDoSaldoPeloExtrato(clienteId: number): void {
+    this.listarTodosExtratoByCliente(clienteId);
   }
-  */
-  listarTodosExtratoByCliente(clienteId: number): Milhas[] {
-    
+
+  
+  listarTodosExtratoByCliente(clienteId: number): ExtratoMilhas[] {
     this.milhasService.getExtratoPorClienteId(String(clienteId)).subscribe({
-      next: (data: Milhas[]) => {
+      next: (data: ExtratoMilhas[]) => {
         if (data == null) {
           this.extratoMilhas = [];
         }
         else {
+          //data.saldo = 
+          //data[1].saldo
           this.extratoMilhas = data;
-         
+          /*
+          for (let i = 1; i < data.length; i++) {
+            //this.extratoMilhas[i].saldo =+ this.extratoMilhas[i+1].saldo;
+          }
+          */
         }
       }
     });
     return this.extratoMilhas;
   }
 
-  listarTodosExtratos(): Milhas[] {
+  calcularSaldoNoExtrato() {
+
+  }
+
+
+  listarTodosExtratos(): ExtratoMilhas[] {
     this.milhasService.getTodosExtratos().subscribe({
-      next: (data: Milhas[]) => {
+      next: (data: ExtratoMilhas[]) => {
         if (data == null) {
           this.extratoMilhas = [];
         }
         else {
           this.extratoMilhas = data;
+
         }
       }
     });

@@ -6,14 +6,14 @@
             <tr>
                 <th scope="col">Data / Hora</th>
                 <th scope="col">Operação</th>
-                <th scope="col">Cliente</th>
+                <th scope="col">Saldo</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let extratoMilha of extratoMilhas">
+            <tr *ngFor="let extratoMilha of extratoMilhas; let i = index">
                 <td>{{ extratoMilha.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ extratoMilha.operacao  }}</td>
                 <td>{{ extratoMilha.saldo }}</td>
-                <td>"{{ extratoMilha.clienteId }}"</td>
                 
         </tbody>
     </table>
