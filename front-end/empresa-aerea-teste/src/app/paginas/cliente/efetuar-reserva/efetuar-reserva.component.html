@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Detalhes do Voo</h2>
+  
+    <div *ngIf="voo">
+      <p><strong>Origem:</strong> {{ voo.origem }}</p>
+      <p><strong>Destino:</strong> {{ voo.destino }}</p>
+      <p><strong>Data/Hora:</strong> {{ voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</p>
+      <p><strong>Preço do Assento:</strong> {{ voo.valorPassagem | currency: 'BRL' }}</p>
+    </div>
+  
+    <div *ngIf="saldoMilhas !== null">
+      <p><strong>Seu saldo de milhas:</strong> {{ saldoMilhas | number }}</p>
+    </div>
+  
+    <div *ngIf="!voo || saldoMilhas === null">
+      <p>Carregando informações...</p>
+    </div>
+  </div>
+  
