@@ -27,6 +27,11 @@
       "clienteId": "2",
       "saldo": 5,
       "id": "c1af"
+    },
+    {
+      "clienteId": "e8ac",
+      "saldo": 550000,
+      "id": "c2ai"
     }
   ],
   "reservas": [

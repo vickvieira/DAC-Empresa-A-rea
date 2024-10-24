@@ -38,6 +38,13 @@ export class AuthService {
     return null;
   }
 
+  // Novo método para obter o ID do cliente logado
+getClienteId(): number | null {
+  const cliente = this.getCliente();
+  return cliente && cliente.id ? cliente.id : null;
+}
+
+
   isLoggedIn(): boolean {
     return this.getCliente() !== null; // Retorna true se houver um cliente válido
   }
