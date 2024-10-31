@@ -2,7 +2,7 @@
     style="background-color: #6610f2;">
     <div class="container-fluid">
 
-        <a class="navbar-brand text-white" href="#">
+        <a class="navbar-brand text-white" href="/cliente">
             <i class="bi bi-airplane"></i>
             Empresa Aérea <!-- Vai para a Página inicial -->
 
@@ -18,7 +18,7 @@
                         Reservas
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i
+                        <li><a class="dropdown-item" href="/buscar-voos"><i
                                     class="bi bi-bookmark-check"></i> Efetuar
                                 reserva</a></li>
                         <li><a class="dropdown-item" href="#"><i
@@ -59,11 +59,11 @@
         </div>
 
         <a class="nav-link  text-white mx-auto p-2" style="width: 200px;">
-            Saldo de Milhas: XXXXXX
+            Saldo de Milhas: {{milhasSaldo}}
         </a>
 
         <a class="navbar-brand text-white" href="#">
-            <i class="bi bi-person-circle"></i> Minha conta
+            <i class="bi bi-person-circle"></i> {{cliente.nome}}
         </a>
 
         <button class="btn btn-outline-light ms-2" (click)="logout()">
