@@ -1,0 +1,26 @@
+<div class="container my-4">
+    <h2 class="text-center">Próximos Voos nas Próximas 48 Horas</h2>
+    <table class="table table-striped table-hover mt-4">
+      <thead class="table-dark">
+        <tr>
+          <th>Data/Hora</th>
+          <th>Aeroporto Origem</th>
+          <th>Aeroporto Destino</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let voo of voos">
+          <td>{{ voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ voo.origem }}</td>
+          <td>{{ voo.destino }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="confirmarEmbarque(voo.codigo)">Confirmar Embarque</button>
+            <button class="btn btn-danger btn-sm mx-2" (click)="cancelarVoo(voo.codigo)">Cancelar Voo</button>
+            <button class="btn btn-primary btn-sm" (click)="realizarVoo(voo.codigo)">Realizar Voo</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

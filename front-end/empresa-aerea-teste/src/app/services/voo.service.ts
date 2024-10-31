@@ -34,5 +34,10 @@ export class VooService {
         map(voos => voos[0]) // Retorna o primeiro item do array
       );
   }
-  
+
+  getVoosProximos(dataInicial: Date, dataFinal: Date): Observable<Voo[]> {
+    const dataInicialStr = dataInicial.toISOString();
+    const dataFinalStr = dataFinal.toISOString();
+    return this.http.get<Voo[]>(`/api/voos?dataHora_gte=${dataInicialStr}&dataHora_lte=${dataFinalStr}`);
+  }
 }  
