@@ -19,11 +19,11 @@ export class MilhasService {
     })
   }
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 
   getMilhasByClienteId(clienteId: number): Observable<number> {
-    return this.httpClient.get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+    return this.http.get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
       .pipe(
         map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
       );
@@ -66,7 +66,7 @@ export class MilhasService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.httpClient.get<ExtratoMilhas[]>(`${this.apiUrlTransacoes}/?clienteId=${term}`).pipe(
+    return this.http.get<ExtratoMilhas[]>(`${this.apiUrlTransacoes}/?clienteId=${term}`).pipe(
       tap(x => x.length),
 
     );
@@ -74,7 +74,7 @@ export class MilhasService {
 
 
   getTodosExtratos(): Observable<ExtratoMilhas[]> {
-    return this.httpClient.get<ExtratoMilhas[]>(this.apiUrlTransacoes, this.httpOption)
+    return this.http.get<ExtratoMilhas[]>(this.apiUrlTransacoes, this.httpOption)
   }
 
   atualizarSaldo() {

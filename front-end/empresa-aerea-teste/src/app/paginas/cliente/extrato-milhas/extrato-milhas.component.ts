@@ -4,12 +4,15 @@ import { MilhasService } from '../../../services/milhas.service';
 import { Cliente } from '../../../models/cliente.model';
 import { ActivatedRoute } from '@angular/router';
 import { ExtratoMilhas } from '../../../models/extrato-milhas.model';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+
 
 
 
 @Component({
   selector: 'app-extrato-milhas',
-  //standalone: true,
+  standalone: true,
+  imports: [NgFor, NgIf, DatePipe],
   templateUrl: './extrato-milhas.component.html',
   styleUrl: './extrato-milhas.component.css'
 })
@@ -36,6 +39,7 @@ export class ExtratoMilhasComponent implements OnInit {
 
   checaCliente() {
     let clienteId = 1;
+    //let clienteId = 1;
 
     this.getCliente(clienteId);
     //this.getMilhasSaldo(clienteId);
