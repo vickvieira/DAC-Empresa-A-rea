@@ -56,8 +56,9 @@ export class NavbarComponent {
     this.router.navigate(['/extrato-milhas'])
   }
 
+  /* 
   teste() {
     alert("teste");
   }
-
+  */
 }

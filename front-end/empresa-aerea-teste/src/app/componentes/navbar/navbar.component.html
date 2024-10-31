@@ -47,7 +47,7 @@
                         Milhas
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" (click)="teste()"><i
+                        <li><a class="dropdown-item" href="#"><i
                                     class="bi bi-coin"></i>
                                 Comprar</a></li>
                         <li><a class="dropdown-item" href="/extrato-milhas" (click)="goExtrato()"> <i
@@ -63,7 +63,7 @@
         </a>
 
         <a class="navbar-brand text-white" href="#">
-            <i class="bi bi-person-circle"></i> 
+            <i class="bi bi-person-circle"></i> {{cliente.nome}}
         </a>
 
         <button class="btn btn-outline-light ms-2" (click)="logout()">
