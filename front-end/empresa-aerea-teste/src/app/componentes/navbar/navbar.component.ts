@@ -18,22 +18,22 @@ export class NavbarComponent {
   milhasSaldo: number = 0;
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private clienteService: ClienteService,
-    private milhasService: MilhasService,) {}
+    private milhasService: MilhasService,) { }
 
-    ngOnInit(): void {
-      const clienteId = this.authService.getCliente();
-      console.log(clienteId)
-      if (clienteId && clienteId.id) {
-        this.getCliente(clienteId.id);
-        this.getMilhasSaldo(clienteId.id);
-        console.log('Cliente ID capturado nav-bar:', clienteId.id);
-      } else {
-        console.error('Cliente ID não encontrado no serviço de autenticação');
-      }
+  ngOnInit(): void {
+    const clienteId = this.authService.getCliente();
+    console.log(clienteId)
+    if (clienteId && clienteId.id) {
+      this.getCliente(clienteId.id);
+      this.getMilhasSaldo(clienteId.id);
+      console.log('Cliente ID capturado nav-bar:', clienteId.id);
+    } else {
+      console.error('Cliente ID não encontrado no serviço de autenticação');
     }
+  }
 
 
   logout() {
@@ -51,4 +51,14 @@ export class NavbarComponent {
       this.milhasSaldo = saldo;
     });
   }
+
+  goExtrato() {
+    this.router.navigate(['/extrato-milhas'])
+  }
+
+  /* 
+  teste() {
+    alert("teste");
+  }
+  */
 }

@@ -15,6 +15,13 @@
       "cpf": "00000000000",
       "telefone": "1234567891",
       "tipo": "C"
+    },{
+      "id": 1,
+      "nome": "é o testas nao tem como",
+      "email": "rqreewrwq@email.com",
+      "cpf": "00000000000",
+      "telefone": "1234567891",
+      "tipo": "C"
     }
   ],
   "milhas": [
@@ -216,5 +223,46 @@
       "poltronasOcupadas": 90,
       "id": "0c42"
     }
+  ],
+  
+  "transacoes_milhas": [
+    {
+      "clienteId": 1,
+      "dataHora": "2024-05-11T12:15:00",
+      "operacao": 12450,
+      "saldo": 12450
+      
+    },
+    {
+      "clienteId": 1,
+      "dataHora": "2024-06-11T23:35:00",
+      "operacao": 4000,
+      "saldo": 16450
+    },
+    {
+      "clienteId": 1,
+      "dataHora": "2024-08-11T10:35:00",
+      "operacao": 300,
+      "saldo": 16750
+    },
+    {
+      "clienteId": 1,
+      "dataHora": "2024-09-12T10:30:00",
+      "operacao": -2500,
+      "saldo": 14250
+    },
+    {
+      "clienteId": 1,
+      "dataHora": "2024-09-15T14:00:00",
+      "operacao": -3200,
+      "saldo": 11050
+    },
+    {
+      "clienteId": 2,
+      "dataHora": "2024-05-11T12:15:00",
+      "operacao": 1245045454,
+      "saldo": 1245045454
+    }
   ]
 }
+
