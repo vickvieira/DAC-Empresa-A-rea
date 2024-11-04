@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [authNaoLogadoGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'extrato-milhas', component: ExtratoMilhasComponent, canActivate: [authClienteGuard]}, 
-    
+    { path: 'comprar-milhas', component: ComprarMilhasComponent,canActivate: [authClienteGuard]}
 
 
 ];

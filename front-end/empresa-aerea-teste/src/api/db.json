@@ -15,7 +15,8 @@
       "cpf": "00000000000",
       "telefone": "1234567891",
       "tipo": "C"
-    },{
+    },
+    {
       "id": 1,
       "nome": "é o testas nao tem como",
       "email": "rqreewrwq@email.com",
@@ -224,45 +225,111 @@
       "id": "0c42"
     }
   ],
-  
   "transacoes_milhas": [
     {
+      "id": "aaa0",
       "clienteId": 1,
       "dataHora": "2024-05-11T12:15:00",
       "operacao": 12450,
       "saldo": 12450
-      
     },
     {
+      "id": "aaa1",
       "clienteId": 1,
       "dataHora": "2024-06-11T23:35:00",
       "operacao": 4000,
       "saldo": 16450
     },
     {
+      "id": "aaa2",
       "clienteId": 1,
       "dataHora": "2024-08-11T10:35:00",
       "operacao": 300,
       "saldo": 16750
     },
     {
+      "id": "aaa3",
       "clienteId": 1,
       "dataHora": "2024-09-12T10:30:00",
       "operacao": -2500,
       "saldo": 14250
     },
     {
+      "id": "aaa5",
       "clienteId": 1,
       "dataHora": "2024-09-15T14:00:00",
       "operacao": -3200,
       "saldo": 11050
     },
     {
+      "id": "aaa4",
       "clienteId": 2,
       "dataHora": "2024-05-11T12:15:00",
       "operacao": 1245045454,
       "saldo": 1245045454
+    },
+    {
+      "clienteId": 421,
+      "dataHora": "2023-05-11T12:15:00",
+      "saldo": 0,
+      "operacao": 124,
+      "id": "S2zYlg4"
+    },
+    {
+      "clienteId": 421,
+      "dataHora": "2023-05-11T12:15:00",
+      "saldo": 0,
+      "operacao": 124,
+      "id": "tasfdasd"
+    },
+    {
+      "clienteId": 124,
+      "dataHora": "asdsad",
+      "saldo": 0,
+      "operacao": 0,
+      "id": "4l1msY-"
+    },
+    {
+      "clienteId": 1,
+      "dataHora": "2023-05-11T12:15:00",
+      "saldo": 0,
+      "operacao": 124,
+      "id": "Xz0_Bua"
+    },
+    {
+      "clienteId": "ars",
+      "dataHora": "2024-11-01T20:22:17.621Z",
+      "operacao": 80,
+      "saldo": 0,
+      "id": "T3PL009"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "2024-10-04T20:22:17.621Z",
+      "operacao": 124,
+      "saldo": 0,
+      "id": "S19Qe6M"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "YYYY-MM-DDTHH:mm",
+      "operacao": 412412,
+      "saldo": 0,
+      "id": "Bsx17Sl"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "2024-11-04T17:56:53.532Z",
+      "operacao": 4124,
+      "saldo": 0,
+      "id": "WEqByxw"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "2024-11-04T20:22:17.621Z",
+      "operacao": 8000,
+      "saldo": 0,
+      "id": "UNaooF1"
     }
   ]
 }
-

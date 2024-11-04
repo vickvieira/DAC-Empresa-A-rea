@@ -83,6 +83,12 @@ export class MilhasService {
     //return this.httpClient.put<Milhas>
   }
 
+  inserirCompraMilhas(extratoMilhas: ExtratoMilhas): Observable<ExtratoMilhas> {
+    
+    return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes, JSON.stringify(extratoMilhas), this.httpOption)
+  
+  }
+
   // mais metodos
 
 }
