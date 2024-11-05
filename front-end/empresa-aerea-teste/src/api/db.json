@@ -276,13 +276,6 @@
       "id": "S2zYlg4"
     },
     {
-      "clienteId": 421,
-      "dataHora": "2023-05-11T12:15:00",
-      "saldo": 0,
-      "operacao": 124,
-      "id": "tasfdasd"
-    },
-    {
       "clienteId": 124,
       "dataHora": "asdsad",
       "saldo": 0,
@@ -305,30 +298,30 @@
     },
     {
       "clienteId": "e8ac",
-      "dataHora": "2024-10-04T20:22:17.621Z",
-      "operacao": 124,
-      "saldo": 0,
+      "dataHora": "2024-05-11T12:15:00",
+      "operacao": 12450,
+      "saldo": 12450,
       "id": "S19Qe6M"
     },
     {
       "clienteId": "e8ac",
-      "dataHora": "YYYY-MM-DDTHH:mm",
-      "operacao": 412412,
-      "saldo": 0,
+      "dataHora": "2024-08-11T10:35:00",
+      "operacao": 300,
+      "saldo": 16750,
       "id": "Bsx17Sl"
     },
     {
       "clienteId": "e8ac",
-      "dataHora": "2024-11-04T17:56:53.532Z",
-      "operacao": 4124,
-      "saldo": 0,
+      "dataHora": "2024-09-12T10:30:00",
+      "operacao": -2500,
+      "saldo": 14250,
       "id": "WEqByxw"
     },
     {
       "clienteId": "e8ac",
-      "dataHora": "2024-11-04T20:22:17.621Z",
-      "operacao": 8000,
-      "saldo": 0,
+      "dataHora": "2024-09-15T14:00:00",
+      "operacao": -3200,
+      "saldo": 11050,
       "id": "UNaooF1"
     }
   ]

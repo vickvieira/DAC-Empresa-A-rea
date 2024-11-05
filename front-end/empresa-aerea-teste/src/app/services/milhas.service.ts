@@ -28,6 +28,7 @@ export class MilhasService {
         map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
       );
   }
+
   atualizarMilhas(clienteId: number, milhasDelta: number): Observable<Milhas> {
     // Primeiro, obter o saldo atual de milhas do cliente
     return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`).pipe(
@@ -77,15 +78,23 @@ export class MilhasService {
     return this.http.get<ExtratoMilhas[]>(this.apiUrlTransacoes, this.httpOption)
   }
 
-  atualizarSaldo() {
+  /*
+  atualizarSaldo(transacaoMaisRecente: ExtratoMilhas) {
     //saldo anterior menos operação nova
+    let body: Milhas;
+    body.saldo = transacaoMaisRecente.saldo;    
+    return this.http.put<Milhas[]>(this.apiUrl,)
+  }
+  */
 
-    //return this.httpClient.put<Milhas>
+  atualizarSaldoMilhas(novoSaldo: Milhas): Observable<Milhas>{
+    return this.http.put<Milhas>(this.apiUrl, JSON.stringify(novoSaldo), 
+      this.httpOption)
   }
 
   inserirCompraMilhas(extratoMilhas: ExtratoMilhas): Observable<ExtratoMilhas> {
-    
-    return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes, JSON.stringify(extratoMilhas), this.httpOption)
+   return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes,
+     JSON.stringify(extratoMilhas), this.httpOption)
   
   }
 
