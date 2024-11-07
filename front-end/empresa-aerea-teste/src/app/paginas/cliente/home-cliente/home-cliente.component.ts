@@ -6,6 +6,7 @@ import { Cliente } from '../../../models/cliente.model';
 import { Reserva } from '../../../models/reserva.model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
