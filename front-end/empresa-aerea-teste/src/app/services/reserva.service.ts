@@ -47,7 +47,6 @@ export class ReservaService {
     // Atualiza o saldo de milhas do cliente
     this.milhasService.atualizarMilhas(clienteId, -milhasUtilizadas).subscribe();
 
-    // Faz o POST da nova reserva no backend
     return this.http.post<Reserva>(this.apiUrl, novaReserva);
   }
 }

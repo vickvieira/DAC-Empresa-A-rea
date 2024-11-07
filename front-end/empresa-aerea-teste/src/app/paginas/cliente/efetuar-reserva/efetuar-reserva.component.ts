@@ -5,6 +5,7 @@ import { MilhasService } from '../../../services/milhas.service';
 import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReservaService } from '../../../services/reserva.service';
 
 @Component({
   selector: 'app-efetuar-reserva',
@@ -29,7 +30,8 @@ export class EfetuarReservaComponent implements OnInit {
     private route: ActivatedRoute,
     private vooService: VooService,
     private milhasService: MilhasService,
-    private authService: AuthService
+    private authService: AuthService,
+    private reservaService: ReservaService
   ) {}
 
   ngOnInit(): void {
@@ -102,20 +104,10 @@ export class EfetuarReservaComponent implements OnInit {
 
   // Confirmar a compra e gerar o código de reserva
   confirmarCompra(): void {
-    if (this.valorRestante !== null && this.valorRestante >= 0) {
-      const clienteId = this.authService.getClienteId();
-  
-      if (clienteId !== null) { // Garantir que clienteId não é null
-        // Atualizar o saldo de milhas do cliente
-        const novoSaldo = this.saldoMilhas! - this.milhasUsadas;
-        this.milhasService.atualizarMilhas(clienteId, novoSaldo).subscribe(() => {
-          // Gerar um código de reserva único
-          this.codigoReserva = this.gerarCodigoReserva();
-          console.log('Compra confirmada! Código da reserva:', this.codigoReserva);
-        });
-      } else {
-        console.error('Cliente não logado.');
-      }
+    const clienteId = this.authService.getClienteId();
+    if (clienteId !== null) {
+      this.reservaService.criarReserva(clienteId, this.voo, this.quantidadePassagens, this.valorTotal, this.milhasUsadas)
+        .subscribe(() => console.log('Reserva criada com sucesso!'));
     }
   }
   

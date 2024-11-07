@@ -9,14 +9,15 @@
   "usuarios": [],
   "clientes": [
     {
-      "id": "e8ac",
+      "id": "1",
       "nome": "é o testas nao tem como",
       "email": "rqreewrwq@email.com",
       "cpf": "00000000000",
       "telefone": "1234567891",
       "tipo": "C"
-    },{
-      "id": 1,
+    },
+    {
+      "id": "1",
       "nome": "é o testas nao tem como",
       "email": "rqreewrwq@email.com",
       "cpf": "00000000000",
@@ -26,19 +27,19 @@
   ],
   "milhas": [
     {
-      "clienteId": "1",
-      "saldo": 5000,
-      "id": "89b9"
+      "clienteId": 1,
+      "saldo": 3992,
+      "id": "1"
     },
     {
-      "clienteId": "2",
+      "clienteId": 2,
       "saldo": 5,
-      "id": "c1af"
+      "id": "2"
     },
     {
-      "clienteId": "e8ac",
+      "clienteId": 3,
       "saldo": 550000,
-      "id": "c2ai"
+      "id": "3"
     }
   ],
   "reservas": [
@@ -75,6 +76,215 @@
       "milhasUtilizadas": 2500,
       "status": "Voo realizado",
       "id": "f4cd"
+    },
+    {
+      "id": "b9c1",
+      "codigo": "RRW332",
+      "dataHoraReserva": "2024-11-07T04:07:02.526Z",
+      "clienteId": "e8ac",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 1090.5,
+      "milhasUtilizadas": 0,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "4a5d",
+      "codigo": "NRX041",
+      "dataHoraReserva": "2024-11-07T04:19:50.218Z",
+      "clienteId": "e8ac",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 1090.5,
+      "milhasUtilizadas": 0,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "5e78",
+      "codigo": "FUB638",
+      "dataHoraReserva": "2024-11-07T04:20:24.892Z",
+      "clienteId": "e8ac",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 1090.5,
+      "milhasUtilizadas": 0,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "c2be",
+      "codigo": "ZDP617",
+      "dataHoraReserva": "2024-11-07T04:21:15.387Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 1090.5,
+      "milhasUtilizadas": 100,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "7fcd",
+      "codigo": "MTP686",
+      "dataHoraReserva": "2024-11-07T04:22:30.503Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "JKL6789",
+        "dataHora": "2024-12-25T20:00:00",
+        "origem": "GIG",
+        "destino": "CWB",
+        "valorPassagem": 1000.6,
+        "quantidadePoltronas": 170,
+        "poltronasOcupadas": 90,
+        "id": "0c42"
+      },
+      "valorGasto": 3001.8,
+      "milhasUtilizadas": 900,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "0bae",
+      "codigo": "KRV957",
+      "dataHoraReserva": "2024-11-07T04:24:00.154Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "DEF9101",
+        "dataHora": "2024-12-01T08:00:00",
+        "origem": "CWB",
+        "destino": "GIG",
+        "valorPassagem": 950,
+        "quantidadePoltronas": 150,
+        "poltronasOcupadas": 50,
+        "id": "b714"
+      },
+      "valorGasto": 1900,
+      "milhasUtilizadas": 2,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "53c5",
+      "codigo": "XVL904",
+      "dataHoraReserva": "2024-11-07T04:30:27.979Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 2181,
+      "milhasUtilizadas": 100,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "3a33",
+      "codigo": "ZFJ143",
+      "dataHoraReserva": "2024-11-07T04:31:09.782Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "DEF9101",
+        "dataHora": "2024-12-01T08:00:00",
+        "origem": "CWB",
+        "destino": "GIG",
+        "valorPassagem": 950,
+        "quantidadePoltronas": 150,
+        "poltronasOcupadas": 50,
+        "id": "b714"
+      },
+      "valorGasto": 950,
+      "milhasUtilizadas": 100,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "6b10",
+      "codigo": "BGH499",
+      "dataHoraReserva": "2024-11-07T04:31:41.124Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "GHI2345",
+        "dataHora": "2024-12-03T15:30:00",
+        "origem": "GRU",
+        "destino": "BSB",
+        "valorPassagem": 1200.75,
+        "quantidadePoltronas": 220,
+        "poltronasOcupadas": 180,
+        "id": "ccfd"
+      },
+      "valorGasto": 1200.75,
+      "milhasUtilizadas": 200,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "c550",
+      "codigo": "QVX601",
+      "dataHoraReserva": "2024-11-07T04:32:33.880Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "ABC5678",
+        "dataHora": "2024-12-12T10:30:00",
+        "origem": "BSB",
+        "destino": "CWB",
+        "valorPassagem": 750.2,
+        "quantidadePoltronas": 180,
+        "poltronasOcupadas": 130,
+        "id": "7ec2"
+      },
+      "valorGasto": 750.2,
+      "milhasUtilizadas": 5,
+      "status": "Aguardando check-in"
+    },
+    {
+      "id": "13c9",
+      "codigo": "TWZ403",
+      "dataHoraReserva": "2024-11-07T04:35:58.792Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "ABC5678",
+        "dataHora": "2024-12-12T10:30:00",
+        "origem": "BSB",
+        "destino": "CWB",
+        "valorPassagem": 750.2,
+        "quantidadePoltronas": 180,
+        "poltronasOcupadas": 130,
+        "id": "7ec2"
+      },
+      "valorGasto": 750.2,
+      "milhasUtilizadas": 1,
+      "status": "Aguardando check-in"
     }
   ],
   "endereco": [
@@ -224,45 +434,48 @@
       "id": "0c42"
     }
   ],
-  
   "transacoes_milhas": [
     {
       "clienteId": 1,
       "dataHora": "2024-05-11T12:15:00",
       "operacao": 12450,
-      "saldo": 12450
-      
+      "saldo": 12450,
+      "id": "7f6f"
     },
     {
       "clienteId": 1,
       "dataHora": "2024-06-11T23:35:00",
       "operacao": 4000,
-      "saldo": 16450
+      "saldo": 16450,
+      "id": "db5b"
     },
     {
       "clienteId": 1,
       "dataHora": "2024-08-11T10:35:00",
       "operacao": 300,
-      "saldo": 16750
+      "saldo": 16750,
+      "id": "2b03"
     },
     {
       "clienteId": 1,
       "dataHora": "2024-09-12T10:30:00",
       "operacao": -2500,
-      "saldo": 14250
+      "saldo": 14250,
+      "id": "94db"
     },
     {
       "clienteId": 1,
       "dataHora": "2024-09-15T14:00:00",
       "operacao": -3200,
-      "saldo": 11050
+      "saldo": 11050,
+      "id": "9dec"
     },
     {
       "clienteId": 2,
       "dataHora": "2024-05-11T12:15:00",
       "operacao": 1245045454,
-      "saldo": 1245045454
+      "saldo": 1245045454,
+      "id": "b585"
     }
   ]
 }
-
