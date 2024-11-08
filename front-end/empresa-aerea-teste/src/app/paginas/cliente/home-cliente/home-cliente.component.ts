@@ -7,54 +7,51 @@ import { Reserva } from '../../../models/reserva.model';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home-cliente',
-  templateUrl: './home-cliente.component.html',
-  styleUrls: ['./home-cliente.component.css'],
   standalone: true,
-  imports: [CommonModule]
-
+  imports: [CommonModule],
+  templateUrl: './home-cliente.component.html',
+  styleUrls: ['./home-cliente.component.css']
 })
 export class HomeClienteComponent implements OnInit {
   cliente: Cliente | undefined;
-  milhasSaldo: number = 0;
   reservas: Reserva[] = [];
-  reservasFiltradas: Reserva[] = [];
-  clienteId: number | undefined;
-  expandedReserva: Reserva | null = null;
-  reserva: any;
+  milhasSaldo: number = 0;
 
   constructor(
     private clienteService: ClienteService,
     private milhasService: MilhasService,
     private reservaService: ReservaService,
-    private route: ActivatedRoute,
-    private http: HttpClient
-  ) { }
+    // private route: ActivatedRoute,
+    private authService: AuthService // Adicionando o AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.clienteId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getCliente(this.clienteId);
-    this.getMilhasSaldo(this.clienteId);
-    this.getReservas(this.clienteId);
-    this.fetchReservas();
+    const clienteId = this.authService.getCliente();
+    console.log(clienteId)
+    if (clienteId && clienteId.id) {
+      this.getCliente(clienteId.id);
+      this.getMilhasSaldo(clienteId.id);
+      this.getReservas(clienteId.id);
+      console.log('Cliente ID capturado:', clienteId.id);
+    } else {
+      console.error('Cliente ID não encontrado no serviço de autenticação');
+    }
+  }
 
-  }
-  fetchReservas(): void {
-    this.http.get<Reserva[]>('http://localhost:3000/reservas').subscribe(reservas => {
-      this.reservas = reservas;
-      if (this.cliente) { //verifica se o id do cliente foi capturado corretamente
-        console.log('Cliente ID:', this.cliente);
-        this.reservasFiltradas = this.reservas.filter(reserva => reserva.clienteId === this.clienteId);
-      } else {
-        this.reservasFiltradas = []; // Se não houver clienteId, define como array vazio
-        console.error('Cliente ID não encontrado na rota');
-      }
-      console.log('Reservas filtradas:', this.reservasFiltradas);
-    });
-  }
+  //   const clienteId = Number(this.route.snapshot.paramMap.get('id'));
+  //   this.getCliente(clienteId);
+  //   this.getMilhasSaldo(clienteId);
+  //   this.getReservas(clienteId);
+  //   if (this.cliente) { //ve se o id do cliente foi capturado corretamente
+  //     console.log('Cliente ID:', this.cliente);
+  //   } else {
+  //     console.error('Cliente ID não encontrado na rota');
+  //   }
+  // }
+
 
   getCliente(id: number): void {
     this.clienteService.getClienteById(id).subscribe((data: Cliente) => {
@@ -71,7 +68,6 @@ export class HomeClienteComponent implements OnInit {
   getReservas(clienteId: number): void {
     this.reservaService.getReservasByClienteId(clienteId).subscribe((data: Reserva[]) => {
       this.reservas = data;
-
     });
   }
 
@@ -80,12 +76,4 @@ export class HomeClienteComponent implements OnInit {
       this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
     });
   }
-
-  toggleVisualizar(reserva: Reserva) {
-    console.log('Reserva expandida atual:', reserva);
-    console.log('Reserva expandida anterior:', this.expandedReserva);
-    this.expandedReserva = this.expandedReserva === reserva ? null : reserva;
-  }
-
-
 }
