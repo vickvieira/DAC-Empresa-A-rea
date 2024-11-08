@@ -23,7 +23,8 @@ export class MilhasService {
 
 
   getMilhasByClienteId(clienteId: number): Observable<number> {
-    return this.http.get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+    console.log("getMilhasByClienteId " + clienteId)
+    return this.http.get<Milhas[]>(`${this.apiUrl}?id=${clienteId}`)
       .pipe(
         map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
       );
@@ -42,7 +43,25 @@ export class MilhasService {
 
         // Atualizar o saldo no servidor
         const milhasAtualizadas: Milhas = { ...milhasCliente, saldo: novoSaldo };
-        return this.http.put<Milhas>(`${this.apiUrl}/${milhasCliente.clienteId}`, milhasAtualizadas);
+        return this.http.put<Milhas>(`${this.apiUrl}/${milhasCliente.id}`, milhasAtualizadas);
+      })
+    );
+  }
+
+  atualizarMilhasString(clienteId: string, milhasDelta: number): Observable<Milhas> {
+    // Primeiro, obter o saldo atual de milhas do cliente
+    return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`).pipe(
+      switchMap((milhasArray: Milhas[]) => {
+        if (milhasArray.length === 0) {
+          throw new Error('Milhas do cliente não encontradas');
+        }
+
+        const milhasCliente = milhasArray[0];
+        const novoSaldo = milhasCliente.saldo + milhasDelta;
+
+        // Atualizar o saldo no servidor
+        const milhasAtualizadas: Milhas = { ...milhasCliente, saldo: novoSaldo };
+        return this.http.put<Milhas>(`${this.apiUrl}/${milhasCliente.id}`, milhasAtualizadas);
       })
     );
   }
@@ -87,17 +106,40 @@ export class MilhasService {
   }
   */
 
-  atualizarSaldoMilhas(novoSaldo: Milhas): Observable<Milhas>{
-    return this.http.put<Milhas>(this.apiUrl, JSON.stringify(novoSaldo), 
-      this.httpOption)
+  //POR QUE ESSA MERDA DE PUT NAO FUNCIONA?? O URL, OS OS MODELS, O JSON, TA TUDO CERTO MAS NAO FUNCIONA. 
+  atualizarSaldoMilhas(novoSaldo: Milhas): Observable<Milhas> {
+    console.log("atualizar stringfy" + JSON.stringify(novoSaldo));
+    console.log("url:" + this.apiUrl + "/" + novoSaldo.id);
+
+    //return this.http.put<Milhas>(this.apiUrl + "/" + novoSaldo.id,
+    //JSON.stringify(novoSaldo), this.httpOption)
+
+    return this.http.put<Milhas>(this.apiUrl + "/" + novoSaldo.id,
+      JSON.stringify(novoSaldo), this.httpOption)
+
+
+  }
+
+  getMilhasByClienteIdString(clienteId: string): Observable<number> {
+    return this.http.get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+      .pipe(
+        map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
+      );
   }
 
   inserirCompraMilhas(extratoMilhas: ExtratoMilhas): Observable<ExtratoMilhas> {
-   return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes,
-     JSON.stringify(extratoMilhas), this.httpOption)
-  
+    return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes,
+      JSON.stringify(extratoMilhas), this.httpOption)
   }
 
+  /*  
+    getIdByClienteId(clienteId: string): Observable<string> {
+      return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+        .pipe(
+          map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
+        );
+    }
+  */
   // mais metodos
 
 }

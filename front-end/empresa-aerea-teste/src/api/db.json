@@ -27,19 +27,16 @@
   ],
   "milhas": [
     {
-      "clienteId": "1",
       "saldo": 5000,
       "id": "89b9"
     },
     {
-      "clienteId": "2",
       "saldo": 5,
       "id": "c1af"
     },
     {
-      "clienteId": "e8ac",
-      "saldo": 550000,
-      "id": "c2ai"
+      "id": "e8ac",
+      "saldo": 558555
     }
   ],
   "reservas": [
@@ -323,6 +320,20 @@
       "operacao": -3200,
       "saldo": 11050,
       "id": "UNaooF1"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "2024-09-15T14:04:00",
+      "operacao": 538950,
+      "saldo": 550000,
+      "id": "AFDDAD"
+    },
+    {
+      "clienteId": "e8ac",
+      "dataHora": "2024-11-07T22:23:06.644Z",
+      "operacao": 8555,
+      "saldo": 558555,
+      "id": "2Kr9joj"
     }
   ]
 }
