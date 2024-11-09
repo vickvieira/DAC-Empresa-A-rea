@@ -1,39 +1,39 @@
 <div class="container-md container-fluid" *ngIf="cliente">
-    <h2>Bem-vindo, {{ cliente.nome }}</h2>
-    <p>Saldo atual de milhas: {{ milhasSaldo }} pontos</p>
-  
-    <h2>Voos e Reservas</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Código</th>
-          <th scope="col">Data / Hora</th>
-          <th scope="col">Aeroporto de Origem</th>
-          <th scope="col">Aeroporto de Destino</th>
-          <th scope="col">Valor gasto</th>
-          <th scope="col">Milhas utilizadas</th>
-          <th scope="col">Status</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let reserva of reservas">
-          <th scope="row">{{ reserva.codigo }}</th>
-          <td>{{ reserva.voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ reserva.voo.origem }}</td>
-          <td>{{ reserva.voo.destino }}</td>
-          <td>R$ {{ reserva.valorGasto | number: '1.2-2' }}</td>
-          <td>{{ reserva.milhasUtilizadas }} pontos</td>
-          <td>{{ reserva.status }}</td>
-          <td>
-            <a href="#" class="link-primary">
-              <i class="bi bi-eye"></i> Visualizar
-            </a>
-            <a href="#" class="link-danger" (click)="cancelarReserva(reserva.codigo)" *ngIf="reserva.status !== 'Voo cancelado'">
-              <i class="bi bi-x-circle"></i> Cancelar
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h2>Bem-vindo, {{ cliente.nome }}</h2>
+  <p>Saldo atual de milhas: {{ milhasSaldo }} pontos</p>
+
+  <h2>Voos e Reservas</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Data / Hora</th>
+        <th scope="col">Aeroporto de Origem</th>
+        <th scope="col">Aeroporto de Destino</th>
+        <th scope="col">Valor gasto</th>
+        <th scope="col">Milhas utilizadas</th>
+        <th scope="col">Status</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reserva of reservas">
+        <th scope="row">{{ reserva.codigo }}</th>
+        <td>{{ reserva.voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ reserva.voo.origem }}</td>
+        <td>{{ reserva.voo.destino }}</td>
+        <td>R$ {{ reserva.valorGasto | number: '1.2-2' }}</td>
+        <td>{{ reserva.milhasUtilizadas }} pontos</td>
+        <td>{{ reserva.status }}</td>
+        <td>
+          <a href="#" class="link-primary">
+            <i class="bi bi-eye"></i> Visualizar
+          </a>
+          <a href="#" class="link-danger" (click)="cancelarReserva(reserva.codigo)" *ngIf="reserva.status !== 'Voo cancelado'">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
