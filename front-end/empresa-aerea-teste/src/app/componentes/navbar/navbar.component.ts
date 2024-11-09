@@ -49,6 +49,7 @@ export class NavbarComponent {
   getMilhasSaldo(clienteId: number): void {
     this.milhasService.getMilhasByClienteId(clienteId).subscribe((saldo: number) => {
       this.milhasSaldo = saldo;
+      console.log("get milhas saldo navbar: " + this.milhasSaldo)
     });
   }
 

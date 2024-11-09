@@ -17,6 +17,10 @@ export class ClienteService {
     return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
   }
 
+  getClienteByIdString(id: string):Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
+  }
+
   // Método para buscar cliente pelo email
   getClienteByEmail(email: string): Observable<Cliente> {
     return this.http.get<Cliente[]>(`${this.apiUrl}?email=${email}`).pipe(
