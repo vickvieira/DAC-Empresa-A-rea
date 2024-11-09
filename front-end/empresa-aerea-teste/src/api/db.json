@@ -27,9 +27,8 @@
   ],
   "milhas": [
     {
-      "clienteId": 1,
       "id": "1",
-      "saldo": 61050
+      "saldo": 65350
     },
     {
       "clienteId": 2,
@@ -570,6 +569,14 @@
       "saldo": 55350,
       "id": "asfgtas",
       "descricao": "compra de reserva"
+    },
+    {
+      "clienteId": "1",
+      "dataHora": "2024-11-09T13:35:40.318Z",
+      "operacao": 10000,
+      "saldo": 65350,
+      "descricao": "compra de milhas",
+      "id": "ThDL3zA"
     }
   ]
 }
