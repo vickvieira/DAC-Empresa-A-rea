@@ -54,7 +54,8 @@ export class ComprarMilhasComponent {
         clienteId: this.cliente.id?.toString(),
         dataHora: (new Date().toISOString()),
         operacao: this.getDadosForm(),
-        saldo: this.calcularValorDoSaldoNoExtrato(this.milhasSaldo)
+        saldo: this.calcularValorDoSaldoNoExtrato(this.milhasSaldo),
+        descricao: "compra de milhas"
       }
     }
     console.log("Resultado montaDadosCompra: ", this.valorNovo)
@@ -90,7 +91,8 @@ export class ComprarMilhasComponent {
           dataHora: "",
           saldo: 0,
           operacao: 0,
-          id: ""
+          id: "",
+          descricao: "",
         };
 
         alert('Compra de milhas registrada com sucesso!');

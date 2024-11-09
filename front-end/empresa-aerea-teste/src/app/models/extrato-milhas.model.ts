@@ -5,6 +5,7 @@ export interface ExtratoMilhas {
     dataHora: string;
     saldo: number;
     operacao: number;
+    descricao: string;
     //mais coisa
 
 }
