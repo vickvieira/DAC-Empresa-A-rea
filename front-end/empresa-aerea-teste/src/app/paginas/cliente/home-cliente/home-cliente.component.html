@@ -10,6 +10,9 @@
         <th scope="col">Data e Hora</th>
         <th scope="col">Aeroporto de Origem</th>
         <th scope="col">Aeroporto de Destino</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -18,17 +21,30 @@
         <td>{{ reserva.voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ reserva.voo.origem }}</td>
         <td>{{ reserva.voo.destino }}</td>
-        <td> <a class="link-primary" (click)="toggleVisualizar(reserva)"><i class="bi bi-eye"></i> Ver
-            reserva</a>
-        <td *ngIf="expandedReserva === reserva" colspan="5" class="p-3">
+
+        <!-- Link com classe Bootstrap para garantir cursor de "mão" -->
+        <td>
+          <a class="link-primary text-decoration-none btn btn-link" (click)="toggleVisualizar(reserva)">
+            <i class="bi bi-eye"></i> Detalhes
+          </a>
+        </td>
+
+        <td *ngIf="expandedReserva === reserva" colspan="2" class="p-3">
           <div>
             <strong>Valor Gasto:</strong> {{ reserva.valorGasto | currency }}<br>
             <strong>Milhas Utilizadas:</strong> {{ reserva.milhasUtilizadas }}<br>
             <strong>Status:</strong> {{ reserva.status }}
           </div>
         </td>
-        <td> <a class="link-danger" (click)="cancelarReserva(reserva.codigo)"
-            *ngIf="reserva.status !== 'Voo cancelado'"><i class="bi bi-x-circle"></i> Cancelar reserva</a></td>
+
+        <!-- Link com classe Bootstrap para garantir cursor de "mão" -->
+        <td>
+          <a class="link-danger text-decoration-none btn btn-link" (click)="cancelarReserva(reserva.codigo)"
+            *ngIf="reserva.status !== 'Voo cancelado'">
+            <i class="bi bi-x-circle"></i> Cancelar reserva
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
