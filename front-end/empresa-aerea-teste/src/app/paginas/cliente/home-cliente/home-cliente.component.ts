@@ -54,12 +54,13 @@ export class HomeClienteComponent implements OnInit {
     }
   }
 
-  fetchReservas(): void {
+  fetchReservas(): void {       //Filtra as reservas por cliente e ordena por data e hora
     this.http.get<Reserva[]>('http://localhost:3000/reservas').subscribe(reservas => {
       this.reservas = reservas;
       if (this.clienteId) {
-        console.log('Cliente ID:', this.clienteId);
-        this.reservasFiltradas = this.reservas.filter(reserva => reserva.clienteId === this.clienteId);
+        this.reservasFiltradas = this.reservas
+          .filter(reserva => reserva.clienteId === this.clienteId)
+          .sort((a, b) => new Date(b.voo.dataHora).getTime() - new Date(a.voo.dataHora).getTime());
       } else {
         this.reservasFiltradas = [];
         console.error('Cliente ID não encontrado');
@@ -67,6 +68,7 @@ export class HomeClienteComponent implements OnInit {
       console.log('Reservas filtradas:', this.reservasFiltradas);
     });
   }
+
 
   getCliente(id: number): void {
     this.clienteService.getClienteById(id).subscribe((data: Cliente) => {
