@@ -7,6 +7,22 @@
     }
   ],
   "usuarios": [],
+  "funcionarios": [
+    {
+      "id": "100",
+      "nome": "Funca Silva",
+      "cpf": "49564663075",
+      "email": "funca@email.com",
+      "telefone": "41777777777"  
+    },
+    {
+      "id": "101",
+      "nome": "Nonono Doe",
+      "cpf": "64501850078",
+      "email": "nonono@email.com",
+      "telefone": "415555555555"  
+    }
+  ],
   "clientes": [
     {
       "id": "1",
