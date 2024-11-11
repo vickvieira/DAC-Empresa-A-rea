@@ -1,0 +1,15 @@
+// primeiramente abrir o docker desktop
+// baixar a imagem do postgres e do PGAdmin
+$ docker pull postgres
+$ docker pull dpage/pgadmin4
+
+
+// cria rede de conteiner entre o postgres e o pgadmin
+$ docker network create --driver bridge postgres-network
+
+// rodar o conteiner do postgres
+$ docker run --name dac-postgres --network=postgres-network -e "POSTGRES_PASSWORD=postgres" -p 5432:5432 -v :/var/lib/postgresql/data -d postgres
+
+
+// rodar o conteiner do PGAdmin (acessar ele em localhost:15432)
+docker run --name dac-pgadmin --network=postgres-network -e "PGADMIN_DEFAULT_EMAIL=admin@admin.com" -e "PGADMIN_DEFAULT_PASSWORD=postgres" -p 15432:80 -d dpage/pgadmin4
