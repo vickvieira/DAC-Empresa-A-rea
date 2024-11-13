@@ -22,4 +22,11 @@ public class CryptoUtils {
         byte[] hashedBytes = md.digest(input.getBytes());
         return Base64.getEncoder().encodeToString(hashedBytes);
     }
+	
+    public String hashPassword(String senha, String salt) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(salt.getBytes());  // Adiciona o salt antes de calcular o hash
+        byte[] hashedPassword = md.digest(senha.getBytes());
+        return Base64.getEncoder().encodeToString(hashedPassword);
+    }
 }
