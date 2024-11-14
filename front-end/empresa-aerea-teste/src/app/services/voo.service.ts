@@ -7,9 +7,6 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class VooService {
-  getVoos() {
-    throw new Error('Method not implemented.');
-  }
 
   private apiUrl = 'http://localhost:3000/voos';
 
@@ -35,9 +32,12 @@ export class VooService {
       );
   }
 
-  getVoosProximos(dataInicial: Date, dataFinal: Date): Observable<Voo[]> {
-    const dataInicialStr = dataInicial.toISOString();
-    const dataFinalStr = dataFinal.toISOString();
-    return this.http.get<Voo[]>(`/api/voos?dataHora_gte=${dataInicialStr}&dataHora_lte=${dataFinalStr}`);
+  // getVoosProximos(dataInicial: Date, dataFinal: Date): Observable<Voo[]> {
+  //   const dataInicialStr = dataInicial.toISOString();
+  //   const dataFinalStr = dataFinal.toISOString();
+  //   return this.http.get<Voo[]>(`/api/voos?dataHora_gte=${dataInicialStr}&dataHora_lte=${dataFinalStr}`);
+  // }
+  getVoos(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/voos');
   }
 }  

@@ -452,6 +452,16 @@
       "quantidadePoltronas": 170,
       "poltronasOcupadas": 90,
       "id": "0c42"
+    },
+    {
+      "codigo": "TESTE6789",
+      "dataHora": "2024-11-14T02:00:00",
+      "origem": "GIG",
+      "destino": "CWB",
+      "valorPassagem": 1000.6,
+      "quantidadePoltronas": 170,
+      "poltronasOcupadas": 90,
+      "id": "0c42"
     }
   ],
   "transacoes_milhas": [

@@ -7,7 +7,7 @@ import { VooService } from '../../../services/voo.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home-func.component.html',
-  styleUrls: ['./home-func.component.css']
+  styleUrls: ['./home-func.component.css'],
 })
 export class HomeFuncComponent implements OnInit {
   voos: any[] = [];
@@ -17,9 +17,17 @@ export class HomeFuncComponent implements OnInit {
   ngOnInit(): void {
     const dataInicial = new Date();
     const dataFinal = new Date(dataInicial.getTime() + 48 * 60 * 60 * 1000); // 48 horas adiante
-
-    this.vooService.getVoosProximos(dataInicial, dataFinal).subscribe((voos) => {
-      this.voos = voos.sort((a, b) => new Date(a.dataHora).getTime() - new Date(b.dataHora).getTime());
+    //faço o get de todos os voos e depois filtro os das últimas 48hrs direto no front... não é o ideal mas tava dando muito BO tentar filtrar do json-server
+    this.vooService.getVoos().subscribe((voos) => {
+      this.voos = voos
+        .filter((voo: any) => {
+          const dataVoo = new Date(voo.dataHora);
+          return dataVoo >= dataInicial && dataVoo <= dataFinal;
+        })
+        .sort(
+          (a, b) =>
+            new Date(a.dataHora).getTime() - new Date(b.dataHora).getTime()
+        );
     });
   }
 
