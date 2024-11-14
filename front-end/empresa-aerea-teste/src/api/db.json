@@ -18,14 +18,14 @@
       "nome": "Funca Silva",
       "cpf": "49564663075",
       "email": "funca@email.com",
-      "telefone": "41777777777"  
+      "telefone": "41777777777"
     },
     {
       "id": "101",
       "nome": "Nonono Doe",
       "cpf": "64501850078",
       "email": "nonono@email.com",
-      "telefone": "415555555555"  
+      "telefone": "415555555555"
     }
   ],
   "clientes": [
@@ -139,7 +139,7 @@
       "id": "5e78",
       "codigo": "FUB638",
       "dataHoraReserva": "2024-11-07T04:20:24.892Z",
-      "clienteId": "e8ac",
+      "clienteId": "3",
       "voo": {
         "codigo": "XYZ1234",
         "dataHora": "2024-12-15T14:00:00",
