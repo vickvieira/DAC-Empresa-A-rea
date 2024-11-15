@@ -44,6 +44,14 @@
       "cpf": "00000000000",
       "telefone": "1234567891",
       "tipo": "C"
+    },
+    {
+      "id": "3",
+      "nome": "Cliente Tres",
+      "email": "cliente3@email.com",
+      "cpf": "98805414050",
+      "telefone": "4187563214",
+      "tipo": "C"
     }
   ],
   "milhas": [
@@ -501,22 +509,6 @@
       "dataHora": "2024-05-11T12:15:00",
       "operacao": 1245045454,
       "saldo": 1245045454,
-      "descricao": "compra de milhas"
-    },
-    {
-      "clienteId": "421",
-      "dataHora": "2023-05-11T12:15:00",
-      "saldo": 0,
-      "operacao": 124,
-      "id": "S2zYlg4",
-      "descricao": "compra de milhas"
-    },
-    {
-      "clienteId": "ars",
-      "dataHora": "2024-11-01T20:22:17.621Z",
-      "operacao": 80,
-      "saldo": 0,
-      "id": "T3PL009",
       "descricao": "compra de milhas"
     },
     {
