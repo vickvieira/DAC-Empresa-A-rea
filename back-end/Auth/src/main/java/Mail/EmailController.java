@@ -1,4 +1,4 @@
-package com.br.Auth.Mail;
+package Mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

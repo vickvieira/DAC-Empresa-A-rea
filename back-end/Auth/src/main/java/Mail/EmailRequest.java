@@ -1,4 +1,4 @@
-package com.br.Auth.Mail;
+package Mail;
 
 public class EmailRequest {
     private String para;
