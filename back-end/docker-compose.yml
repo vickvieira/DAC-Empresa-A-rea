@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"      # Porta para comunicação do AMQP
+      - "15672:15672"    # Porta para interface de gerenciamento
+    volumes:
+      - "./dados:/var/lib/rabbitmq/"
+    environment:
+      RABBITMQ_DEFAULT_USER: admi
+      RABBITMQ_DEFAULT_PASS: 123456
+
+  auth-service:
+    build:
+      context: ./auth
+    container_name: auth-service
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=admi
+      - RABBITMQ_PASS=123456
+    depends_on:
+      - rabbitmq
+
+  clientes-service:
+    build:
+      context: ./clientes
+    container_name: clientes-service
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=admi
+      - RABBITMQ_PASS=123456
+    depends_on:
+      - rabbitmq
+
+  saga-service:
+    build:
+      context: ./saga
+    container_name: saga-service
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=admi
+      - RABBITMQ_PASS=123456
+    depends_on:
+      - rabbitmq
+      - auth-service
+      - clientes-service

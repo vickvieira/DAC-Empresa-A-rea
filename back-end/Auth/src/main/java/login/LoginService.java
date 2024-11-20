@@ -20,7 +20,7 @@ public class LoginService {
     @Autowired
     private CryptoUtils cryptoUtils;
 
-    public void cadastrarUsuario(LoginDTO loginDTO) throws NoSuchAlgorithmException {
+    public void cadastrarUsuario(UsuarioDTO loginDTO) throws NoSuchAlgorithmException {
         // Verificar se uma chave de criptografia já existe
         if (!cryptoKeyService.exists()) {
             // Se não existir, gera e salva uma nova chave

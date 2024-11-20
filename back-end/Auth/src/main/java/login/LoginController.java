@@ -13,7 +13,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody UsuarioDTO loginDTO) {
         try {
             loginService.cadastrarUsuario(loginDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso!");
