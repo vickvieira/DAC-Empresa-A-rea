@@ -32,11 +32,7 @@ export class VooService {
       );
   }
 
-  // getVoosProximos(dataInicial: Date, dataFinal: Date): Observable<Voo[]> {
-  //   const dataInicialStr = dataInicial.toISOString();
-  //   const dataFinalStr = dataFinal.toISOString();
-  //   return this.http.get<Voo[]>(`/api/voos?dataHora_gte=${dataInicialStr}&dataHora_lte=${dataFinalStr}`);
-  // }
+ //tava dando mt trabalho tentar filtrar os voos próximos do json, então pego todos e filtro no front msm
   getVoos(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/voos');
   }
