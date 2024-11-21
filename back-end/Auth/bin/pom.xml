@@ -8,7 +8,7 @@
 		<version>3.3.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.br.Auth.Crypt</groupId>
+	<groupId>com.br.Auth</groupId>
 	<artifactId>Auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Auth</name>
@@ -29,10 +29,10 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-<dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,21 +41,36 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		    <!-- Spring Boot Starter para e-mail -->
-	    <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-mail</artifactId>
-	    </dependency>
-	
-	    <!-- Jakarta Mail (substituto para javax.mail) -->
-	    <dependency>
-	        <groupId>com.sun.mail</groupId>
-	        <artifactId>jakarta.mail</artifactId>
-	        <version>2.0.1</version> <!-- Verifique a versão mais recente disponível -->
-	    </dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>jakarta.mail</groupId>
+		    <artifactId>jakarta.mail-api</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>jakarta.mail</artifactId>
+		    <version>2.0.0</version> <!-- Verifique a versão mais recente -->
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
