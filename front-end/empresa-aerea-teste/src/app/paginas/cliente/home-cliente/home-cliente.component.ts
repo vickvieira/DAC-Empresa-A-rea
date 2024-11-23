@@ -88,11 +88,17 @@ export class HomeClienteComponent implements OnInit {
     });
   }
 
-  cancelarReserva(codigo: string): void {
-    this.reservaService.cancelarReserva(codigo).subscribe(() => {
-      this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
-    });
-  }
+  cancelarReserva(id: string): void {
+    console.log("codigo cancelar reserva: " + id);
+    //this.reservaService.cancelarReserva(id).subscribe(() => {
+    //this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
+    if (this.cliente && this.cliente.id) {
+      this.reservaService.cancelarReserva(id).subscribe({
+        complete: () => { this.getReservas(1); }
+      })
+    };
+  };
+
 
   toggleVisualizar(reserva: Reserva) {
     console.log('Reserva expandida atual:', reserva);

@@ -41,7 +41,8 @@ export class ReservaService {
       voo: voo,
       valorGasto: valorTotal,
       milhasUtilizadas: milhasUtilizadas,
-      status: 'Aguardando check-in'
+      status: 'Aguardando check-in',
+      id: ""
     };
 
     // Atualiza o saldo de milhas do cliente
