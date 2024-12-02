@@ -4,3 +4,12 @@ spring:
     port: 5672
     username: admi
     password: 123456
+  datasource:
+    url: jdbc:postgresql://postgres:5432/Clientes # Nome do banco de dados
+    username: admin                              # Usuário do banco de dados
+    password: 123456                             # Senha do banco de dados
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update      # Atualiza o esquema automaticamente; use com cuidado.
+    show-sql: true           # Exibe consultas SQL no console (opcional).

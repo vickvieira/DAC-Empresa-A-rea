@@ -3,7 +3,7 @@ package com.SagaClienteUsuario;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"connections", "constantes","controller","dto","service"})
 public class SagaClienteUsuarioApplication {
 
 	public static void main(String[] args) {
