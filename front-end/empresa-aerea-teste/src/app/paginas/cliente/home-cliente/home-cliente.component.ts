@@ -9,13 +9,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CancelarReservaComponent } from '../cancelar-reserva/cancelar-reserva.component';
+import { ComprarMilhasComponent } from '../comprar-milhas/comprar-milhas.component';
 
 @Component({
   selector: 'app-home-cliente',
   templateUrl: './home-cliente.component.html',
   styleUrls: ['./home-cliente.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule,],
 })
 export class HomeClienteComponent implements OnInit {
   cliente: Cliente | undefined;
@@ -32,7 +35,8 @@ export class HomeClienteComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -88,15 +92,27 @@ export class HomeClienteComponent implements OnInit {
     });
   }
 
-  cancelarReserva(id: string): void {
-    console.log("codigo cancelar reserva: " + id);
+  modalCancelarReserva(reserva: Reserva ){
+    const modalRef = this.modalService.open(CancelarReservaComponent);
+    modalRef.componentInstance.reserva = reserva;
+  }
+
+  cancelarReserva(reserva: Reserva): void {
+    console.log("codigo cancelar reserva: " + reserva.id);
     //this.reservaService.cancelarReserva(id).subscribe(() => {
     //this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
-    if (this.cliente && this.cliente.id) {
-      this.reservaService.cancelarReserva(id).subscribe({
-        complete: () => { this.getReservas(1); }
-      })
-    };
+    /*
+    this.reservaService.cancelarReserva(reserva).subscribe({
+      complete: () => { this.getReservas(1); }
+    });
+    */
+
+    this.reservaService.cancelarReserva(reserva).subscribe({
+      next: response => {
+        console.log('REserva cancelada com sucesso ??????:', response);
+      }
+    });
+
   };
 
 

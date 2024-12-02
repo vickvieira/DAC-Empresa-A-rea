@@ -1,11 +1,12 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-    <p>What's your favorite animal?</p>
-    <mat-form-field>
-        <input matInput [(ngModel)]="data.animal">
-    </mat-form-field>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cancelar Reserva: {{reserva.codigo}}</h4>
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+<div class="modal-body">
+    <label for="conf">Tem certeza que deseja cancelar a reserva {{reserva.codigo}}?</label>
 </div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-danger" (click)="cancelarReserva(reserva)">Cancelar Reserva</button>
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Retornar</button>
+</div>
+
+

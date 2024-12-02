@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { MilhasService } from '../../../services/milhas.service';
 import { ClienteService } from '../../../services/cliente.service';
 import { ExtratoMilhas } from '../../../models/extrato-milhas.model';
@@ -13,6 +13,9 @@ import { Milhas } from '../../../models/milhas.model';
   imports: [],
   templateUrl: './comprar-milhas.component.html',
   styleUrl: './comprar-milhas.component.css'
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class ComprarMilhasComponent {
   valorNovo!: ExtratoMilhas;
@@ -44,7 +47,7 @@ export class ComprarMilhasComponent {
     return parseFloat((<HTMLInputElement>document.getElementById("compra")).value);
   }
 
-  montaDadosCompra(): ExtratoMilhas {
+  montaDadosCompra(descricao: string, operacao: number): ExtratoMilhas {
     this.cliente = this.authService.getCliente();
 
     //esse if é pra nao dar problema com o undefined
@@ -53,9 +56,10 @@ export class ComprarMilhasComponent {
       this.valorNovo = {
         clienteId: this.cliente.id?.toString(),
         dataHora: (new Date().toISOString()),
-        operacao: this.getDadosForm(),
-        saldo: this.calcularValorDoSaldoNoExtrato(this.milhasSaldo),
-        descricao: "compra de milhas"
+        operacao: operacao,
+        //saldo: this.calcularValorDoSaldoNoExtrato(this.milhasSaldo),
+        saldo: this.milhasSaldo + operacao,
+        descricao: descricao
       }
     }
     console.log("Resultado montaDadosCompra: ", this.valorNovo)
@@ -68,9 +72,9 @@ export class ComprarMilhasComponent {
     });
   }
 
-  comprarMilhas(): void {
+  comprarMilhas(descricao: string, operacao: number): void {
     this.isLoading = true;
-    let extrato: ExtratoMilhas = this.montaDadosCompra();
+    let extrato: ExtratoMilhas = this.montaDadosCompra(descricao, operacao);
     console.log("compra milhas variavel extrato:  ", extrato);
     if (extrato && extrato.clienteId) {
       this.milhas = { id: extrato.clienteId, saldo: extrato.saldo };
@@ -95,7 +99,7 @@ export class ComprarMilhasComponent {
           descricao: "",
         };
 
-        alert('Compra de milhas registrada com sucesso!');
+        //alert('Compra de milhas registrada com sucesso!');
       },
       error: (error) => {
         console.error('Erro ao registrar compra:', error);
@@ -134,6 +138,7 @@ export class ComprarMilhasComponent {
     })
   }
 
+  /*
   atualizarValorSaldo2(cId: string, operacao: number,) {
     let saldoObj: Milhas = { id: cId, saldo: operacao + this.milhasSaldo };
     console.log("saldoOBJ: " + saldoObj.id + " " + saldoObj.saldo);
@@ -151,7 +156,7 @@ export class ComprarMilhasComponent {
     });
   }
 
-
+ */
 
   //this.milhasService.getIdByClienteId(saldoObj.id));
 

@@ -10,7 +10,7 @@ import { Voo } from '../models/voo.model';
 })
 export class ReservaService {
   private apiUrl = 'http://localhost:3000/reservas';
-
+  reserva!: Reserva;
   constructor(private http: HttpClient, private milhasService: MilhasService) {}
 
   // Método para gerar o código de reserva único
@@ -26,8 +26,23 @@ export class ReservaService {
     return this.http.get<Reserva[]>(`${this.apiUrl}?clienteId=${clienteId}`);
   }
 
+  //cancelar reserva na verdade era só atualizar o status dela pra cancelada. 
+  //ela não é para ser de fato deletada
+  
+  /* esse é o cancelarReserva velho, que deletava ela
   cancelarReserva(codigo: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${codigo}`);
+    
+    //status: Reserva cancelada
+  }
+  */
+  cancelarReserva(reservaCancelada: Reserva): Observable<Reserva> {
+    reservaCancelada.status = "Reserva cancelada";
+    
+    return this.http.put<Reserva>(`${this.apiUrl}/${reservaCancelada.id}`, 
+      reservaCancelada);
+    
+    //status: Reserva cancelada
   }
 
   criarReserva(clienteId: number, voo: Voo, quantidadePassagens: number, valorTotal: number, milhasUtilizadas: number): Observable<Reserva> {

@@ -104,7 +104,7 @@ export class MilhasService {
   }
   */
 
-  //POR QUE ESSA MERDA DE PUT NAO FUNCIONA?? O URL, OS OS MODELS, O JSON, TA TUDO CERTO MAS NAO FUNCIONA. 
+  
   atualizarSaldoMilhas(novoSaldo: Milhas): Observable<Milhas> {
     console.log("atualizar stringfy" + JSON.stringify(novoSaldo));
     console.log("url:" + this.apiUrl + "/" + novoSaldo.id);

@@ -15,7 +15,7 @@
         <th scope="col">Data e Hora do Voo</th>
         <th scope="col">Aeroporto de Origem</th>
         <th scope="col">Aeroporto de Destino</th>
-        <th scope="col"></th>
+        <th scope="col">Cancelar Reserva</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -28,10 +28,16 @@
         <td>{{ reserva.voo.destino }}</td>
 
         <td>
-          <a class="link-danger text-decoration-none btn btn-link" (click)="cancelarReserva(reserva.id)"
+          <a class="link-danger text-decoration-none btn btn-link" (click)="modalCancelarReserva(reserva)"
             *ngIf="reserva.status !== 'Voo cancelado'&& reserva.status !== 'Reserva cancelada' && reserva.status !== 'Voo realizado'">
             <i class="bi bi-x-circle"></i> Cancelar reserva
           </a>
+          
+          <a class="link-success text-decoration-none btn btn-link"
+            *ngIf="reserva.status == 'Voo cancelado'|| reserva.status == 'Reserva cancelada' || reserva.status == 'Voo realizado'">
+            <i class="bi bi-check"></i> {{reserva.status}}
+          </a>
+          
         </td>
 
         <td>
