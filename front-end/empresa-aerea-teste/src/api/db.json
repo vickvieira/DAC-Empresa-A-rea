@@ -57,7 +57,7 @@
   "milhas": [
     {
       "id": "1",
-      "saldo": 65351
+      "saldo": 68551
     },
     {
       "clienteId": 2,
@@ -85,7 +85,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 3200,
-      "status": "AGUARDANDO_CHECKIN",
+      "status": "CANCELADO_VOO",
       "id": "1cec"
     },
     {
@@ -102,7 +102,7 @@
       },
       "valorGasto": 750.2,
       "milhasUtilizadas": 2500,
-      "status": "Voo realizado",
+      "status": "REALIZADO",
       "id": "f4cd"
     },
     {
@@ -122,7 +122,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 350,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "4a5d",
@@ -141,7 +141,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 0,
-      "status": "Reserva cancelada"
+      "status": "CANCELADO_RESERVA"
     },
     {
       "id": "5e78",
@@ -160,7 +160,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 0,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "c2be",
@@ -179,7 +179,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 100,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "7fcd",
@@ -198,7 +198,7 @@
       },
       "valorGasto": 3001.8,
       "milhasUtilizadas": 900,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "0bae",
@@ -217,7 +217,7 @@
       },
       "valorGasto": 1900,
       "milhasUtilizadas": 2,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "53c5",
@@ -236,7 +236,7 @@
       },
       "valorGasto": 2181,
       "milhasUtilizadas": 100,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "3a33",
@@ -255,7 +255,7 @@
       },
       "valorGasto": 950,
       "milhasUtilizadas": 100,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     },
     {
       "id": "6b10",
@@ -274,7 +274,7 @@
       },
       "valorGasto": 1200.75,
       "milhasUtilizadas": 200,
-      "status": "Voo realizado"
+      "status": "REALIZADO"
     },
     {
       "id": "c550",
@@ -331,7 +331,7 @@
       },
       "valorGasto": 2181,
       "milhasUtilizadas": 10000,
-      "status": "Aguardando check-in"
+      "status": "AGUARDANDO_CHECKIN"
     }
   ],
   "endereco": [
@@ -438,6 +438,7 @@
       "valorPassagem": 1090.5,
       "quantidadePoltronas": 200,
       "poltronasOcupadas": 150,
+      "status": "CONFIRMADO",
       "id": "0fa0"
     },
     {
@@ -448,6 +449,7 @@
       "valorPassagem": 750.2,
       "quantidadePoltronas": 180,
       "poltronasOcupadas": 130,
+      "status": "REALIZADO",
       "id": "7ec2"
     },
     {
@@ -458,6 +460,7 @@
       "valorPassagem": 950,
       "quantidadePoltronas": 150,
       "poltronasOcupadas": 50,
+      "status": "CONFIRMADO",
       "id": "b714"
     },
     {
@@ -468,6 +471,7 @@
       "valorPassagem": 1200.75,
       "quantidadePoltronas": 220,
       "poltronasOcupadas": 180,
+      "status": "CONFIRMADO",
       "id": "ccfd"
     },
     {
@@ -478,6 +482,7 @@
       "valorPassagem": 1000.6,
       "quantidadePoltronas": 170,
       "poltronasOcupadas": 90,
+      "status": "CANCELADO",
       "id": "0c42"
     },
     {
@@ -488,6 +493,7 @@
       "valorPassagem": 1000.6,
       "quantidadePoltronas": 170,
       "poltronasOcupadas": 90,
+      "status": "CONFIRMADO",
       "id": "0c42"
     }
   ],
@@ -635,6 +641,14 @@
       "operacao": 1,
       "saldo": 65351,
       "descricao": "cancelamento da reserva TWZ403"
+    },
+    {
+      "id": "4b5c",
+      "clienteId": "1",
+      "dataHora": "2024-12-06T23:52:57.934Z",
+      "operacao": 3200,
+      "saldo": 68551,
+      "descricao": "cancelamento da reserva RES1234"
     }
   ]
 }
