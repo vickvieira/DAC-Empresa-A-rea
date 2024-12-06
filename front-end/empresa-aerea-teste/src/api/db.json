@@ -57,7 +57,7 @@
   "milhas": [
     {
       "id": "1",
-      "saldo": 65350
+      "saldo": 65351
     },
     {
       "clienteId": 2,
@@ -85,7 +85,7 @@
       },
       "valorGasto": 1090.5,
       "milhasUtilizadas": 3200,
-      "status": "Aguardando check-in",
+      "status": "AGUARDANDO_CHECKIN",
       "id": "1cec"
     },
     {
@@ -94,7 +94,7 @@
       "clienteId": "1",
       "voo": {
         "codigo": "ABC5678",
-        "dataHora": "2024-12-12T10:30:00",
+        "dataHora": "2024-12-07T10:30:00",
         "origem": "BSB",
         "destino": "CWB",
         "valorPassagem": 750.2,
@@ -283,7 +283,7 @@
       "clienteId": "2",
       "voo": {
         "codigo": "ABC5678",
-        "dataHora": "2024-12-12T10:30:00",
+        "dataHora": "2024-12-07T10:30:00",
         "origem": "BSB",
         "destino": "CWB",
         "valorPassagem": 750.2,
@@ -293,7 +293,7 @@
       },
       "valorGasto": 750.2,
       "milhasUtilizadas": 700,
-      "status": "Aguardando check-in"
+      "status": "EMBARCADO"
     },
     {
       "id": "13c9",
@@ -302,7 +302,7 @@
       "clienteId": "1",
       "voo": {
         "codigo": "ABC5678",
-        "dataHora": "2024-12-12T10:30:00",
+        "dataHora": "2024-12-07T10:30:00",
         "origem": "BSB",
         "destino": "CWB",
         "valorPassagem": 750.2,
@@ -312,6 +312,25 @@
       },
       "valorGasto": 750.2,
       "milhasUtilizadas": 1,
+      "status": "CANCELADO_VOO"
+    },
+    {
+      "id": "",
+      "codigo": "AFJ110",
+      "dataHoraReserva": "2024-12-06T13:55:35.661Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "XYZ1234",
+        "dataHora": "2024-12-15T14:00:00",
+        "origem": "CWB",
+        "destino": "GRU",
+        "valorPassagem": 1090.5,
+        "quantidadePoltronas": 200,
+        "poltronasOcupadas": 150,
+        "id": "0fa0"
+      },
+      "valorGasto": 2181,
+      "milhasUtilizadas": 10000,
       "status": "Aguardando check-in"
     }
   ],
@@ -413,7 +432,7 @@
   "voos": [
     {
       "codigo": "XYZ1234",
-      "dataHora": "2024-12-15T14:00:00",
+      "dataHora": "2024-12-06T14:00:00",
       "origem": "CWB",
       "destino": "GRU",
       "valorPassagem": 1090.5,
@@ -423,7 +442,7 @@
     },
     {
       "codigo": "ABC5678",
-      "dataHora": "2024-12-12T10:30:00",
+      "dataHora": "2024-12-07T10:30:00",
       "origem": "BSB",
       "destino": "CWB",
       "valorPassagem": 750.2,
@@ -600,6 +619,22 @@
       "saldo": 65350,
       "descricao": "compra de milhas",
       "id": "ThDL3zA"
+    },
+    {
+      "id": "bd41",
+      "clienteId": "1",
+      "dataHora": "2024-12-06T18:14:43.102Z",
+      "operacao": 10000,
+      "saldo": 65350,
+      "descricao": "cancelamento da reserva AFJ110"
+    },
+    {
+      "id": "1986",
+      "clienteId": "1",
+      "dataHora": "2024-12-06T18:15:10.907Z",
+      "operacao": 1,
+      "saldo": 65351,
+      "descricao": "cancelamento da reserva TWZ403"
     }
   ]
 }

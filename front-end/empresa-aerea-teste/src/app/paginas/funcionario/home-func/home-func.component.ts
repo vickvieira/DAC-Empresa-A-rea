@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VooService } from '../../../services/voo.service';
+import { ReservaService } from '../../../services/reserva.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-func',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home-func.component.html',
   styleUrls: ['./home-func.component.css'],
 })
 export class HomeFuncComponent implements OnInit {
   voos: any[] = [];
+  codigoReserva: string = ''; // Armazena o código da reserva digitado
+  codigoVooAtual: string = '';
 
-  constructor(private vooService: VooService) {}
+  constructor(
+    private vooService: VooService,
+    private reservaService: ReservaService
+  ) {}
 
   ngOnInit(): void {
     const dataInicial = new Date();
@@ -31,9 +38,33 @@ export class HomeFuncComponent implements OnInit {
     });
   }
 
-  confirmarEmbarque(codigo: string): void {
-    console.log('Confirmação de embarque para o voo:', codigo);
-    // Implementar lógica de confirmação (R12)
+  abrirModal(codigoVoo: string): void {
+    this.codigoVooAtual = codigoVoo; // Define o voo atual para a confirmação
+  }
+
+  confirmarEmbarque(): void {
+    console.log('Código da reserva:', this.codigoReserva);
+    if (!this.codigoReserva || !this.codigoVooAtual) {
+      alert('Por favor, insira o código da reserva.');
+      return;
+    }
+
+    this.reservaService
+      .confirmarEmbarque(this.codigoReserva, this.codigoVooAtual)
+      .subscribe({
+        next: () => {
+          alert('Embarque confirmado com sucesso!');
+          this.codigoReserva = ''; // Reseta o campo de entrada
+          this.codigoVooAtual = ''; // Reseta o voo atual
+          const modalElement = document.getElementById(
+            'confirmarEmbarqueModal'
+          );
+          if (modalElement) (modalElement as any).classList.remove('show'); // Fecha o modal
+        },
+        error: (err) => {
+          alert(`Erro: ${err.message}`);
+        },
+      });
   }
 
   cancelarVoo(codigo: string): void {
