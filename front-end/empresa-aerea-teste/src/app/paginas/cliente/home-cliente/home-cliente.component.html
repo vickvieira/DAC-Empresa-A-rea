@@ -28,15 +28,20 @@
         <td>{{ reserva.voo.destino }}</td>
 
         <td>
-          <a class="link-danger text-decoration-none btn btn-link" (click)="modalCancelarReserva(reserva)"
-            *ngIf="reserva.status !== 'CANCELADO_VOO'&& reserva.status !== 'CANCELADO_RESERVA' && reserva.status !== 'REALIZADO' && reserva.status !== 'EMBARCADO'">
-            <i class="bi bi-x-circle"></i> Cancelar reserva
-          </a>
-          
-          <a class="link-success text-decoration-none btn btn-link"
-            *ngIf="reserva.status == 'CANCELADO_VOO'|| reserva.status == 'CANCELADO_RESERVA' || reserva.status == 'REALIZADO' || reserva.status == 'EMBARCADO'">
-            <i class="bi bi-check"></i> {{reserva.status}}
-          </a>
+          <a
+          class="link-danger text-decoration-none btn btn-link"
+          (click)="modalCancelarReserva(reserva)"
+          *ngIf="['AGUARDANDO_CHECKIN', 'RESERVADO'].includes(reserva.status)"
+        >
+          <i class="bi bi-x-circle"></i> Cancelar reserva
+        </a>
+      
+        <a
+          class="link-success text-decoration-none btn btn-link"
+          *ngIf="!['AGUARDANDO_CHECKIN', 'RESERVADO'].includes(reserva.status)"
+        >
+          <i class="bi bi-check"></i> {{ reserva.status }}
+        </a>
           
         </td>
 

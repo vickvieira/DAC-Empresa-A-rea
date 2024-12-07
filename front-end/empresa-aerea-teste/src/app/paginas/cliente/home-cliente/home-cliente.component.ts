@@ -18,7 +18,7 @@ import { ComprarMilhasComponent } from '../comprar-milhas/comprar-milhas.compone
   templateUrl: './home-cliente.component.html',
   styleUrls: ['./home-cliente.component.css'],
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule],
 })
 export class HomeClienteComponent implements OnInit {
   cliente: Cliente | undefined;
@@ -37,7 +37,7 @@ export class HomeClienteComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private modalService: NgbModal
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // Verifica se o usuário está logado
@@ -58,21 +58,30 @@ export class HomeClienteComponent implements OnInit {
     }
   }
 
-  fetchReservas(): void {       //Filtra as reservas por cliente e ordena por data e hora
-    this.http.get<Reserva[]>('http://localhost:3000/reservas').subscribe(reservas => {
-      this.reservas = reservas;
-      if (this.clienteId) {
-        this.reservasFiltradas = this.reservas
-          .filter(reserva => reserva.clienteId === this.clienteId)
-          .sort((a, b) => new Date(b.voo.dataHora).getTime() - new Date(a.voo.dataHora).getTime());
-      } else {
-        this.reservasFiltradas = [];
-        console.error('Cliente ID não encontrado');
-      }
-      console.log('Reservas filtradas:', this.reservasFiltradas);
-    });
+  fetchReservas(): void {
+    console.log('[DEBUG] Atualizando reservas...');
+    this.http
+      .get<Reserva[]>('http://localhost:3000/reservas')
+      .subscribe((reservas) => {
+        this.reservas = reservas;
+        if (this.clienteId) {
+          this.reservasFiltradas = this.reservas
+            .filter((reserva) => reserva.clienteId === this.clienteId)
+            .sort(
+              (a, b) =>
+                new Date(b.voo.dataHora).getTime() -
+                new Date(a.voo.dataHora).getTime()
+            );
+        } else {
+          this.reservasFiltradas = [];
+          console.error('[ERROR] Cliente ID não encontrado.');
+        }
+        console.log(
+          '[DEBUG] Reservas filtradas atualizadas:',
+          this.reservasFiltradas
+        );
+      });
   }
-
 
   getCliente(id: number): void {
     this.clienteService.getClienteById(id).subscribe((data: Cliente) => {
@@ -81,24 +90,28 @@ export class HomeClienteComponent implements OnInit {
   }
 
   getMilhasSaldo(clienteId: number): void {
-    this.milhasService.getMilhasByClienteId(clienteId).subscribe((saldo: number) => {
-      this.milhasSaldo = saldo;
-    });
+    this.milhasService
+      .getMilhasByClienteId(clienteId)
+      .subscribe((saldo: number) => {
+        this.milhasSaldo = saldo;
+      });
   }
 
   getReservas(clienteId: number): void {
-    this.reservaService.getReservasByClienteId(clienteId).subscribe((data: Reserva[]) => {
-      this.reservas = data;
-    });
+    this.reservaService
+      .getReservasByClienteId(clienteId)
+      .subscribe((data: Reserva[]) => {
+        this.reservas = data;
+      });
   }
 
-  modalCancelarReserva(reserva: Reserva ){
+  modalCancelarReserva(reserva: Reserva) {
     const modalRef = this.modalService.open(CancelarReservaComponent);
     modalRef.componentInstance.reserva = reserva;
   }
 
   cancelarReserva(reserva: Reserva): void {
-    console.log("codigo cancelar reserva: " + reserva.id);
+    console.log('codigo cancelar reserva: ' + reserva.id);
     //this.reservaService.cancelarReserva(id).subscribe(() => {
     //this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
     /*
@@ -108,13 +121,12 @@ export class HomeClienteComponent implements OnInit {
     */
 
     this.reservaService.cancelarReserva(reserva).subscribe({
-      next: response => {
+      next: (response) => {
         console.log('REserva cancelada com sucesso ??????:', response);
-      }
+        this.fetchReservas();
+      },
     });
-
-  };
-
+  }
 
   toggleVisualizar(reserva: Reserva) {
     console.log('Reserva expandida atual:', reserva);

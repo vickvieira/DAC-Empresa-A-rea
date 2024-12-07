@@ -9,6 +9,7 @@ export interface Voo {
   quantidadePoltronas: number;
   poltronasOcupadas: number;
   status: EstadoVoo;
+  id: string;
 
   // mais coisa ?
 }
