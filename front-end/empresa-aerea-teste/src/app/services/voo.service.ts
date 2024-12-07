@@ -7,9 +7,6 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class VooService {
-  getVoos() {
-    throw new Error('Method not implemented.');
-  }
 
   private apiUrl = 'http://localhost:3000/voos';
 
@@ -34,5 +31,9 @@ export class VooService {
         map(voos => voos[0]) // Retorna o primeiro item do array
       );
   }
-  
+
+ //tava dando mt trabalho tentar filtrar os voos próximos do json, então pego todos e filtro no front msm
+  getVoos(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/voos');
+  }
 }  

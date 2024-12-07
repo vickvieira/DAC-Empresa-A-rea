@@ -7,6 +7,7 @@ import { LoginComponent } from './paginas/login/login/login.component';
 import { authClienteGuard } from './guard/auth-cliente.guard';
 import { authNaoLogadoGuard } from './guard/auth-nao-logado.guard';
 import { ExtratoMilhasComponent } from './paginas/cliente/extrato-milhas/extrato-milhas.component';
+import { HomeFuncComponent } from './paginas/funcionario/home-func/home-func.component';
 import { ComprarMilhasComponent } from './paginas/cliente/comprar-milhas/comprar-milhas.component';
 import { CancelarReservaComponent } from './paginas/cliente/cancelar-reserva/cancelar-reserva.component';
 
@@ -17,7 +18,8 @@ export const routes: Routes = [
     { path: 'efetuar-reserva/:codigo', component: EfetuarReservaComponent, canActivate: [authClienteGuard]},
     { path: 'login', component: LoginComponent, canActivate: [authNaoLogadoGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: 'extrato-milhas', component: ExtratoMilhasComponent, canActivate: [authClienteGuard]}, 
+    { path: 'extrato-milhas', component: ExtratoMilhasComponent, canActivate: [authClienteGuard]},
+    { path: 'funcionario', component: HomeFuncComponent},
     { path: 'comprar-milhas', component: ComprarMilhasComponent, canActivate: [authClienteGuard]},
     { path: 'cancelar-reserva', component: CancelarReservaComponent, canActivate: [authClienteGuard]}
 

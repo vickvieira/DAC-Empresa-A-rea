@@ -1,4 +1,5 @@
-import { Voo } from "./voo.model";
+import { EstadoReserva } from './estado-reservas.model';
+import { Voo } from './voo.model';
 
 export interface Reserva {
   codigo: string;
@@ -7,8 +8,7 @@ export interface Reserva {
   voo: Voo;
   valorGasto: number;
   milhasUtilizadas: number;
-  status: string;
+  status: EstadoReserva;
   expandido?: boolean;
   id: string;
 }
-
