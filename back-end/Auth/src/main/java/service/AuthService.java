@@ -1,5 +1,6 @@
 package service;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Repository.UsuarioRepository;
@@ -17,8 +18,13 @@ public class AuthService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
-    @Autowired
-    private SagaService sagaService;
+	@Autowired
+	RabbitTemplate rabbitTemplate;
+	
+    public void enviaMensagem(String nomeFila, Object mensagem) {
+        rabbitTemplate.convertAndSend(nomeFila, mensagem);
+
+    }
     
     public void cadastrarUsuario(UserRequisitionDTO login) throws Exception {
     	
@@ -43,6 +49,5 @@ public class AuthService {
 
         // Opcional: Log ou retorno para verificar o sucesso
         System.out.println("Usuário cadastrado com sucesso: " + novoUser.getEmail());
-        sagaService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO, login);
     }
 }

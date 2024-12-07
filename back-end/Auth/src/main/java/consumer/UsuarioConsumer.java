@@ -17,16 +17,10 @@ public class UsuarioConsumer {
     @RabbitListener(queues = RabbitmqConstantes.FILA_CADASTRO)
     public void consumidor(UserCliente user) {
         try {
-            // Realiza o cadastro do usuário
             authService.cadastrarUsuario(user.getUserRequisitionDTO());
-            
-            // Configura o status de sucesso no objeto UserCliente
-            user.setStatus("success");
-            user.setMensagem("Usuário cadastrado com sucesso.");
+            authService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO, user);
         } catch (Exception e) {
-            // Configura o status de erro no objeto UserCliente
-            user.setStatus("error");
-            user.setMensagem("Erro ao cadastrar usuário: " + e.getMessage());
+        	System.out.print(e.getMessage());
         }
     }
 }

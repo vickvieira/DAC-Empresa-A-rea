@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {"connections", "constantes","controller","dto","service"})
+@SpringBootApplication(scanBasePackages = {"connections", "constantes","controller","dto","service","consumer"})
 @EnableJpaRepositories(basePackages = "repository")
 @EntityScan(basePackages = "dto") // Pacote das entidades
 public class ClientesApplication {

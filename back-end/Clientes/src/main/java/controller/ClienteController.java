@@ -20,7 +20,7 @@ public class ClienteController {
     // Criar um novo cliente
     @PostMapping
     public ResponseEntity<ClientesDTO> criarCliente(@RequestBody ClientesDTO clienteDTO) {
-        ClientesDTO clienteCriado = clienteService.salvarCliente(clienteDTO);
+        ClientesDTO clienteCriado = clienteService.cadastrarCliente(clienteDTO);
         return ResponseEntity.ok(clienteCriado);
     }
     

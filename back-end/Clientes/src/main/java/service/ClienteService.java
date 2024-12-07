@@ -2,6 +2,7 @@ package service;
 
 import dto.ClientesDTO;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.ClienteRepository;
@@ -13,14 +14,29 @@ public class ClienteService {
 
 	@Autowired
     private final ClienteRepository clienteRepository;
+	
+	@Autowired
+	RabbitTemplate rabbitTemplate;
 
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 
-    // Criar um novo cliente
-    public ClientesDTO salvarCliente(ClientesDTO cliente) {
-        return clienteRepository.save(cliente); // Salva o cliente no banco de dados
+    
+    public void enviaMensagem(String nomeFila, Object mensagem) {
+        rabbitTemplate.convertAndSend(nomeFila, mensagem);
+
+    }
+    
+    public ClientesDTO cadastrarCliente(ClientesDTO cliente) {
+    	
+        ClientesDTO clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+
+        if (clienteExistente  != null) {
+            throw new IllegalArgumentException("Já existe um cliente cadastrado com o CPF: " + cliente.getCpf());
+        }
+
+        return clienteRepository.save(cliente);
     }
 
     // Listar todos os clientes

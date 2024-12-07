@@ -2,6 +2,11 @@ package dto;
 
 import java.io.Serializable;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.persistence.Table;
+
+@Document(collection = "Usuario") // Nome da coleção no MongoDB
 public class UsuarioDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -47,16 +47,29 @@ public class RabbitMQConfig {
     private void adicionaFilas() {
         Queue filaCadastro = this.fila(RabbitmqConstantes.FILA_CADASTRO);
         Queue filaCliente = this.fila(RabbitmqConstantes.FILA_CLIENTE);
+        Queue filaCadastrado = this.fila(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO);
+        Queue filaEmail = this.fila(RabbitmqConstantes.FILA_ENVIAR_EMAIL);
+        Queue filaRollback = this.fila(RabbitmqConstantes.FILA_ROLLBACK);
+        
         DirectExchange troca = this.trocaDireta();
 
         Binding ligacaoUsuario = this.relacionamento(filaCadastro, troca);
         Binding ligacaoCliente = this.relacionamento(filaCliente, troca);
-
+        Binding ligacaoCadastrado =  this.relacionamento(filaCadastrado, troca);
+        Binding ligacaoEmail =  this.relacionamento(filaEmail, troca);
+        Binding ligacaoRollback =  this.relacionamento(filaRollback, troca);
+        
         this.amqpAdmin.declareQueue(filaCadastro);
         this.amqpAdmin.declareQueue(filaCliente);
+        this.amqpAdmin.declareQueue(filaCadastrado);
+        this.amqpAdmin.declareQueue(filaEmail);
+        this.amqpAdmin.declareQueue(filaRollback);
         this.amqpAdmin.declareExchange(troca);
 
         this.amqpAdmin.declareBinding(ligacaoUsuario);
         this.amqpAdmin.declareBinding(ligacaoCliente);
+        this.amqpAdmin.declareBinding(ligacaoCadastrado);
+        this.amqpAdmin.declareBinding(ligacaoEmail);
+        this.amqpAdmin.declareBinding(ligacaoRollback);
     }
 }

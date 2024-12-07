@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import dto.ClientesDTO;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<ClientesDTO, Long> {}
+public interface ClienteRepository extends JpaRepository<ClientesDTO, Long> {
+    ClientesDTO findByCpf(String cpf);
+}

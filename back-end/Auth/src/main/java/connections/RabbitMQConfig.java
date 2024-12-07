@@ -23,21 +23,6 @@ public class RabbitMQConfig {
     private static final String NOME_EXCHANGE = "SagaClienteUsuario";
 
     private final AmqpAdmin amqpAdmin;
-
-    @Bean
-    public MessageConverter jsonToMapMessageConverter() {
-        // Configura o DefaultClassMapper para definir pacotes confiáveis
-        DefaultClassMapper defaultClassMapper = new DefaultClassMapper();
-        defaultClassMapper.setTrustedPackages("dto"); // Substitua pelo pacote real das suas classes DTO
-
-        // Cria o Jackson2JsonMessageConverter e configura o class mapper
-        Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter();
-        jackson2JsonMessageConverter.setClassMapper(defaultClassMapper);
-
-        return jackson2JsonMessageConverter;
-    }
-  
-    
     
     public RabbitMQConfig(AmqpAdmin amqpAdmin) {
         this.amqpAdmin = amqpAdmin;
@@ -62,16 +47,21 @@ public class RabbitMQConfig {
     private void adicionaFilas() {
         Queue filaCadastro = this.fila(RabbitmqConstantes.FILA_CADASTRO);
         Queue filaCliente = this.fila(RabbitmqConstantes.FILA_CLIENTE);
+        Queue filaCadastrado = this.fila(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO);
+        
         DirectExchange troca = this.trocaDireta();
 
         Binding ligacaoUsuario = this.relacionamento(filaCadastro, troca);
         Binding ligacaoCliente = this.relacionamento(filaCliente, troca);
+        Binding ligacaoCadastrado =  this.relacionamento(filaCadastrado, troca);
 
         this.amqpAdmin.declareQueue(filaCadastro);
         this.amqpAdmin.declareQueue(filaCliente);
+        this.amqpAdmin.declareQueue(filaCadastrado);
         this.amqpAdmin.declareExchange(troca);
 
         this.amqpAdmin.declareBinding(ligacaoUsuario);
         this.amqpAdmin.declareBinding(ligacaoCliente);
+        this.amqpAdmin.declareBinding(ligacaoCadastrado);
     }
 }
