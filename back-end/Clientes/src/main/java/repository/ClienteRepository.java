@@ -8,4 +8,6 @@ import dto.ClientesDTO;
 @Repository
 public interface ClienteRepository extends JpaRepository<ClientesDTO, Long> {
     ClientesDTO findByCpf(String cpf);
+    ClientesDTO findByEmail(String email);
+    
 }

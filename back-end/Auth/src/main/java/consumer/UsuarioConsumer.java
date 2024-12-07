@@ -18,8 +18,8 @@ public class UsuarioConsumer {
     public void consumidor(UserCliente user) {
         try {
             authService.cadastrarUsuario(user.getUserRequisitionDTO());
-            authService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO, user);
         } catch (Exception e) {
+        	authService.enviaMensagem(RabbitmqConstantes.FILA_ROLLBACK, user);
         	System.out.print(e.getMessage());
         }
     }

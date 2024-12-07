@@ -16,7 +16,8 @@ public class SagaConsumer {
 	
     @RabbitListener(queues = RabbitmqConstantes.FILA_CLIENTE_CADASTRADO)
     private void consumidor(UserCliente user) throws Exception {
-    	this.sagaService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE, user);
+    	this.sagaService.enviaMensagem(RabbitmqConstantes.FILA_CADASTRO, user);
     	System.out.print("Cliente cadastrado");
     }
+    
 }

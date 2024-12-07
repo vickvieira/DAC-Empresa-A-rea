@@ -25,7 +25,7 @@ public class SagaController {
     private ResponseEntity<Object> cadastra(@RequestBody UserCliente user) {
         try {
         	System.out.print(user.toString());
-            sagaService.enviaMensagem(RabbitmqConstantes.FILA_CADASTRO, user);
+            sagaService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE, user);
             
 
 

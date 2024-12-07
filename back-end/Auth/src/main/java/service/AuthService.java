@@ -19,6 +19,9 @@ public class AuthService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
+    @Autowired
+    private EmailService emailService;
+    
 	@Autowired
 	RabbitTemplate rabbitTemplate;
 	
@@ -45,27 +48,31 @@ public class AuthService {
     }
     
     public void cadastrarUsuario(UserRequisitionDTO login) throws Exception {
-    	
         if (usuarioRepository.findByEmail(login.getEmail()) != null) {
-        	System.out.print("O e-mail já está cadastrado.");
+            System.out.print("O e-mail já está cadastrado.");
             throw new Exception("O e-mail já está cadastrado.");
         }
-    	
-    	System.out.println("Usuário cadastrado com sucesso: " );
-    	SecureRandom random = new SecureRandom();
-        int senha = 1000 + random.nextInt(9000);
+
+        System.out.println("Usuário cadastrado com sucesso: ");
+        SecureRandom random = new SecureRandom();
+        int senha = 1000 + random.nextInt(9000); 
         String senhaString = Integer.toString(senha);
-    	
+
         String salt = PasswordUtils.generateSalt();
         String hashedPassword = PasswordUtils.hashPassword(senhaString, salt);
-        
-    	
-    	UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt);
-    	System.out.println("Usuário cadastrado com sucesso: " );
-        // Salva o objeto no MongoDB
+
+        UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt);
         usuarioRepository.save(novoUser);
 
-        // Opcional: Log ou retorno para verificar o sucesso
-        System.out.println("Usuário cadastrado com sucesso: " + novoUser.getEmail());
+        String assunto = "Bem-vindo ao sistema!";
+        String mensagem = "Olá, " + login.getEmail() + "!\n\n" +
+                          "Sua conta foi criada com sucesso.\n" +
+                          "Sua senha temporária é: " + senhaString + "\n\n" +
+                          "Recomendamos alterá-la após o primeiro login.\n\n" +
+                          "Atenciosamente,\nEquipe de Suporte.";
+
+        emailService.enviarEmail(login.getEmail(), assunto, mensagem);
+
+        System.out.println("Usuário cadastrado e e-mail enviado com sucesso: " + novoUser.getEmail());
     }
 }

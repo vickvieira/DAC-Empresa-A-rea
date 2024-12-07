@@ -31,8 +31,9 @@ public class ClienteService {
     public ClientesDTO cadastrarCliente(ClientesDTO cliente) {
     	
         ClientesDTO clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+        ClientesDTO clienteExistenteEMAIL = clienteRepository.findByEmail(cliente.getEmail());
 
-        if (clienteExistente  != null) {
+        if (clienteExistente  != null && clienteExistenteEMAIL != null) {
             throw new IllegalArgumentException("Já existe um cliente cadastrado com o CPF: " + cliente.getCpf());
         }
 

@@ -20,8 +20,9 @@ public class ClienteConsumer {
         try {
             clienteService.cadastrarCliente(user.getClienteDTO());
             System.out.println("Cliente cadastrado com sucesso: " + user.getClienteDTO().getCpf());
+            clienteService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO, user);
         } catch (IllegalArgumentException e) {
-            clienteService.enviaMensagem(RabbitmqConstantes.FILA_ROLLBACK, user);
+        	System.err.println("Erro cliente: já existente " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Erro inesperado ao cadastrar cliente: " + e.getMessage());
         }
