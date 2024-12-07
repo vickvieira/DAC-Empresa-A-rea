@@ -10,5 +10,5 @@ export interface Reserva {
   milhasUtilizadas: number;
   status: EstadoReserva;
   expandido?: boolean;
-  id: string;
+  id?: string;
 }
