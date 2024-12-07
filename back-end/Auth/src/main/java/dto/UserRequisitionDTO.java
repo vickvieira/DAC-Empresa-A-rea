@@ -13,8 +13,9 @@ public class UserRequisitionDTO implements Serializable {
     }
 
     // Construtor com parâmetros
-    public UserRequisitionDTO(String email) {
+    public UserRequisitionDTO(String email, String tipo) {
         this.email = email;
+        this.tipo = tipo;
     }
 
     // Getters e Setters

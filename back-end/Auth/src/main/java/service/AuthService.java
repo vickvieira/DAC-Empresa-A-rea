@@ -7,6 +7,7 @@ import Repository.UsuarioRepository;
 import constantes.RabbitmqConstantes;
 import dto.UserRequisitionDTO;
 import dto.UsuarioDTO;
+import models.LoginRequisition;
 
 import java.security.SecureRandom;
 import password.PasswordUtils;
@@ -24,6 +25,23 @@ public class AuthService {
     public void enviaMensagem(String nomeFila, Object mensagem) {
         rabbitTemplate.convertAndSend(nomeFila, mensagem);
 
+    }
+    
+    public UserRequisitionDTO logar(LoginRequisition login) throws Exception {
+        UsuarioDTO usuario = usuarioRepository.findByEmail(login.getEmail());
+
+        if (usuario == null) {
+            throw new Exception("E-mail não encontrado.");
+        }
+
+        String hashedInputPassword = PasswordUtils.hashPassword(login.getSenha(), usuario.getSalt());
+
+        if (!hashedInputPassword.equals(usuario.getSenha())) {
+            throw new Exception("Senha incorreta.");
+        }
+
+        System.out.println("Usuário logado com sucesso: " + usuario.getEmail());
+        return new UserRequisitionDTO(usuario.getEmail(), usuario.getTipo());
     }
     
     public void cadastrarUsuario(UserRequisitionDTO login) throws Exception {
