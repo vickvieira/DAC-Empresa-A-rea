@@ -43,7 +43,7 @@ export class ReservaService {
   }
   */
   cancelarReserva(reservaCancelada: Reserva): Observable<Reserva> {
-    reservaCancelada.status = 'CANCELADO_VOO';
+    reservaCancelada.status = 'CANCELADO_RESERVA'; //pq o cliente cancelou a reserva, não o func o voo
 
     return this.http.put<Reserva>(
       `${this.apiUrl}/${reservaCancelada.id}`,

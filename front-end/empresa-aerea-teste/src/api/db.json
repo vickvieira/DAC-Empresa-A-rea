@@ -57,7 +57,7 @@
   "milhas": [
     {
       "id": "1",
-      "saldo": 68551
+      "saldo": 79451
     },
     {
       "clienteId": 2,
@@ -198,7 +198,7 @@
       },
       "valorGasto": 3001.8,
       "milhasUtilizadas": 900,
-      "status": "AGUARDANDO_CHECKIN"
+      "status": "CANCELADO_RESERVA"
     },
     {
       "id": "0bae",
@@ -649,6 +649,22 @@
       "operacao": 3200,
       "saldo": 68551,
       "descricao": "cancelamento da reserva RES1234"
+    },
+    {
+      "id": "f77b",
+      "clienteId": "1",
+      "dataHora": "2024-12-06T23:56:43.313Z",
+      "operacao": 10000,
+      "saldo": 78551,
+      "descricao": "cancelamento da reserva AFJ110"
+    },
+    {
+      "id": "0ea0",
+      "clienteId": "1",
+      "dataHora": "2024-12-07T00:01:59.113Z",
+      "operacao": 900,
+      "saldo": 79451,
+      "descricao": "cancelamento da reserva MTP686"
     }
   ]
 }
