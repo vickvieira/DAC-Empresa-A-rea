@@ -3,8 +3,9 @@ package dto;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
+
 @Entity
-@Table(name = "clientes") // Nome da tabela no banco de dados
+@Table(name = "clientes")
 public class ClientesDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

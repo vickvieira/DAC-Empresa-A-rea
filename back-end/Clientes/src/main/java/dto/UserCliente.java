@@ -11,10 +11,8 @@ public class UserCliente implements Serializable {
     private ClientesDTO clienteDTO;
     private UserRequisitionDTO userRequisitionDTO;
 
-    // Construtor padrão
     public UserCliente() {}
 
-    // Construtor com parâmetros
     public UserCliente(ClientesDTO clienteDTO, UserRequisitionDTO userRequisitionDTO) {
         this.clienteDTO = clienteDTO;
         this.userRequisitionDTO = userRequisitionDTO;

@@ -26,8 +26,6 @@ public class SagaController {
         try {
         	System.out.print(user.toString());
             sagaService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE, user);
-            
-
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Resposta inesperada do consumidor.");

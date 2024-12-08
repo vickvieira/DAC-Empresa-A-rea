@@ -1,13 +1,18 @@
 package service;
 
 import dto.ClientesDTO;
+import dto.MilhasDTO;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.ClienteRepository;
+import repository.MilhasRepository;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ClienteService {
@@ -16,10 +21,14 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
 	
 	@Autowired
+    private final MilhasRepository milhasRepository;
+	
+	@Autowired
 	RabbitTemplate rabbitTemplate;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, MilhasRepository milhasRepository ) {
         this.clienteRepository = clienteRepository;
+        this.milhasRepository = milhasRepository;
     }
 
     
@@ -40,37 +49,29 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    // Listar todos os clientes
-    public List<ClientesDTO> listarTodos() {
-        return clienteRepository.findAll(); // Retorna todos os clientes do banco
+    public void comprarMilhas(Long clienteId, double valor) {
+        final double PROPORCAO = 5.0; // 1 milha por R$ 5,00
+
+        ClientesDTO cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+
+        double milhasCompradas = valor / PROPORCAO;
+
+        cliente.setMilhas(cliente.getMilhas() + milhasCompradas);
+        clienteRepository.save(cliente);
+
+        MilhasDTO transacao = new MilhasDTO(cliente, LocalDateTime.now(), milhasCompradas, "entrada", "COMPRA DE MILHAS");
+        milhasRepository.save(transacao);
+
+        enviaMensagem("fila-milhas", transacao);
     }
 
-    // Buscar cliente por ID
-    public ClientesDTO buscarPorId(Long id) {
-        return clienteRepository.findById(id) 
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado!")); // Busca cliente por ID
+    public List<MilhasDTO> consultarExtratoMilhas(Long clienteId) {
+
+        ClientesDTO cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+
+        return milhasRepository.findByCliente(cliente);
     }
 
-    // Atualizar cliente
-    public ClientesDTO atualizarCliente(Long id, ClientesDTO clienteAtualizado) {
-        ClientesDTO clienteExistente = buscarPorId(id); // Verifica se o cliente existe
-        clienteExistente.setNome(clienteAtualizado.getNome());
-        clienteExistente.setEmail(clienteAtualizado.getEmail());
-        clienteExistente.setCpf(clienteAtualizado.getCpf());
-        clienteExistente.setTelefone(clienteAtualizado.getTelefone());
-        clienteExistente.setTipo(clienteAtualizado.getTipo());
-        clienteExistente.setRuaNumero(clienteAtualizado.getRuaNumero());
-        clienteExistente.setComplemento(clienteAtualizado.getComplemento());
-        clienteExistente.setCep(clienteAtualizado.getCep());
-        clienteExistente.setCidade(clienteAtualizado.getCidade());
-        clienteExistente.setEstado(clienteAtualizado.getEstado());
-        clienteExistente.setMilhas(clienteAtualizado.getMilhas());
-        return clienteRepository.save(clienteExistente); // Atualiza o cliente no banco
-    }
-
-    // Deletar cliente
-    public void deletarCliente(Long id) {
-        ClientesDTO cliente = buscarPorId(id); // Verifica se o cliente existe
-        clienteRepository.delete(cliente); // Remove o cliente do banco
-    }
 }
