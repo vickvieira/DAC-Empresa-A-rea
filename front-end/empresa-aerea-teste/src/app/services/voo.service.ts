@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Voo } from '../models/voo.model';
-import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, map, Observable, switchMap, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +57,42 @@ export class VooService {
         console.error('Erro ao cancelar voo:', error);
         return throwError(
           () => new Error(error.message || 'Erro desconhecido.')
+        );
+      })
+    );
+  }
+
+  realizarVoo(codigoVoo: string): Observable<Voo> {
+    console.log(`[DEBUG] Tentando realizar voo: ${codigoVoo}`);
+
+    return this.http.get<Voo[]>(`${this.apiUrl}?codigo=${codigoVoo}`).pipe(
+      map((voos) => {
+        const voo = voos[0]; // Assume que o código é único
+        if (!voo) {
+          throw new Error('Voo não encontrado.');
+        }
+        if (voo.status !== 'CONFIRMADO') {
+          throw new Error(
+            'Somente voos no estado CONFIRMADO podem ser realizados.'
+          );
+        }
+
+        voo.status = 'REALIZADO'; // Atualiza o estado do voo
+        return voo;
+      }),
+      switchMap((voo) =>
+        this.http
+          .put<Voo>(`${this.apiUrl}/${voo.id}`, voo)
+          .pipe(
+            tap(() =>
+              console.log(`[DEBUG] Voo ${codigoVoo} atualizado para REALIZADO.`)
+            )
+          )
+      ),
+      catchError((error) => {
+        console.error(`[ERROR] Erro ao realizar voo ${codigoVoo}:`, error);
+        return throwError(
+          () => new Error(error.message || 'Erro ao realizar voo.')
         );
       })
     );

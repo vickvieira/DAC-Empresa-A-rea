@@ -19,14 +19,15 @@
             (click)="abrirModal(voo.codigo)">
             Confirmar Embarque
           </button>
-          <button
-          class="btn btn-danger btn-sm mx-2"
-          (click)="cancelarVoo(voo.codigo)"
-          [disabled]="voo.status !== 'CONFIRMADO'"
-        >
-          Cancelar Voo
-        </button>
-          <button class="btn btn-primary btn-sm" (click)="realizarVoo(voo.codigo)">Realizar Voo</button>
+          <button class="btn btn-danger btn-sm mx-2" (click)="cancelarVoo(voo.codigo)"
+            [disabled]="voo.status !== 'CONFIRMADO'">
+            Cancelar Voo
+          </button>
+          <button class="btn btn-primary btn-sm" (click)="realizarVoo(voo.codigo)"
+            [disabled]="voo.status !== 'CONFIRMADO'">
+            Realizar Voo
+          </button>
+
         </td>
       </tr>
     </tbody>
