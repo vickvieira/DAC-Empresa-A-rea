@@ -25,6 +25,7 @@ export class EfetuarReservaComponent implements OnInit {
   milhasNecessarias: number = 0;
   maxMilhasUsadas: number = 0;
   errorMessage: string | null = null;
+  assentosDisponiveis: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +44,8 @@ export class EfetuarReservaComponent implements OnInit {
       this.vooService.getVooByCodigo(codigoVoo).subscribe((voo) => {
         if (voo) {
           this.voo = voo; // Voo encontrado
+          this.assentosDisponiveis =
+            voo.quantidadePoltronas - voo.poltronasOcupadas; // Calcula assentos disponíveis
           this.calcularValorTotal(); // Calcular o valor total inicial
         } else {
           console.error('Voo não encontrado.');
@@ -63,6 +66,7 @@ export class EfetuarReservaComponent implements OnInit {
       this.valorTotal = this.voo.valorPassagem * this.quantidadePassagens;
       this.calcularMilhasNecessarias(); // Calcula as milhas necessárias
       this.calcularValorRestante(); //recalcula
+      this.validarAssentos(); // Valida se os assentos estão disponíveis
     }
   }
 
@@ -70,7 +74,7 @@ export class EfetuarReservaComponent implements OnInit {
   calcularMilhasNecessarias(): void {
     if (this.voo) {
       // Regra: 10x o valor da passagem em milhas
-      this.milhasNecessarias = this.valorTotal * 10;
+      this.milhasNecessarias = this.valorTotal * 5;
     }
   }
 
@@ -80,6 +84,19 @@ export class EfetuarReservaComponent implements OnInit {
       this.valorRestante = this.valorTotal - milhasDesconto / 5; // 5 milhas = R$ 1
     } else {
       this.valorRestante = this.valorTotal; // Se não houver milhas ou exceder o saldo, paga o valor total
+    }
+  }
+  validarAssentos(): void {
+    const assentosRestantes =
+      this.voo.quantidadePoltronas -
+      this.voo.poltronasOcupadas -
+      this.quantidadePassagens;
+
+    if (assentosRestantes < 0) {
+      this.errorMessage = `Não há assentos disponíveis suficientes. Restam apenas ${this.assentosDisponiveis} assento(s).`;
+    } else {
+      this.assentosDisponiveis = assentosRestantes; // Atualiza dinamicamente os assentos disponíveis
+      this.errorMessage = null;
     }
   }
 
@@ -106,7 +123,7 @@ export class EfetuarReservaComponent implements OnInit {
     const clienteId = this.authService.getClienteId();
     const codigoVoo = this.route.snapshot.paramMap.get('codigo'); // Captura o código do voo
 
-    if (clienteId !== null && codigoVoo) {
+    if (clienteId !== null && codigoVoo && !this.errorMessage) {
       this.reservaService
         .criarReserva(
           clienteId,

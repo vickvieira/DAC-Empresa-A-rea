@@ -97,4 +97,46 @@ export class VooService {
       })
     );
   }
+
+  atualizarAssentosOcupados(
+    vooCodigo: string,
+    quantidadePassagens: number
+  ): Observable<Voo> {
+    return this.getVooByCodigo(vooCodigo).pipe(
+      switchMap((voo) => {
+        const novosAssentosOcupados =
+          voo.poltronasOcupadas + quantidadePassagens;
+
+        if (novosAssentosOcupados > voo.quantidadePoltronas) {
+          throw new Error(
+            `Número de assentos excedido para o voo ${vooCodigo}. Assentos disponíveis: ${
+              voo.quantidadePoltronas - voo.poltronasOcupadas
+            }`
+          );
+        }
+
+        const vooAtualizado = {
+          ...voo,
+          poltronasOcupadas: novosAssentosOcupados,
+        };
+
+        return this.http
+          .put<Voo>(`${this.apiUrl}/${voo.id}`, vooAtualizado)
+          .pipe(
+            tap((vooAtualizado) => {
+              console.log(`[DEBUG] Voo atualizado com sucesso:`, vooAtualizado);
+            }),
+            catchError((error) => {
+              console.error(
+                `[ERROR] Falha ao atualizar assentos do voo ${vooCodigo}:`,
+                error
+              );
+              return throwError(
+                () => new Error('Erro ao atualizar assentos do voo.')
+              );
+            })
+          );
+      })
+    );
+  }
 }

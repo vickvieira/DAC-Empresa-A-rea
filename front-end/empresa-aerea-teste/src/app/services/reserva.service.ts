@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { MilhasService } from './milhas.service';
 import { Voo } from '../models/voo.model';
+import { VooService } from './voo.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,11 @@ import { Voo } from '../models/voo.model';
 export class ReservaService {
   private apiUrl = 'http://localhost:3000/reservas';
   reserva!: Reserva;
-  constructor(private http: HttpClient, private milhasService: MilhasService) {}
+  constructor(
+    private http: HttpClient,
+    private milhasService: MilhasService,
+    private vooService: VooService
+  ) {}
 
   // Método para gerar o código de reserva único
   private gerarCodigoReserva(): string {
@@ -91,6 +96,9 @@ export class ReservaService {
     valorTotal: number,
     milhasUtilizadas: number
   ): Observable<Reserva> {
+    const codigoReserva = this.gerarCodigoReserva();
+    const dataHoraReserva = new Date().toISOString();
+
     const novaReserva: Reserva = {
       // id: '', // Será gerado pelo backend
       codigo: this.gerarCodigoReserva(),
@@ -104,13 +112,38 @@ export class ReservaService {
 
     console.log('[DEBUG] Enviando reserva para criação:', novaReserva);
 
+    // return this.http.post<Reserva>(this.apiUrl, novaReserva).pipe(
+    //   tap((reservaCriada) =>
+    //     console.log('[DEBUG] Reserva criada com sucesso:', reservaCriada)
+    //   ),
+
+    //   catchError((err) => {
+    //     console.error('[ERROR] Falha ao criar reserva:', err);
+    //     throw err; // Repropaga o erro para tratamento no componente
+    //   })
+    // );
     return this.http.post<Reserva>(this.apiUrl, novaReserva).pipe(
-      tap((reservaCriada) =>
-        console.log('[DEBUG] Reserva criada com sucesso:', reservaCriada)
-      ),
-      catchError((err) => {
-        console.error('[ERROR] Falha ao criar reserva:', err);
-        throw err; // Repropaga o erro para tratamento no componente
+      switchMap((reservaCriada) => {
+        console.log('[DEBUG] Reserva criada com sucesso:', reservaCriada);
+
+        // Atualiza o número de assentos ocupados no voo
+        return this.vooService
+          .atualizarAssentosOcupados(codigoVoo, quantidadePassagens)
+          .pipe(
+            map(() => {
+              console.log(
+                `[DEBUG] Assentos atualizados para o voo ${codigoVoo}.`
+              );
+              return reservaCriada; // Retorna a reserva criada após a atualização
+            })
+          );
+      }),
+      catchError((error) => {
+        console.error(
+          '[ERROR] Falha ao criar reserva ou atualizar assentos:',
+          error
+        );
+        return throwError(() => new Error('Erro ao criar reserva.'));
       })
     );
   }
