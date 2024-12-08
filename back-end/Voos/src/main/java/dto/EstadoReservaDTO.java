@@ -1,31 +1,35 @@
 package dto;
 
 import java.io.Serializable;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "estado_reserva")
 public class EstadoReservaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "codigo_estado", nullable = false, unique = true, length = 10)
     private String codigoEstado;
 
+    @Column(name = "sigla_estado", nullable = false, unique = true, length = 5)
     private String siglaEstado;
 
+    @Column(name = "descricao_estado", nullable = false, length = 100)
     private String descricaoEstado;
 
-    // Construtor padrão
     public EstadoReservaDTO() {}
 
-    // Construtor com parâmetros
     public EstadoReservaDTO(String codigoEstado, String siglaEstado, String descricaoEstado) {
         this.codigoEstado = codigoEstado;
         this.siglaEstado = siglaEstado;
         this.descricaoEstado = descricaoEstado;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

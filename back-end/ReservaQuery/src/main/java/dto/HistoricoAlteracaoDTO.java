@@ -1,8 +1,8 @@
 package dto;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "historico_alteracao")
@@ -20,19 +20,15 @@ public class HistoricoAlteracaoDTO implements Serializable {
     @Column(name = "data_hora_alteracao", nullable = false)
     private LocalDateTime dataHoraAlteracao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "estado_origem_id", nullable = false)
-    private EstadoReservaDTO estadoOrigem;
+    @Column(name = "estado_origem", nullable = false, length = 10)
+    private String estadoOrigem; // Código do estado de origem
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "estado_destino_id", nullable = false)
-    private EstadoReservaDTO estadoDestino;
+    @Column(name = "estado_destino", nullable = false, length = 10)
+    private String estadoDestino; // Código do estado de destino
 
-    // Construtor padrão
     public HistoricoAlteracaoDTO() {}
 
-    // Construtor com parâmetros
-    public HistoricoAlteracaoDTO(String codigoReserva, LocalDateTime dataHoraAlteracao, EstadoReservaDTO estadoOrigem, EstadoReservaDTO estadoDestino) {
+    public HistoricoAlteracaoDTO(String codigoReserva, LocalDateTime dataHoraAlteracao, String estadoOrigem, String estadoDestino) {
         this.codigoReserva = codigoReserva;
         this.dataHoraAlteracao = dataHoraAlteracao;
         this.estadoOrigem = estadoOrigem;
@@ -64,19 +60,19 @@ public class HistoricoAlteracaoDTO implements Serializable {
         this.dataHoraAlteracao = dataHoraAlteracao;
     }
 
-    public EstadoReservaDTO getEstadoOrigem() {
+    public String getEstadoOrigem() {
         return estadoOrigem;
     }
 
-    public void setEstadoOrigem(EstadoReservaDTO estadoOrigem) {
+    public void setEstadoOrigem(String estadoOrigem) {
         this.estadoOrigem = estadoOrigem;
     }
 
-    public EstadoReservaDTO getEstadoDestino() {
+    public String getEstadoDestino() {
         return estadoDestino;
     }
 
-    public void setEstadoDestino(EstadoReservaDTO estadoDestino) {
+    public void setEstadoDestino(String estadoDestino) {
         this.estadoDestino = estadoDestino;
     }
 }

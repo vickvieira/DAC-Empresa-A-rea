@@ -6,26 +6,19 @@ public class EstadoReservaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     private Long id;
-
     private String codigoEstado;
-
     private String siglaEstado;
-
     private String descricaoEstado;
 
-    // Construtor padrão
     public EstadoReservaDTO() {}
 
-    // Construtor com parâmetros
     public EstadoReservaDTO(String codigoEstado, String siglaEstado, String descricaoEstado) {
         this.codigoEstado = codigoEstado;
         this.siglaEstado = siglaEstado;
         this.descricaoEstado = descricaoEstado;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

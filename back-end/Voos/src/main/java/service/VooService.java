@@ -22,14 +22,14 @@ public class VooService {
     }
 
     public VooDTO cadastrarVoo(VooDTO vooDTO) {
-        AeroportoDTO origem = aeroportoRepository.findById(vooDTO.getAeroportoOrigem().getCodigo())
+        AeroportoDTO origem = aeroportoRepository.findById(vooDTO.getAeroportoOrigem())
             .orElseThrow(() -> new IllegalArgumentException("Aeroporto de origem não encontrado"));
 
-        AeroportoDTO destino = aeroportoRepository.findById(vooDTO.getAeroportoDestino().getCodigo())
+        AeroportoDTO destino = aeroportoRepository.findById(vooDTO.getAeroportoDestino())
             .orElseThrow(() -> new IllegalArgumentException("Aeroporto de destino não encontrado"));
 
-        vooDTO.setAeroportoOrigem(origem);
-        vooDTO.setAeroportoDestino(destino);
+        vooDTO.setAeroportoOrigem(origem.getCodigo());
+        vooDTO.setAeroportoDestino(destino.getCodigo());
 
         return vooRepository.save(vooDTO);
     }
@@ -53,5 +53,14 @@ public class VooService {
 
     public List<AeroportoDTO> buscarAeroportos() {
         return aeroportoRepository.findAll();
+    }
+    
+    public VooDTO buscarVooPorCodigo(String codigoVoo) {
+        return vooRepository.findById(codigoVoo)
+                .orElseThrow(() -> new IllegalArgumentException("Voo não encontrado com código: " + codigoVoo));
+    }
+
+    public void atualizarVoo(VooDTO voo) {
+        vooRepository.save(voo);
     }
 }

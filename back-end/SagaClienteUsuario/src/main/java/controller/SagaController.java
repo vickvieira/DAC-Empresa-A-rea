@@ -27,8 +27,7 @@ public class SagaController {
         	System.out.print(user.toString());
             sagaService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE, user);
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Resposta inesperada do consumidor.");
+            return ResponseEntity.ok("Requisição de cadastro na fila");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

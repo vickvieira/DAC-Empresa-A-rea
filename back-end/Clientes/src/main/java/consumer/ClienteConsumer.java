@@ -21,6 +21,7 @@ public class ClienteConsumer {
             clienteService.cadastrarCliente(user.getClienteDTO());
             System.out.println("Cliente cadastrado com sucesso: " + user.getClienteDTO().getCpf());
             clienteService.enviaMensagem(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO, user);
+            System.out.println("mensagem enviada");
         } catch (IllegalArgumentException e) {
         	System.err.println("Erro cliente: já existente " + e.getMessage());
         } catch (Exception e) {

@@ -48,31 +48,36 @@ public class AuthService {
     }
     
     public void cadastrarUsuario(UserRequisitionDTO login) throws Exception {
-        if (usuarioRepository.findByEmail(login.getEmail()) != null) {
-            System.out.print("O e-mail já está cadastrado.");
-            throw new Exception("O e-mail já está cadastrado.");
-        }
-
-        System.out.println("Usuário cadastrado com sucesso: ");
-        SecureRandom random = new SecureRandom();
-        int senha = 1000 + random.nextInt(9000); 
-        String senhaString = Integer.toString(senha);
-
-        String salt = PasswordUtils.generateSalt();
-        String hashedPassword = PasswordUtils.hashPassword(senhaString, salt);
-
-        UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt);
-        usuarioRepository.save(novoUser);
-
-        String assunto = "Bem-vindo ao sistema!";
-        String mensagem = "Olá, " + login.getEmail() + "!\n\n" +
-                          "Sua conta foi criada com sucesso.\n" +
-                          "Sua senha temporária é: " + senhaString + "\n\n" +
-                          "Recomendamos alterá-la após o primeiro login.\n\n" +
-                          "Atenciosamente,\nEquipe de Suporte.";
-
-        emailService.enviarEmail(login.getEmail(), assunto, mensagem);
-
-        System.out.println("Usuário cadastrado e e-mail enviado com sucesso: " + novoUser.getEmail());
-    }
+	    System.out.println("Iniciando cadastro de usuário: " + login.getEmail());
+	
+//	    UsuarioDTO usuarioExistente = usuarioRepository.findByEmail(login.getEmail());
+//	    if (usuarioExistente == null) {
+//	        System.out.println("Nenhum usuário encontrado para o email: " + login.getEmail());
+//	    } else {
+//	        System.out.println("Usuário encontrado: " + usuarioExistente.getEmail());
+//	    }
+	    
+	    System.out.println("Usuário não encontrado, prosseguindo com cadastro.");
+	
+	    SecureRandom random = new SecureRandom();
+	    int senha = 1000 + random.nextInt(9000); 
+	    String senhaString = Integer.toString(senha);
+	
+	    String salt = PasswordUtils.generateSalt();
+	    String hashedPassword = PasswordUtils.hashPassword(senhaString, salt);
+	
+	    UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt);
+	    usuarioRepository.save(novoUser);
+	
+	    String assunto = "Bem-vindo ao sistema!";
+	    String mensagem = "Olá, " + login.getEmail() + "!\n\n" +
+	                      "Sua conta foi criada com sucesso.\n" +
+	                      "Sua senha é: " + senhaString + "\n\n" +
+	                      "Atenciosamente\n";
+	
+	    System.out.println("Enviando e-mail para: " + login.getEmail());
+	    emailService.enviarEmail(login.getEmail(), assunto, mensagem);
+	
+	    System.out.println("Usuário cadastrado e e-mail enviado com sucesso: " + novoUser.getEmail());
+	}
 }

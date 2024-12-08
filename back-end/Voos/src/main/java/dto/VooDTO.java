@@ -12,33 +12,29 @@ public class VooDTO implements Serializable {
 
     @Id
     @Column(name = "codigo_voo", length = 10, nullable = false, unique = true)
-    private String codigoVoo; // Código do voo (TADS0000)
+    private String codigoVoo;
 
     @Column(name = "data_hora", nullable = false)
-    private LocalDateTime dataHora; // Data e hora do voo
+    private LocalDateTime dataHora;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aeroporto_origem", nullable = false)
-    private AeroportoDTO aeroportoOrigem; // Aeroporto de origem
+    @Column(name = "aeroporto_origem", length = 3, nullable = false)
+    private String aeroportoOrigem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aeroporto_destino", nullable = false)
-    private AeroportoDTO aeroportoDestino; // Aeroporto de destino
+    @Column(name = "aeroporto_destino", length = 3, nullable = false)
+    private String aeroportoDestino;
 
     @Column(name = "valor_passagem", nullable = false)
-    private Double valorPassagem; // Valor da passagem em reais
+    private Double valorPassagem;
 
     @Column(name = "quantidade_poltronas_total", nullable = false)
-    private Integer quantidadePoltronasTotal; // Quantidade total de poltronas
+    private Integer quantidadePoltronasTotal;
 
     @Column(name = "quantidade_poltronas_ocupadas", nullable = false)
-    private Integer quantidadePoltronasOcupadas; // Quantidade de poltronas ocupadas
+    private Integer quantidadePoltronasOcupadas;
 
-    // Construtor padrão
     public VooDTO() {}
 
-    // Construtor com parâmetros
-    public VooDTO(String codigoVoo, LocalDateTime dataHora, AeroportoDTO aeroportoOrigem, AeroportoDTO aeroportoDestino,
+    public VooDTO(String codigoVoo, LocalDateTime dataHora, String aeroportoOrigem, String aeroportoDestino,
                   Double valorPassagem, Integer quantidadePoltronasTotal, Integer quantidadePoltronasOcupadas) {
         this.codigoVoo = codigoVoo;
         this.dataHora = dataHora;
@@ -66,19 +62,19 @@ public class VooDTO implements Serializable {
         this.dataHora = dataHora;
     }
 
-    public AeroportoDTO getAeroportoOrigem() {
+    public String getAeroportoOrigem() {
         return aeroportoOrigem;
     }
 
-    public void setAeroportoOrigem(AeroportoDTO aeroportoOrigem) {
+    public void setAeroportoOrigem(String aeroportoOrigem) {
         this.aeroportoOrigem = aeroportoOrigem;
     }
 
-    public AeroportoDTO getAeroportoDestino() {
+    public String getAeroportoDestino() {
         return aeroportoDestino;
     }
 
-    public void setAeroportoDestino(AeroportoDTO aeroportoDestino) {
+    public void setAeroportoDestino(String aeroportoDestino) {
         this.aeroportoDestino = aeroportoDestino;
     }
 

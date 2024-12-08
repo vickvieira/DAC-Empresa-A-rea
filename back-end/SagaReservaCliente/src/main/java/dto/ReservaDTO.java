@@ -2,29 +2,30 @@ package dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+import jakarta.persistence.*;
 
 public class ReservaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private Long id;
+
     private String codigoReserva;
     private String codigoVoo;
     private LocalDateTime dataHoraReserva;
-    private EstadoReservaDTO estadoReserva;
     private double valorPago;
     private int milhasGastas;
-    
-    
-    // Construtor padrão
+    private int quantidadePoltronasReservadas;
+    private String estadoReserva;
+
     public ReservaDTO() {}
 
-    // Construtor com parâmetros
-    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, EstadoReservaDTO estadoReserva) {
+    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas) {
         this.codigoReserva = codigoReserva;
         this.codigoVoo = codigoVoo;
         this.dataHoraReserva = dataHoraReserva;
         this.estadoReserva = estadoReserva;
+        this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
     }
 
     // Getters e Setters
@@ -60,29 +61,35 @@ public class ReservaDTO implements Serializable {
         this.dataHoraReserva = dataHoraReserva;
     }
 
-    public EstadoReservaDTO getEstadoReserva() {
+    public double getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public int getMilhasGastas() {
+        return milhasGastas;
+    }
+
+    public void setMilhasGastas(int milhasGastas) {
+        this.milhasGastas = milhasGastas;
+    }
+
+    public String getEstadoReserva() {
         return estadoReserva;
     }
 
-    public void setEstadoReserva(EstadoReservaDTO estadoReserva) {
+    public void setEstadoReserva(String estadoReserva) {
         this.estadoReserva = estadoReserva;
     }
 
-	public double getValorPago() {
-		return valorPago;
-	}
+    public int getQuantidadePoltronasReservadas() {
+        return quantidadePoltronasReservadas;
+    }
 
-	public void setValorPago(double valorPago) {
-		this.valorPago = valorPago;
-	}
-
-	public int getMilhasGastas() {
-		return milhasGastas;
-	}
-
-	public void setMilhasGastas(int milhasGastas) {
-		this.milhasGastas = milhasGastas;
-	}
-    
-    
+    public void setQuantidadePoltronasReservadas(int quantidadePoltronasReservadas) {
+        this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+    }
 }

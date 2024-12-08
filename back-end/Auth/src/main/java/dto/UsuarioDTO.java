@@ -2,17 +2,17 @@ package dto;
 
 import java.io.Serializable;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.persistence.Table;
-
-@Document(collection = "Usuario") // Nome da coleção no MongoDB
-public class UsuarioDTO implements Serializable {
+public class UsuarioDTO implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    private String id;
+
     private String email;
+
     private String senha;
+
     private String tipo;
+
     private String salt;
 
     public UsuarioDTO() {}
@@ -25,6 +25,14 @@ public class UsuarioDTO implements Serializable {
     }
 
     // Getters e Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -60,7 +68,8 @@ public class UsuarioDTO implements Serializable {
     @Override
     public String toString() {
         return "UsuarioDTO{" +
-                "email='" + email + '\'' +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", salt='" + salt + '\'' +

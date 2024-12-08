@@ -23,6 +23,7 @@ public class SagaConsumer {
     public void consumidor(SagaReservaRequisition requisition) {
         try {
             ReservaDTO reserva = reservaService.cadastrarReserva(requisition.getReserva());
+            System.out.print("Rserva processada no Command");
             rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_atualizaReservaQ, requisition.getReserva());
         } catch (Exception e) {
             System.err.println("Erro ao processar reserva: " + e.getMessage());

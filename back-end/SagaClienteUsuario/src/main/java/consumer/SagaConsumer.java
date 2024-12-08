@@ -14,10 +14,15 @@ public class SagaConsumer {
 	@Autowired
 	private SagaService sagaService;
 	
-    @RabbitListener(queues = RabbitmqConstantes.FILA_CLIENTE_CADASTRADO)
-    private void consumidor(UserCliente user) throws Exception {
-    	this.sagaService.enviaMensagem(RabbitmqConstantes.FILA_CADASTRO, user);
-    	System.out.print("Cliente cadastrado");
-    }
-    
+	@RabbitListener(queues = RabbitmqConstantes.FILA_CLIENTE_CADASTRADO)
+	private void consumidor(UserCliente user) {
+	    try {
+	        System.out.print("Saga cliente cadastrado");
+	        this.sagaService.enviaMensagem(RabbitmqConstantes.FILA_CADASTRO, user);
+	        System.out.print("Cliente cadastrado");
+	    } catch (Exception e) {
+	        System.err.println("Erro ao processar mensagem: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
 }

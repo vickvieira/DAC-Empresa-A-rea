@@ -2,14 +2,14 @@ package dto;
 
 import java.io.Serializable;
 
+
 public class AeroportoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     private String codigo;
     private String nome;
     private String cidade;
-    private String estado;
+    private String estado; 
 
     public AeroportoDTO() {}
 

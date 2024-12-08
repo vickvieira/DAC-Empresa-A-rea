@@ -14,13 +14,16 @@ public class UsuarioConsumer {
 	@Autowired
     private AuthService authService;
 	
-    @RabbitListener(queues = RabbitmqConstantes.FILA_CADASTRO)
-    public void consumidor(UserCliente user) {
-        try {
-            authService.cadastrarUsuario(user.getUserRequisitionDTO());
-        } catch (Exception e) {
-        	authService.enviaMensagem(RabbitmqConstantes.FILA_ROLLBACK, user);
-        	System.out.print(e.getMessage());
-        }
-    }
+	@RabbitListener(queues = RabbitmqConstantes.FILA_CADASTRO)
+	public void consumidor(UserCliente user) {
+	    System.out.println("Mensagem recebida no Auth: " + user);
+	    try {
+	        System.out.println("Processando usuário: " + user.getUserRequisitionDTO());
+	        authService.cadastrarUsuario(user.getUserRequisitionDTO());
+	        System.out.println("Processamento concluído com sucesso para: " + user.getUserRequisitionDTO());
+	    } catch (Exception e) {
+	        System.err.println("Erro ao processar usuário: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	}
 }

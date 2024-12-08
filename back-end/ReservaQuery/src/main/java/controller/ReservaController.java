@@ -8,7 +8,7 @@ import service.ReservaService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reserva")
+@RequestMapping("/reservaquery")
 public class ReservaController {
 
 }
