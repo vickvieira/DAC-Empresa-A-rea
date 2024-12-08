@@ -19,11 +19,10 @@ public class SagaConsumer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @RabbitListener(queues = RabbitmqConstantes.FILA_RESERVA)
+    @RabbitListener(queues = RabbitmqConstantes.FILA_atualizaReservaQ)
     public void consumidor(SagaReservaRequisition requisition) {
         try {
             ReservaDTO reserva = reservaService.cadastrarReserva(requisition.getReserva());
-            rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_atualizaReservaQ, requisition.getReserva());
         } catch (Exception e) {
             System.err.println("Erro ao processar reserva: " + e.getMessage());
         }

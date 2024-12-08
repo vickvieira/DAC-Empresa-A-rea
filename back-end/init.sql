@@ -12,15 +12,15 @@ END
 $do$;
 
 -- Criação dos bancos de dados
-CREATE DATABASE "FuncionárioAutenticação";
-CREATE DATABASE "Cliente";
-CREATE DATABASE "Voos";
-CREATE DATABASE "Reservas";
-CREATE DATABASE "Funcionário";
+CREATE DATABASE "clientesdb";          -- Para dados de clientes
+CREATE DATABASE "reservac";            -- Para comandos de reservas (CQRS)
+CREATE DATABASE "reservaq";            -- Para consultas de reservas (CQRS)
+CREATE DATABASE "funcionariodb";       -- Para dados de funcionários
+CREATE DATABASE "voosdb";              -- Para gerenciamento de voos
 
 -- Grant privileges para o usuário admin
-GRANT ALL PRIVILEGES ON DATABASE "FuncionárioAutenticação" TO admin;
-GRANT ALL PRIVILEGES ON DATABASE "Cliente" TO admin;
-GRANT ALL PRIVILEGES ON DATABASE "Voos" TO admin;
-GRANT ALL PRIVILEGES ON DATABASE "Reservas" TO admin;
-GRANT ALL PRIVILEGES ON DATABASE "Funcionário" TO admin;
+GRANT ALL PRIVILEGES ON DATABASE "clientesdb" TO admin;
+GRANT ALL PRIVILEGES ON DATABASE "reservac" TO admin;
+GRANT ALL PRIVILEGES ON DATABASE "reservaq" TO admin;
+GRANT ALL PRIVILEGES ON DATABASE "funcionariodb" TO admin;
+GRANT ALL PRIVILEGES ON DATABASE "voosdb" TO admin;

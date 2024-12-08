@@ -24,7 +24,7 @@ public class SagaController {
     private ResponseEntity<Object> cadastraReserva(@RequestBody SagaReservaRequisition reserva) {
         try {
         	System.out.print(reserva.toString());
-            sagaService.enviaMensagem(RabbitmqConstantes.FILA_RESERVA, reserva);
+            sagaService.enviaMensagem(RabbitmqConstantes.FILA_VOO, reserva);
             return ResponseEntity.ok("Reserva enviada com sucesso para a fila de processamento.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

@@ -79,3 +79,89 @@ services:
       - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
     depends_on:
       - rabbitmq
+
+  sagareservacliente:
+    build:
+      context: ./SagaReservaCliente
+    container_name: sagareservacliente
+    restart: always
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - rabbitmq
+
+  reserva:
+    build:
+      context: ./ReservaCommand
+    container_name: reservacommand
+    restart: always
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservac
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  reservaquery:
+    build:
+      context: ./ReservaQuery
+    container_name: reservaquery
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservaq
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  funcionario:
+    build:
+      context: ./Funcionario
+    container_name: funcionario
+    restart: always
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/funcionariodb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  voos:
+    build:
+      context: ./Voos
+    container_name: voos
+    restart: always
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/voosdb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
