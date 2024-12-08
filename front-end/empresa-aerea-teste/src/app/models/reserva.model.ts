@@ -5,7 +5,7 @@ export interface Reserva {
   codigo: string;
   dataHoraReserva: string;
   clienteId: number;
-  voo: Voo;
+  vooCodigo: string;
   valorGasto: number;
   milhasUtilizadas: number;
   status: EstadoReserva;

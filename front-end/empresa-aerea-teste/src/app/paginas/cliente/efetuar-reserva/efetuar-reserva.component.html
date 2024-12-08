@@ -7,19 +7,27 @@
     <p><strong>Data/Hora:</strong> {{ voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</p>
     <p><strong>Preço do Assento:</strong> {{ voo.valorPassagem | currency: 'BRL' }}</p>
 
-    <!-- Campo para escolher a quantidade de passagens -->
     <label for="quantidade">Quantidade de Passagens:</label>
-    <input type="number" id="quantidade" [(ngModel)]="quantidadePassagens" (change)="onQuantidadePassagensChange()" min="1">
+    <input
+      type="number"
+      id="quantidade"
+      [(ngModel)]="quantidadePassagens"
+      (change)="onQuantidadePassagensChange()"
+      min="1"
+    />
 
     <p><strong>Valor Total:</strong> {{ valorTotal | currency: 'BRL' }}</p>
     <p><strong>Milhas Necessárias:</strong> {{ milhasNecessarias | number }}</p>
 
-    <!-- Campo para escolher quantas milhas usar -->
     <label for="milhasUsadas">Milhas a Usar:</label>
-    <input type="number" id="milhasUsadas" [(ngModel)]="milhasUsadas" (change)="onMilhasUsadasChange()" [max]="maxMilhasUsadas"  [min]="0">
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-  </div>
+    <input
+      type="number"
+      id="milhasUsadas"
+      [(ngModel)]="milhasUsadas"
+      (change)="onMilhasUsadasChange()"
+      [min]="0"
+    />
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <p><strong>Valor Restante a Pagar:</strong> {{ valorRestante | currency: 'BRL' }}</p>
   </div>
 
@@ -30,12 +38,11 @@
   <div *ngIf="!voo || saldoMilhas === null">
     <p>Carregando informações...</p>
   </div>
-   <!-- Botão para confirmar a compra -->
-   <button (click)="confirmarCompra()" [disabled]="valorRestante === null || valorRestante < 0 || !!errorMessage">
+
+  <button (click)="confirmarCompra()" [disabled]="valorRestante === null || valorRestante < 0 || !!errorMessage">
     Confirmar Compra
   </button>
 
-  <!-- Exibe o código da reserva gerado, após a confirmação -->
   <div *ngIf="codigoReserva">
     <p>Compra confirmada! Código da Reserva: <strong>{{ codigoReserva }}</strong></p>
   </div>

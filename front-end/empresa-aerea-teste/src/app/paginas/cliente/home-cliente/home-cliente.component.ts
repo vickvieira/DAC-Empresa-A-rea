@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CancelarReservaComponent } from '../cancelar-reserva/cancelar-reserva.component';
 import { ComprarMilhasComponent } from '../comprar-milhas/comprar-milhas.component';
+import { VooService } from '../../../services/voo.service';
 
 @Component({
   selector: 'app-home-cliente',
@@ -27,11 +28,13 @@ export class HomeClienteComponent implements OnInit {
   reservasFiltradas: Reserva[] = [];
   clienteId: number | null = null;
   expandedReserva: Reserva | null = null;
+  reservasComDetalhes: any[] = [];
 
   constructor(
     private clienteService: ClienteService,
     private milhasService: MilhasService,
     private reservaService: ReservaService,
+    private vooService: VooService,
     private route: ActivatedRoute,
     private http: HttpClient,
     private authService: AuthService,
@@ -57,30 +60,53 @@ export class HomeClienteComponent implements OnInit {
       this.router.navigate(['/login']); // Caso o ID do cliente não seja encontrado, redireciona para login
     }
   }
-
+  //atualizado fetch p/ nova model reserva
   fetchReservas(): void {
     console.log('[DEBUG] Atualizando reservas...');
-    this.http
-      .get<Reserva[]>('http://localhost:3000/reservas')
-      .subscribe((reservas) => {
+
+    if (!this.clienteId) {
+      console.error('[ERROR] Cliente ID não encontrado.');
+      return;
+    }
+
+    this.reservaService.getReservasByClienteId(this.clienteId).subscribe({
+      next: (reservas) => {
         this.reservas = reservas;
-        if (this.clienteId) {
-          this.reservasFiltradas = this.reservas
-            .filter((reserva) => reserva.clienteId === this.clienteId)
-            .sort(
-              (a, b) =>
-                new Date(b.voo.dataHora).getTime() -
-                new Date(a.voo.dataHora).getTime()
-            );
-        } else {
-          this.reservasFiltradas = [];
-          console.error('[ERROR] Cliente ID não encontrado.');
-        }
-        console.log(
-          '[DEBUG] Reservas filtradas atualizadas:',
-          this.reservasFiltradas
-        );
-      });
+        const detalhesCombinados: any[] = [];
+
+        reservas.forEach((reserva) => {
+          this.vooService.getVooByCodigo(reserva.vooCodigo).subscribe({
+            next: (voo) => {
+              detalhesCombinados.push({ ...reserva, voo }); // Combina voo dinamicamente
+
+              // Atualiza apenas após todas as reservas terem os detalhes do voo carregados
+              if (detalhesCombinados.length === reservas.length) {
+                this.reservasComDetalhes = detalhesCombinados
+                  .filter((item) => item.voo) // Exclui reservas sem detalhes de voo (se aplicável)
+                  .sort(
+                    (a, b) =>
+                      new Date(b.voo.dataHora).getTime() -
+                      new Date(a.voo.dataHora).getTime()
+                  );
+                console.log(
+                  '[DEBUG] Reservas com detalhes carregadas:',
+                  this.reservasComDetalhes
+                );
+              }
+            },
+            error: (err) => {
+              console.error(
+                `[ERROR] Falha ao buscar detalhes do voo ${reserva.vooCodigo}:`,
+                err
+              );
+            },
+          });
+        });
+      },
+      error: (err) => {
+        console.error('[ERROR] Falha ao buscar reservas:', err);
+      },
+    });
   }
 
   getCliente(id: number): void {
@@ -107,7 +133,7 @@ export class HomeClienteComponent implements OnInit {
 
   modalCancelarReserva(reserva: Reserva) {
     const modalRef = this.modalService.open(CancelarReservaComponent);
-    modalRef.componentInstance.reserva = reserva;
+    modalRef.componentInstance.reserva = { ...reserva };
   }
 
   cancelarReserva(reserva: Reserva): void {

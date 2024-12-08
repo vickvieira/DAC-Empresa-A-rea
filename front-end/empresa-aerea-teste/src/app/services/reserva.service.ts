@@ -8,6 +8,7 @@ import {
   Observable,
   of,
   switchMap,
+  tap,
   throwError,
 } from 'rxjs';
 import { MilhasService } from './milhas.service';
@@ -50,44 +51,68 @@ export class ReservaService {
     //status: Reserva cancelada
   }
   */
-  cancelarReserva(reservaCancelada: Reserva): Observable<Reserva> {
-    reservaCancelada.status = 'CANCELADO_RESERVA'; //pq o cliente cancelou a reserva, não o func o voo
+  cancelarReserva(reserva: Reserva): Observable<Reserva> {
+    console.log('[DEBUG] Cancelando reserva:', reserva);
 
-    return this.http.put<Reserva>(
-      `${this.apiUrl}/${reservaCancelada.id}`,
-      reservaCancelada
-    );
+    // Remove campos não relacionados antes de enviar
+    const reservaAtualizada: Partial<Reserva> = {
+      id: reserva.id,
+      codigo: reserva.codigo,
+      clienteId: reserva.clienteId,
+      vooCodigo: reserva.vooCodigo,
+      dataHoraReserva: reserva.dataHoraReserva,
+      status: 'CANCELADO_RESERVA',
+      valorGasto: reserva.valorGasto,
+      milhasUtilizadas: reserva.milhasUtilizadas,
+    };
 
-    //status: Reserva cancelada
+    console.log('[DEBUG] Enviando atualização de reserva:', reservaAtualizada);
+
+    return this.http
+      .put<Reserva>(`${this.apiUrl}/${reserva.id}`, reservaAtualizada)
+      .pipe(
+        tap((reservaAtualizada) =>
+          console.log(
+            '[DEBUG] Reserva atualizada no backend:',
+            reservaAtualizada
+          )
+        ),
+        catchError((err) => {
+          console.error('[ERROR] Falha ao cancelar reserva:', err);
+          throw err;
+        })
+      );
   }
 
   criarReserva(
     clienteId: number,
-    voo: Voo,
+    codigoVoo: string,
     quantidadePassagens: number,
     valorTotal: number,
     milhasUtilizadas: number
   ): Observable<Reserva> {
-    const codigoReserva = this.gerarCodigoReserva();
-    const dataHoraReserva = new Date().toISOString();
-
     const novaReserva: Reserva = {
-      codigo: codigoReserva,
-      dataHoraReserva: dataHoraReserva,
-      clienteId: clienteId,
-      voo: voo,
+      // id: '', // Será gerado pelo backend
+      codigo: this.gerarCodigoReserva(),
+      clienteId: clienteId, // Converte para string se necessário
+      vooCodigo: codigoVoo,
+      dataHoraReserva: new Date().toISOString(),
+      status: 'AGUARDANDO_CHECKIN', // Status inicial
       valorGasto: valorTotal,
       milhasUtilizadas: milhasUtilizadas,
-      status: 'AGUARDANDO_CHECKIN',
-      // id: '',
     };
 
-    // Atualiza o saldo de milhas do cliente
-    this.milhasService
-      .atualizarMilhas(clienteId, -milhasUtilizadas)
-      .subscribe();
+    console.log('[DEBUG] Enviando reserva para criação:', novaReserva);
 
-    return this.http.post<Reserva>(this.apiUrl, novaReserva);
+    return this.http.post<Reserva>(this.apiUrl, novaReserva).pipe(
+      tap((reservaCriada) =>
+        console.log('[DEBUG] Reserva criada com sucesso:', reservaCriada)
+      ),
+      catchError((err) => {
+        console.error('[ERROR] Falha ao criar reserva:', err);
+        throw err; // Repropaga o erro para tratamento no componente
+      })
+    );
   }
 
   confirmarEmbarque(
@@ -97,15 +122,16 @@ export class ReservaService {
     return this.http
       .get<Reserva[]>(`${this.apiUrl}?codigo=${codigoReserva}`)
       .pipe(
-        map((reservas) => {
-          if (!reservas.length) {
+        switchMap((reservas) => {
+          const reserva = reservas[0];
+          if (!reserva) {
             throw new Error('Reserva não encontrada.');
           }
 
-          const reserva = reservas[0]; // Assume que o código de reserva é único
-          if (reserva.voo.codigo !== codigoVoo) {
+          if (reserva.vooCodigo !== codigoVoo) {
             throw new Error('A reserva não pertence ao voo informado.');
           }
+
           if (reserva.status !== 'CHECKED_IN') {
             throw new Error(
               'A reserva não está no estado "Check-In Realizado".'
@@ -114,11 +140,11 @@ export class ReservaService {
 
           // Atualiza o status para EMBARCADO
           reserva.status = 'EMBARCADO';
-          return reserva;
+          return this.http.put<Reserva>(
+            `${this.apiUrl}/${reserva.id}`,
+            reserva
+          );
         }),
-        switchMap((reserva) =>
-          this.http.put<Reserva>(`${this.apiUrl}/${reserva.id}`, reserva)
-        ),
         catchError((error) => {
           console.error('Erro ao confirmar embarque:', error);
           return throwError(
@@ -128,84 +154,60 @@ export class ReservaService {
       );
   }
 
-  getReservasPorCodigoVoo(codigoVoo: string): Observable<any[]> {
+  getReservasPorCodigoVoo(codigoVoo: string): Observable<Reserva[]> {
     return this.http
-      .get<any[]>(this.apiUrl)
+      .get<Reserva[]>(this.apiUrl)
       .pipe(
         map((reservas) =>
-          reservas.filter((reserva) => reserva.voo.codigo === codigoVoo)
+          reservas.filter((reserva) => reserva.vooCodigo === codigoVoo)
         )
       );
   }
 
   atualizarReservasParaCancelamento(codigoVoo: string): Observable<Reserva[]> {
-    console.log(
-      `[DEBUG] Iniciando atualização de reservas para o voo: ${codigoVoo}`
-    );
-
     return this.getReservasPorCodigoVoo(codigoVoo).pipe(
       switchMap((reservas) => {
-        if (!reservas.length) {
-          console.error(
-            `[ERROR] Nenhuma reserva encontrada para o voo: ${codigoVoo}`
-          );
-          throw new Error('Nenhuma reserva encontrada para este voo.');
-        }
+        const reservasAtualizadas: Observable<Reserva>[] = reservas.map(
+          (reserva) => {
+            // Atualiza o status da reserva para CANCELADO_VOO
+            const reservaAtualizada = { ...reserva, status: 'CANCELADO_VOO' };
 
-        console.log(
-          `[DEBUG] Reservas encontradas para o voo ${codigoVoo}:`,
-          reservas
-        );
-
-        // Atualiza o status de cada reserva
-        const atualizacoes = reservas.map((reserva) => {
-          console.log(
-            `[DEBUG] Atualizando reserva ${reserva.codigo} - Status atual: ${reserva.status}`
-          );
-
-          reserva.status = 'CANCELADO_VOO';
-          reserva.voo.status = 'CANCELADO'; // Reflete o novo status no voo embutido
-
-          console.log(
-            `[DEBUG] Novo status da reserva ${reserva.codigo}: ${reserva.status}`
-          );
-
-          // this.reembolsarMilhasReserva(reserva);
-          return this.reembolsarMilhasReserva(reserva).pipe(
-            switchMap(() =>
-              this.http
-                .put<Reserva>(`${this.apiUrl}/${reserva.id}`, reserva)
-                .pipe(
-                  map((reservaAtualizada) => {
-                    console.log(
-                      `[DEBUG] Reserva atualizada no backend:`,
-                      reservaAtualizada
-                    );
-                    return reservaAtualizada;
-                  }),
-                  catchError((error) => {
-                    console.error(
-                      `[ERROR] Falha ao atualizar a reserva ${reserva.codigo}:`,
-                      error
-                    );
-                    throw error;
-                  })
+            // Reembolsa as milhas, se aplicável
+            if (reserva.milhasUtilizadas > 0) {
+              console.log(
+                `[DEBUG] Reembolsando ${reserva.milhasUtilizadas} milhas ao cliente ${reserva.clienteId}.`
+              );
+              this.milhasService
+                .atualizarMilhas(
+                  Number(reserva.clienteId),
+                  reserva.milhasUtilizadas
                 )
-            )
-          );
-        });
+                .subscribe();
+            }
 
-        // Executa todas as atualizações
-        return forkJoin(atualizacoes);
+            // Atualiza a reserva no backend
+            return this.http.put<Reserva>(
+              `${this.apiUrl}/${reserva.id}`,
+              reservaAtualizada
+            );
+          }
+        );
+
+        // Aguarda todas as atualizações das reservas
+        return forkJoin(reservasAtualizadas);
       }),
-      catchError((error) => {
+      tap((reservasAtualizadas) => {
+        console.log(
+          '[DEBUG] Reservas atualizadas para cancelamento de voo:',
+          reservasAtualizadas
+        );
+      }),
+      catchError((err) => {
         console.error(
-          `[ERROR] Erro ao atualizar reservas associadas ao voo ${codigoVoo}:`,
-          error
+          '[ERROR] Falha ao atualizar reservas para cancelamento de voo:',
+          err
         );
-        return throwError(
-          () => new Error(error.message || 'Erro desconhecido.')
-        );
+        throw err;
       })
     );
   }
@@ -217,7 +219,7 @@ export class ReservaService {
       );
       return this.milhasService.reembolsarMilhas(
         reserva.clienteId,
-        `Cancelamento do voo ${reserva.voo.codigo}`,
+        `Cancelamento do voo ${reserva.vooCodigo}`,
         reserva.milhasUtilizadas
       );
     } else {
@@ -248,31 +250,12 @@ export class ReservaService {
         );
 
         const atualizacoes = reservas.map((reserva) => {
-          if (reserva.status === 'EMBARCADO') {
-            reserva.status = 'REALIZADO';
-          } else if (
-            reserva.status === 'CHECKED_IN' ||
-            reserva.status === 'AGUARDANDO_CHECKIN' ||
-            reserva.status === 'RESERVADO'
-          ) {
-            reserva.status = 'NÃO_REALIZADO';
-          }
-
-          console.log(
-            `[DEBUG] Atualizando reserva ${reserva.codigo} para ${reserva.status}.`
+          reserva.status =
+            reserva.status === 'EMBARCADO' ? 'REALIZADO' : 'NÃO_REALIZADO';
+          return this.http.put<Reserva>(
+            `${this.apiUrl}/${reserva.id}`,
+            reserva
           );
-
-          return this.http
-            .put<Reserva>(`${this.apiUrl}/${reserva.id}`, reserva)
-            .pipe(
-              map((reservaAtualizada) => {
-                console.log(
-                  `[DEBUG] Reserva atualizada no backend:`,
-                  reservaAtualizada
-                );
-                return reservaAtualizada;
-              })
-            );
         });
 
         return forkJoin(atualizacoes);
