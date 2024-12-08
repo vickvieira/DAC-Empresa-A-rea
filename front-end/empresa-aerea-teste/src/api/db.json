@@ -57,7 +57,7 @@
   "milhas": [
     {
       "id": "1",
-      "saldo": 80350
+      "saldo": 70349
     },
     {
       "clienteId": 2,
@@ -415,6 +415,46 @@
       "valorGasto": 1200.75,
       "milhasUtilizadas": 25,
       "status": "CANCELADO_VOO"
+    },
+    {
+      "id": "f579",
+      "codigo": "PDM229",
+      "dataHoraReserva": "2024-12-08T02:01:14.415Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "CON6789",
+        "dataHora": "2024-12-09T02:00:00",
+        "origem": "FRA",
+        "destino": "MUN",
+        "valorPassagem": 15000,
+        "quantidadePoltronas": 170,
+        "poltronasOcupadas": 90,
+        "status": "CONFIRMADO",
+        "id": "0c48"
+      },
+      "valorGasto": 15000,
+      "milhasUtilizadas": 10000,
+      "status": "NÃO_REALIZADO"
+    },
+    {
+      "id": "c525",
+      "codigo": "QHV678",
+      "dataHoraReserva": "2024-12-08T02:01:51.907Z",
+      "clienteId": "1",
+      "voo": {
+        "codigo": "CON6789",
+        "dataHora": "2024-12-09T02:00:00",
+        "origem": "FRA",
+        "destino": "MUN",
+        "valorPassagem": 15000,
+        "quantidadePoltronas": 170,
+        "poltronasOcupadas": 90,
+        "status": "CONFIRMADO",
+        "id": "0c48"
+      },
+      "valorGasto": 15000,
+      "milhasUtilizadas": 1,
+      "status": "REALIZADO"
     }
   ],
   "endereco": [
@@ -578,6 +618,17 @@
       "poltronasOcupadas": 90,
       "status": "CONFIRMADO",
       "id": "0c42"
+    },
+    {
+      "codigo": "CON6789",
+      "dataHora": "2024-12-09T02:00:00",
+      "origem": "FRA",
+      "destino": "MUN",
+      "valorPassagem": 15000,
+      "quantidadePoltronas": 170,
+      "poltronasOcupadas": 90,
+      "status": "REALIZADO",
+      "id": "0c48"
     }
   ],
   "transacoes_milhas": [

@@ -103,8 +103,36 @@ export class HomeFuncComponent implements OnInit {
     }
   }
 
-  realizarVoo(codigo: string): void {
-    console.log('Realização do voo:', codigo);
-    // Implementar lógica de realização (R14)
+  realizarVoo(codigoVoo: string): void {
+    console.log(`[DEBUG] Iniciando realização do voo: ${codigoVoo}`);
+
+    if (confirm('Tem certeza de que deseja marcar este voo como realizado?')) {
+      this.vooService.realizarVoo(codigoVoo).subscribe({
+        next: () => {
+          console.log(`[DEBUG] Voo ${codigoVoo} realizado com sucesso.`);
+
+          this.reservaService
+            .atualizarReservasParaRealizacao(codigoVoo)
+            .subscribe({
+              next: (reservasAtualizadas) => {
+                console.log(
+                  `[DEBUG] Reservas atualizadas para o voo ${codigoVoo}:`,
+                  reservasAtualizadas
+                );
+                alert(
+                  'Voo e reservas associadas marcados como realizados com sucesso!'
+                );
+                this.ngOnInit(); // Recarrega a lista de voos
+              },
+              error: (err) => {
+                alert(`Erro ao atualizar reservas: ${err.message}`);
+              },
+            });
+        },
+        error: (err) => {
+          alert(`Erro ao realizar voo: ${err.message}`);
+        },
+      });
+    }
   }
 }

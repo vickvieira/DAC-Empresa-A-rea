@@ -106,9 +106,9 @@ export class ReservaService {
           if (reserva.voo.codigo !== codigoVoo) {
             throw new Error('A reserva não pertence ao voo informado.');
           }
-          if (reserva.status !== 'AGUARDANDO_CHECKIN') {
+          if (reserva.status !== 'CHECKED_IN') {
             throw new Error(
-              'A reserva não está no estado "Aguardando Check-In".'
+              'A reserva não está no estado "Check-In Realizado".'
             );
           }
 
@@ -209,6 +209,7 @@ export class ReservaService {
       })
     );
   }
+
   reembolsarMilhasReserva(reserva: Reserva): Observable<any> {
     if (reserva.milhasUtilizadas > 0) {
       console.log(
@@ -225,6 +226,67 @@ export class ReservaService {
       );
       return of(null); // Retorna um Observable vazio para evitar erros
     }
+  }
+
+  atualizarReservasParaRealizacao(codigoVoo: string): Observable<Reserva[]> {
+    console.log(
+      `[DEBUG] Atualizando reservas para o voo realizado: ${codigoVoo}`
+    );
+
+    return this.getReservasPorCodigoVoo(codigoVoo).pipe(
+      switchMap((reservas) => {
+        if (!reservas.length) {
+          console.warn(
+            `[DEBUG] Nenhuma reserva encontrada para o voo ${codigoVoo}.`
+          );
+          return of([]); // Retorna lista vazia
+        }
+
+        console.log(
+          `[DEBUG] Reservas encontradas para o voo ${codigoVoo}:`,
+          reservas
+        );
+
+        const atualizacoes = reservas.map((reserva) => {
+          if (reserva.status === 'EMBARCADO') {
+            reserva.status = 'REALIZADO';
+          } else if (
+            reserva.status === 'CHECKED_IN' ||
+            reserva.status === 'AGUARDANDO_CHECKIN' ||
+            reserva.status === 'RESERVADO'
+          ) {
+            reserva.status = 'NÃO_REALIZADO';
+          }
+
+          console.log(
+            `[DEBUG] Atualizando reserva ${reserva.codigo} para ${reserva.status}.`
+          );
+
+          return this.http
+            .put<Reserva>(`${this.apiUrl}/${reserva.id}`, reserva)
+            .pipe(
+              map((reservaAtualizada) => {
+                console.log(
+                  `[DEBUG] Reserva atualizada no backend:`,
+                  reservaAtualizada
+                );
+                return reservaAtualizada;
+              })
+            );
+        });
+
+        return forkJoin(atualizacoes);
+      }),
+      catchError((error) => {
+        console.error(
+          `[ERROR] Erro ao atualizar reservas para o voo ${codigoVoo}:`,
+          error
+        );
+        return throwError(
+          () => new Error(error.message || 'Erro ao atualizar reservas.')
+        );
+      })
+    );
   }
 }
 
