@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { VooService } from '../../../services/voo.service';
 import { ReservaService } from '../../../services/reserva.service';
 import { FormsModule } from '@angular/forms';
+import { MilhasService } from '../../../services/milhas.service';
 
 @Component({
   selector: 'app-home-func',
@@ -18,7 +19,8 @@ export class HomeFuncComponent implements OnInit {
 
   constructor(
     private vooService: VooService,
-    private reservaService: ReservaService
+    private reservaService: ReservaService,
+    private milhasService: MilhasService
   ) {}
 
   ngOnInit(): void {
@@ -79,11 +81,34 @@ export class HomeFuncComponent implements OnInit {
             .atualizarReservasParaCancelamento(codigoVoo)
             .subscribe({
               next: (reservasAtualizadas) => {
+                reservasAtualizadas.forEach((reserva) => {
+                  if (reserva.milhasUtilizadas > 0) {
+                    this.milhasService
+                      .reembolsarMilhas(
+                        Number(reserva.clienteId),
+                        `Cancelamento do voo ${codigoVoo}`,
+                        reserva.milhasUtilizadas
+                      )
+                      .subscribe({
+                        next: () =>
+                          console.log(
+                            `[DEBUG] Milhas reembolsadas para a reserva ${reserva.codigo}.`
+                          ),
+                        error: (err) =>
+                          console.error(
+                            `[ERROR] Falha ao reembolsar milhas para a reserva ${reserva.codigo}:`,
+                            err
+                          ),
+                      });
+                  }
+                });
+
                 console.log(
-                  `[DEBUG] Reservas atualizadas com sucesso para o voo ${codigoVoo}:`,
-                  reservasAtualizadas
+                  `[DEBUG] Reservas associadas ao voo ${codigoVoo} atualizadas.`
                 );
-                alert('Voo e reservas associadas cancelados com sucesso!');
+                alert(
+                  'Voo e reservas associadas cancelados com sucesso! Milhas foram reembolsadas.'
+                );
                 this.ngOnInit(); // Recarrega a lista de voos
               },
               error: (err) => {

@@ -37,7 +37,7 @@ export class MilhasService {
       .pipe(
         switchMap((milhasArray: Milhas[]) => {
           if (milhasArray.length === 0) {
-            return throwError('Milhas do cliente não encontradas');
+            throw new Error(`Milhas do cliente ${clienteId} não encontradas.`);
           }
 
           const milhasCliente = milhasArray[0];
@@ -51,6 +51,19 @@ export class MilhasService {
             `${this.apiUrl}/${milhasCliente.id}`,
             milhasAtualizadas
           );
+        }),
+        tap((milhasAtualizadas) => {
+          console.log(
+            `[DEBUG] Milhas atualizadas para cliente ${clienteId}:`,
+            milhasAtualizadas
+          );
+        }),
+        catchError((err) => {
+          console.error(
+            `[ERROR] Falha ao atualizar milhas do cliente ${clienteId}:`,
+            err
+          );
+          throw err;
         })
       );
   }
@@ -147,11 +160,29 @@ export class MilhasService {
   }
 
   inserirCompraMilhas(extratoMilhas: ExtratoMilhas): Observable<ExtratoMilhas> {
-    return this.http.post<ExtratoMilhas>(
-      this.apiUrlTransacoes,
-      JSON.stringify(extratoMilhas),
-      this.httpOption
-    );
+    console.log('[DEBUG] Enviando transação para o backend:', extratoMilhas);
+
+    return this.http
+      .post<ExtratoMilhas>(
+        this.apiUrlTransacoes,
+        JSON.stringify(extratoMilhas),
+        this.httpOption
+      )
+      .pipe(
+        tap((transacaoCriada) =>
+          console.log(
+            '[DEBUG] Transação registrada com sucesso:',
+            transacaoCriada
+          )
+        ),
+        catchError((error) => {
+          console.error(
+            '[ERROR] Falha ao registrar transação no backend:',
+            error
+          );
+          throw error;
+        })
+      );
   }
 
   /*  
@@ -196,12 +227,21 @@ export class MilhasService {
           descricao: descricao,
         };
 
+        console.log('[DEBUG] Registrando no extrato:', extrato);
+
         return this.inserirCompraMilhas(extrato).pipe(
           tap(() =>
             console.log(
               `[DEBUG] Reembolso registrado no extrato para o cliente ${clienteId}.`
             )
-          )
+          ),
+          catchError((error) => {
+            console.error(
+              `[ERROR] Falha ao registrar reembolso no extrato do cliente ${clienteId}:`,
+              error
+            );
+            throw error;
+          })
         );
       }),
       catchError((error) => {

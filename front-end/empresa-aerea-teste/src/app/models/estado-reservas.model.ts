@@ -1,5 +1,4 @@
 export type EstadoReserva =
-  | 'RESERVADO'
   | 'AGUARDANDO_CHECKIN'
   | 'CHECKED_IN'
   | 'EMBARCADO'

@@ -1,5 +1,16 @@
-import { Component, inject, Injectable, Input, TemplateRef } from '@angular/core';
-import { ModalDismissReasons, NgbActiveModal, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  Component,
+  inject,
+  Injectable,
+  Input,
+  TemplateRef,
+} from '@angular/core';
+import {
+  ModalDismissReasons,
+  NgbActiveModal,
+  NgbDatepickerModule,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
 import { Reserva } from '../../../models/reserva.model';
 import { ReservaService } from '../../../services/reserva.service';
 import { Cliente } from '../../../models/cliente.model';
@@ -9,18 +20,16 @@ import { Router } from '@angular/router';
 import { ComprarMilhasComponent } from '../comprar-milhas/comprar-milhas.component';
 import { ExtratoMilhas } from '../../../models/extrato-milhas.model';
 
-
 @Component({
   selector: 'app-cancelar-compra',
   standalone: true,
-  imports: [NgbDatepickerModule,],
+  imports: [NgbDatepickerModule],
   templateUrl: './cancelar-reserva.component.html',
-  styleUrl: './cancelar-reserva.component.css'
+  styleUrl: './cancelar-reserva.component.css',
 })
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class CancelarReservaComponent {
   @Input() reserva!: Reserva;
   reservas: Reserva[] = [];
@@ -29,11 +38,12 @@ export class CancelarReservaComponent {
   cliente!: Cliente | null;
   valorNovo!: ExtratoMilhas;
   //reserva: Reserva | undefined;
-  constructor(public activeModal: NgbActiveModal,
+  constructor(
+    public activeModal: NgbActiveModal,
     private reservaService: ReservaService,
     private compraMilhas: ComprarMilhasComponent,
-    private authService: AuthService,
-  ) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -56,35 +66,43 @@ export class CancelarReservaComponent {
   */
 
   getReservas(clienteId: number): void {
-    this.reservaService.getReservasByClienteId(clienteId).subscribe((data: Reserva[]) => {
-      this.reservas = data;
-    });
+    this.reservaService
+      .getReservasByClienteId(clienteId)
+      .subscribe((data: Reserva[]) => {
+        this.reservas = data;
+      });
   }
 
   cancelarReserva(reserva: Reserva): void {
-    console.log("codigo cancelar reserva: " + reserva.id);
-    //this.reservaService.cancelarReserva(id).subscribe(() => {
-    //this.reservas = this.reservas.filter(reserva => reserva.codigo !== codigo);
-    /*
-    this.reservaService.cancelarReserva(reserva).subscribe({
-      complete: () => { this.getReservas(1); }
-    });
-    */
+    console.log('[DEBUG] Cancelando reserva:', reserva);
 
     this.reservaService.cancelarReserva(reserva).subscribe({
-      next: response => {
-        console.log('REserva cancelada com sucesso ??????:', response);
-      }
+      next: (reservaAtualizada) => {
+        console.log(
+          '[DEBUG] Reserva cancelada com sucesso:',
+          reservaAtualizada
+        );
+
+        // Reembolsa as milhas, se aplicável
+        if (reserva.milhasUtilizadas > 0) {
+          console.log(
+            `[DEBUG] Reembolsando ${reserva.milhasUtilizadas} milhas ao cliente.`
+          );
+          this.compraMilhas.comprarMilhas(
+            `Cancelamento da reserva ${reserva.codigo}`,
+            reserva.milhasUtilizadas
+          );
+        }
+
+        this.open(); // Modal de confirmação
+        this.activeModal.dismiss(); // Fecha o modal atual
+      },
+      error: (err) => {
+        console.error('[ERROR] Falha ao cancelar reserva:', err);
+        alert('Erro ao cancelar a reserva. Tente novamente.');
+      },
     });
-
-    this.compraMilhas.comprarMilhas('cancelamento da reserva ' + reserva.codigo, reserva.milhasUtilizadas);
-    this.open();
-    this.activeModal.dismiss();
-
-  };
-
-
-
+  }
 
   // aqui pra baixo é relacionado ao modal de confirmacao
   private modalService = inject(NgbModal);
@@ -93,26 +111,28 @@ export class CancelarReservaComponent {
   open() {
     this.modalService.open(NgbdModal2Content, { size: 'lg' });
   }
-
-
 }
-
-
 
 //MODAL DE CONFIRMACAO
 @Component({
   standalone: true,
   template: `
-      <div class="modal-header">
-        <h4 class="modal-title">Cancelar Reserva</h4>
-      </div>
-      <div class="modal-body">
-        <p>Sua Reserva foi cancelada! </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="fecharModalEAtualizarPagina()">Close</button>
-      </div>
-    `,
+    <div class="modal-header">
+      <h4 class="modal-title">Cancelar Reserva</h4>
+    </div>
+    <div class="modal-body">
+      <p>Sua Reserva foi cancelada!</p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="fecharModalEAtualizarPagina()"
+      >
+        Close
+      </button>
+    </div>
+  `,
 })
 export class NgbdModal2Content {
   activeModal = inject(NgbActiveModal);
@@ -124,5 +144,4 @@ export class NgbdModal2Content {
   atualizarPagina(): void {
     window.location.reload();
   }
-
 }

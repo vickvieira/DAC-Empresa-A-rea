@@ -12,7 +12,7 @@ import { ReservaService } from '../../../services/reserva.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './efetuar-reserva.component.html',
-  styleUrls: ['./efetuar-reserva.component.css']
+  styleUrls: ['./efetuar-reserva.component.css'],
 })
 export class EfetuarReservaComponent implements OnInit {
   voo: any;
@@ -25,6 +25,7 @@ export class EfetuarReservaComponent implements OnInit {
   milhasNecessarias: number = 0;
   maxMilhasUsadas: number = 0;
   errorMessage: string | null = null;
+  assentosDisponiveis: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +44,8 @@ export class EfetuarReservaComponent implements OnInit {
       this.vooService.getVooByCodigo(codigoVoo).subscribe((voo) => {
         if (voo) {
           this.voo = voo; // Voo encontrado
+          this.assentosDisponiveis =
+            voo.quantidadePoltronas - voo.poltronasOcupadas; // Calcula assentos disponíveis
           this.calcularValorTotal(); // Calcular o valor total inicial
         } else {
           console.error('Voo não encontrado.');
@@ -61,8 +64,9 @@ export class EfetuarReservaComponent implements OnInit {
   calcularValorTotal(): void {
     if (this.voo) {
       this.valorTotal = this.voo.valorPassagem * this.quantidadePassagens;
-      this.calcularMilhasNecessarias();// Calcula as milhas necessárias
+      this.calcularMilhasNecessarias(); // Calcula as milhas necessárias
       this.calcularValorRestante(); //recalcula
+      this.validarAssentos(); // Valida se os assentos estão disponíveis
     }
   }
 
@@ -70,16 +74,29 @@ export class EfetuarReservaComponent implements OnInit {
   calcularMilhasNecessarias(): void {
     if (this.voo) {
       // Regra: 10x o valor da passagem em milhas
-      this.milhasNecessarias = this.valorTotal * 10;
+      this.milhasNecessarias = this.valorTotal * 5;
     }
   }
 
   calcularValorRestante(): void {
     if (this.saldoMilhas !== null && this.milhasUsadas <= this.saldoMilhas) {
       const milhasDesconto = Math.min(this.milhasUsadas, this.valorTotal * 10); // Máximo de milhas aplicável
-      this.valorRestante = this.valorTotal - (milhasDesconto / 10); // 10 milhas = R$ 1
+      this.valorRestante = this.valorTotal - milhasDesconto / 5; // 5 milhas = R$ 1
     } else {
       this.valorRestante = this.valorTotal; // Se não houver milhas ou exceder o saldo, paga o valor total
+    }
+  }
+  validarAssentos(): void {
+    const assentosRestantes =
+      this.voo.quantidadePoltronas -
+      this.voo.poltronasOcupadas -
+      this.quantidadePassagens;
+
+    if (assentosRestantes < 0) {
+      this.errorMessage = `Não há assentos disponíveis suficientes. Restam apenas ${this.assentosDisponiveis} assento(s).`;
+    } else {
+      this.assentosDisponiveis = assentosRestantes; // Atualiza dinamicamente os assentos disponíveis
+      this.errorMessage = null;
     }
   }
 
@@ -87,12 +104,12 @@ export class EfetuarReservaComponent implements OnInit {
     this.calcularValorTotal(); // Recalcula o valor total e o valor restante ao mudar a quantidade de passagens
   }
 
-//   calcularMaxMilhas(): number {
-//     this.maxMilhasUsadas = Math.min(this.saldoMilhas || 0, this.valorTotal * 10); // 10 é o fator de conversão
-//     return this.maxMilhasUsadas;
-// }
+  //   calcularMaxMilhas(): number {
+  //     this.maxMilhasUsadas = Math.min(this.saldoMilhas || 0, this.valorTotal * 10); // 10 é o fator de conversão
+  //     return this.maxMilhasUsadas;
+  // }
   onMilhasUsadasChange(): void {
-    const maxMilhas = Math.min(this.saldoMilhas || 0, this.valorTotal * 10); // 10 é o fator de conversão
+    const maxMilhas = Math.min(this.saldoMilhas || 0, this.valorTotal * 5); // 5 é o fator de conversão
     if (this.milhasUsadas > maxMilhas) {
       this.errorMessage = `Você só pode usar até ${maxMilhas} milhas.`;
     } else {
@@ -101,16 +118,34 @@ export class EfetuarReservaComponent implements OnInit {
     this.calcularValorRestante(); // Recalcula o valor restante ao mudar a quantidade de milhas
   }
 
-
   // Confirmar a compra e gerar o código de reserva
   confirmarCompra(): void {
     const clienteId = this.authService.getClienteId();
-    if (clienteId !== null) {
-      this.reservaService.criarReserva(clienteId, this.voo, this.quantidadePassagens, this.valorTotal, this.milhasUsadas)
-        .subscribe(() => console.log('Reserva criada com sucesso!'));
+    const codigoVoo = this.route.snapshot.paramMap.get('codigo'); // Captura o código do voo
+
+    if (clienteId !== null && codigoVoo && !this.errorMessage) {
+      this.reservaService
+        .criarReserva(
+          clienteId,
+          codigoVoo,
+          this.quantidadePassagens,
+          this.valorTotal,
+          this.milhasUsadas
+        )
+        .subscribe({
+          next: (reservaCriada) => {
+            console.log('[DEBUG] Reserva criada com sucesso:', reservaCriada);
+            this.codigoReserva = reservaCriada.codigo; // Atualiza o código da reserva gerada
+          },
+          error: (err) => {
+            console.error('[ERROR] Falha ao criar reserva:', err);
+            alert('Falha ao criar reserva. Tente novamente.');
+          },
+        });
+    } else {
+      console.error('[ERROR] Cliente ou código do voo não encontrado.');
     }
   }
-  
 
   // Função para gerar um código de reserva único (3 letras e 3 números)
   gerarCodigoReserva(): string {
