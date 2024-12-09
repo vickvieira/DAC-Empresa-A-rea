@@ -3,20 +3,22 @@ package dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
 public class VooDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String codigoVoo;
     private LocalDateTime dataHora;
-    private AeroportoDTO aeroportoOrigem; 
-    private AeroportoDTO aeroportoDestino;
+    private String aeroportoOrigem;
+    private String aeroportoDestino;
     private Double valorPassagem;
     private Integer quantidadePoltronasTotal;
     private Integer quantidadePoltronasOcupadas;
-    
+
     public VooDTO() {}
 
-    public VooDTO(String codigoVoo, LocalDateTime dataHora, AeroportoDTO aeroportoOrigem, AeroportoDTO aeroportoDestino,
+    public VooDTO(String codigoVoo, LocalDateTime dataHora, String aeroportoOrigem, String aeroportoDestino,
                   Double valorPassagem, Integer quantidadePoltronasTotal, Integer quantidadePoltronasOcupadas) {
         this.codigoVoo = codigoVoo;
         this.dataHora = dataHora;
@@ -44,19 +46,19 @@ public class VooDTO implements Serializable {
         this.dataHora = dataHora;
     }
 
-    public AeroportoDTO getAeroportoOrigem() {
+    public String getAeroportoOrigem() {
         return aeroportoOrigem;
     }
 
-    public void setAeroportoOrigem(AeroportoDTO aeroportoOrigem) {
+    public void setAeroportoOrigem(String aeroportoOrigem) {
         this.aeroportoOrigem = aeroportoOrigem;
     }
 
-    public AeroportoDTO getAeroportoDestino() {
+    public String getAeroportoDestino() {
         return aeroportoDestino;
     }
 
-    public void setAeroportoDestino(AeroportoDTO aeroportoDestino) {
+    public void setAeroportoDestino(String aeroportoDestino) {
         this.aeroportoDestino = aeroportoDestino;
     }
 

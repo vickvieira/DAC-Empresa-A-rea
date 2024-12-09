@@ -8,18 +8,18 @@ public class SagaReservaRequisition implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int idCliente;
+    private Long idCliente;
     private VooDTO voo;
     private ReservaDTO reserva;
 
     public SagaReservaRequisition() {}
 
     // Getters e Setters
-    public int getIdCliente() {
+    public Long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
     }
 

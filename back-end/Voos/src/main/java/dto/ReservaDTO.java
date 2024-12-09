@@ -2,47 +2,31 @@ package dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "reservas")
+
 public class ReservaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "codigo_reserva", nullable = false, unique = true, length = 10)
     private String codigoReserva;
-
-    @Column(name = "codigo_voo", nullable = false, length = 10)
     private String codigoVoo;
-
-    @Column(name = "data_hora_reserva", nullable = false)
     private LocalDateTime dataHoraReserva;
-
-    @Column(name = "valor_pago")
     private double valorPago;
-
-    @Column(name = "milhas_gastas")
     private int milhasGastas;
-
-    @Column(name = "quantidade_poltronas_reservadas", nullable = false)
     private int quantidadePoltronasReservadas;
-
-    @Column(name = "estado_reserva", nullable = false, length = 10)
-    private String estadoReserva; // Código do estado da reserva
+    private String estadoReserva;
+    private Long idCliente;
 
     public ReservaDTO() {}
 
-    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas) {
+    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas, Long clienteId) {
         this.codigoReserva = codigoReserva;
         this.codigoVoo = codigoVoo;
         this.dataHoraReserva = dataHoraReserva;
         this.estadoReserva = estadoReserva;
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+        this.idCliente = clienteId;
     }
 
     // Getters e Setters
@@ -108,5 +92,13 @@ public class ReservaDTO implements Serializable {
 
     public void setQuantidadePoltronasReservadas(int quantidadePoltronasReservadas) {
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+    }
+
+    public Long getClienteId() {
+        return idCliente;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.idCliente = clienteId;
     }
 }

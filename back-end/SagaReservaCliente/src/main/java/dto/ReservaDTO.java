@@ -2,14 +2,13 @@ package dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
+
 
 public class ReservaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
     private String codigoReserva;
     private String codigoVoo;
     private LocalDateTime dataHoraReserva;
@@ -17,15 +16,17 @@ public class ReservaDTO implements Serializable {
     private int milhasGastas;
     private int quantidadePoltronasReservadas;
     private String estadoReserva;
+    private Long idCliente;
 
     public ReservaDTO() {}
 
-    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas) {
+    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas, Long idCliente) {
         this.codigoReserva = codigoReserva;
         this.codigoVoo = codigoVoo;
         this.dataHoraReserva = dataHoraReserva;
         this.estadoReserva = estadoReserva;
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+        this.idCliente = idCliente;
     }
 
     // Getters e Setters
@@ -91,5 +92,13 @@ public class ReservaDTO implements Serializable {
 
     public void setQuantidadePoltronasReservadas(int quantidadePoltronasReservadas) {
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+    }
+
+    public Long getClienteId() {
+        return idCliente;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.idCliente = clienteId;
     }
 }
