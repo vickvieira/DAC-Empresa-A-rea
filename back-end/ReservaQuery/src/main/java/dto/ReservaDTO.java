@@ -35,14 +35,20 @@ public class ReservaDTO implements Serializable {
     @Column(name = "estado_reserva", nullable = false, length = 10)
     private String estadoReserva;
 
+    @Column(name = "id_cliente", nullable = false)
+    private Long idCliente;
+
     public ReservaDTO() {}
 
-    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas) {
+    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas, double valorPago, int milhasGastas, Long idCliente) {
         this.codigoReserva = codigoReserva;
         this.codigoVoo = codigoVoo;
         this.dataHoraReserva = dataHoraReserva;
         this.estadoReserva = estadoReserva;
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+        this.valorPago = valorPago;
+        this.milhasGastas = milhasGastas;
+        this.idCliente = idCliente;
     }
 
     // Getters e Setters
@@ -108,5 +114,13 @@ public class ReservaDTO implements Serializable {
 
     public void setQuantidadePoltronasReservadas(int quantidadePoltronasReservadas) {
         this.quantidadePoltronasReservadas = quantidadePoltronasReservadas;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long clienteId) {
+        this.idCliente = clienteId;
     }
 }

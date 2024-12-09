@@ -47,6 +47,7 @@ public class RabbitMQConfig {
     private void adicionaFilas() {
 		Queue filaReserva = this.fila(RabbitmqConstantes.FILA_RESERVA);
         Queue filaVoo = this.fila(RabbitmqConstantes.FILA_VOO);
+        Queue filaVooAtualizado = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
 //        Queue filaCadastrado = this.fila(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO);
 //        Queue filaEmail = this.fila(RabbitmqConstantes.FILA_ENVIAR_EMAIL);
 //        Queue filaRollback = this.fila(RabbitmqConstantes.FILA_ROLLBACK);
@@ -55,12 +56,14 @@ public class RabbitMQConfig {
 
         Binding ligacaoReserva = this.relacionamento(filaReserva, troca);
         Binding ligacaoVoo = this.relacionamento(filaVoo, troca);
+        Binding ligacaoVooAtualizado = this.relacionamento(filaVooAtualizado, troca);
 //        Binding ligacaoCadastrado =  this.relacionamento(filaCadastrado, troca);
 //        Binding ligacaoEmail =  this.relacionamento(filaEmail, troca);
 //        Binding ligacaoRollback =  this.relacionamento(filaRollback, troca);
         
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
+        this.amqpAdmin.declareQueue(filaVooAtualizado);
 //        this.amqpAdmin.declareQueue(filaCadastrado);
 //        this.amqpAdmin.declareQueue(filaEmail);
 //        this.amqpAdmin.declareQueue(filaRollback);
@@ -68,6 +71,7 @@ public class RabbitMQConfig {
 
         this.amqpAdmin.declareBinding(ligacaoReserva);
         this.amqpAdmin.declareBinding(ligacaoVoo);
+        this.amqpAdmin.declareBinding(ligacaoVooAtualizado);
 //        this.amqpAdmin.declareBinding(ligacaoCadastrado);
 //        this.amqpAdmin.declareBinding(ligacaoEmail);
 //        this.amqpAdmin.declareBinding(ligacaoRollback);

@@ -12,7 +12,7 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class RabbitMQConfig {
     private static final String NOME_EXCHANGE = "SagaClienteReserva";
-    private static final String NOME_EXCHANGE_ATUALIZARQUERY = "AtualizarQuery";
+    private static final String NOME_EXCHANGE_CQRS = "CQRS";
 
     private final AmqpAdmin amqpAdmin;
 
@@ -36,30 +36,38 @@ public class RabbitMQConfig {
 
     @PostConstruct
     private void adicionaFilas() {
-        // Fila e exchange para reserva
+        // SagaClienteReserva Exchange
         Queue filaReserva = this.fila(RabbitmqConstantes.FILA_RESERVA);
         Queue filaVoo = this.fila(RabbitmqConstantes.FILA_VOO);
+        Queue filaVooAtualizadoSaga = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
 
         DirectExchange trocaSaga = this.trocaDireta(NOME_EXCHANGE);
 
         Binding ligacaoReserva = this.relacionamento(filaReserva, trocaSaga);
         Binding ligacaoVoo = this.relacionamento(filaVoo, trocaSaga);
+        Binding ligacaoVooAtualizadoSaga = this.relacionamento(filaVooAtualizadoSaga, trocaSaga);
 
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
+        this.amqpAdmin.declareQueue(filaVooAtualizadoSaga);
+
         this.amqpAdmin.declareExchange(trocaSaga);
+
         this.amqpAdmin.declareBinding(ligacaoReserva);
         this.amqpAdmin.declareBinding(ligacaoVoo);
+        this.amqpAdmin.declareBinding(ligacaoVooAtualizadoSaga);
 
-        // Fila e exchange para atualizar query
-        Queue filaAtualizaReservaQuery = this.fila(RabbitmqConstantes.FILA_atualizaReservaQ);
+        // CQRS Exchange
+        Queue filaAtualizaReservaQ = this.fila(RabbitmqConstantes.FILA_atualizaReservaQ);
 
-        DirectExchange trocaAtualizarQuery = this.trocaDireta(NOME_EXCHANGE_ATUALIZARQUERY);
+        DirectExchange trocaCQRS = this.trocaDireta(NOME_EXCHANGE_CQRS);
 
-        Binding ligacaoAtualizarQuery = this.relacionamento(filaAtualizaReservaQuery, trocaAtualizarQuery);
+        Binding ligacaoAtualizaReservaQ = this.relacionamento(filaAtualizaReservaQ, trocaCQRS);
 
-        this.amqpAdmin.declareQueue(filaAtualizaReservaQuery);
-        this.amqpAdmin.declareExchange(trocaAtualizarQuery);
-        this.amqpAdmin.declareBinding(ligacaoAtualizarQuery);
+        this.amqpAdmin.declareQueue(filaAtualizaReservaQ);
+
+        this.amqpAdmin.declareExchange(trocaCQRS);
+
+        this.amqpAdmin.declareBinding(ligacaoAtualizaReservaQ);
     }
 }
