@@ -36,16 +36,15 @@ public class VooService {
 
 
     public List<VooDTO> buscarVoos(String aeroportoOrigem, String aeroportoDestino) {
-        if (aeroportoOrigem != null && aeroportoDestino != null) {
-            return vooRepository.findByAeroportoOrigemCodigoAndAeroportoDestinoCodigo(aeroportoOrigem, aeroportoDestino);
+        if (aeroportoOrigem == null || aeroportoDestino == null) {
+            throw new IllegalArgumentException("Os parâmetros aeroportoOrigem e aeroportoDestino são obrigatórios.");
         }
-        return vooRepository.findAll();
+
+        // Obter a data/hora atual
+        LocalDateTime agora = LocalDateTime.now();
+        return vooRepository.findByAeroportoOrigemAndAeroportoDestinoAndDataHoraAfter(aeroportoOrigem, aeroportoDestino, agora);
     }
 
-    public List<VooDTO> buscarVoosFuturos(String aeroportoOrigem, String aeroportoDestino, LocalDateTime dataAtual) {
-        return vooRepository.findByAeroportoOrigemCodigoAndAeroportoDestinoCodigoAndDataHoraAfter(
-                aeroportoOrigem, aeroportoDestino, dataAtual);
-    }
 
     public AeroportoDTO cadastrarAeroporto(AeroportoDTO aeroportoDTO) {
         return aeroportoRepository.save(aeroportoDTO);

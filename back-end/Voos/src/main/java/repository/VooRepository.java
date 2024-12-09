@@ -7,12 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
-public interface VooRepository extends JpaRepository<VooDTO, String> {
-    // Busca com base nos códigos dos aeroportos
-    List<VooDTO> findByAeroportoOrigemCodigoAndAeroportoDestinoCodigo(String origem, String destino);
+public interface VooRepository extends JpaRepository<VooDTO, String> {    
+    List<VooDTO> findByAeroportoOrigemAndAeroportoDestino(String aeroportoOrigem, String aeroportoDestino);
+    
+    List<VooDTO> findByAeroportoOrigemAndAeroportoDestinoAndDataHoraAfter(
+            String aeroportoOrigem, String aeroportoDestino, LocalDateTime dataHora);
 
-    // Busca voos futuros
-    List<VooDTO> findByAeroportoOrigemCodigoAndAeroportoDestinoCodigoAndDataHoraAfter(
-            String origem, String destino, LocalDateTime dataHora);
 }

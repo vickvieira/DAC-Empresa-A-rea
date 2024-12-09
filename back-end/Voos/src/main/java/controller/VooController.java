@@ -34,16 +34,10 @@ public class VooController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VooDTO>> buscarVoos(
-            @RequestParam(required = false) String aeroportoOrigem,
-            @RequestParam(required = false) String aeroportoDestino,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataHora) {
-        List<VooDTO> voos;
-        if (dataHora != null) {
-            voos = vooService.buscarVoosFuturos(aeroportoOrigem, aeroportoDestino, dataHora);
-        } else {
-            voos = vooService.buscarVoos(aeroportoOrigem, aeroportoDestino);
-        }
+    public ResponseEntity<List<VooDTO>> buscarVoos(@RequestParam String aeroportoOrigem, @RequestParam String aeroportoDestino) {
+
+        List<VooDTO> voos = vooService.buscarVoos(aeroportoOrigem, aeroportoDestino);
+
         return ResponseEntity.ok(voos);
     }
     
