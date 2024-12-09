@@ -1,0 +1,167 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./dados/mongodb:/data/db
+
+  postgres:
+    container_name: postgres-db
+    build: 
+      context: .
+      dockerfile: ./postgres.Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - .postgres-data:/var/lib/postgresql
+    restart: on-failure:3
+
+  auth:
+    build:
+      context: ./Auth
+    container_name: auth
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/Usuario
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  cliente:
+    build:
+      context: ./Clientes
+    container_name: cliente
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/clientesdb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  sagaclienteusuario:
+    build:
+      context: ./SagaClienteUsuario
+    container_name: sagaclienteusuario
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - rabbitmq
+
+  sagareservacliente:
+    build:
+      context: ./SagaReservaCliente
+    container_name: sagareservacliente
+    restart: always
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - rabbitmq
+
+  reserva:
+    build:
+      context: ./ReservaCommand
+    container_name: reservacommand
+    restart: always
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservac
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  reservaquery:
+    build:
+      context: ./ReservaQuery
+    container_name: reservaquery
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/reservaq
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  funcionario:
+    build:
+      context: ./Funcionario
+    container_name: funcionario
+    restart: always
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/funcionariodb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  voos:
+    build:
+      context: ./Voos
+    container_name: voos
+    restart: always
+    ports:
+      - "8087:8087"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/voosdb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - postgres
+      - rabbitmq
