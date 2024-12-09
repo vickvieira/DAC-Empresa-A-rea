@@ -1,0 +1,21 @@
+<div class="modal-header bg-danger text-white">
+    <h5 class="modal-title">{{ titulo || 'Confirmação de Exclusão' }}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center fs-5">{{ mensagem || 'Tem certeza que deseja excluir este item?' }}</p>
+  </div>
+  <div class="modal-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-secondary px-4" (click)="cancelar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-danger px-4" (click)="confirmar()">
+      Confirmar
+    </button>
+  </div>
+  

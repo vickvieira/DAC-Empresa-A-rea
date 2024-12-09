@@ -1,7 +1,8 @@
 export interface Funcionario {
-    id: string;
-    nome: string;
-    email: string;
-    cpf: string;
-    telefone: string;
+  id?: string;
+  nome: string;
+  email: string;
+  cpf: string;
+  telefone: string;
+  ativo: boolean;
 }

@@ -11,6 +11,7 @@ import { HomeFuncComponent } from './paginas/funcionario/home-func/home-func.com
 import { ComprarMilhasComponent } from './paginas/cliente/comprar-milhas/comprar-milhas.component';
 import { CancelarReservaComponent } from './paginas/cliente/cancelar-reserva/cancelar-reserva.component';
 import { CadastrarVooComponent } from './paginas/funcionario/cadastrar-voo/cadastrar-voo.component';
+import { FuncionariosComponent } from './paginas/funcionario/funcionarios/funcionarios.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,7 @@ export const routes: Routes = [
   },
   { path: 'funcionario', component: HomeFuncComponent },
   { path: 'cadastrar-voo', component: CadastrarVooComponent },
+  { path: 'funcionarios', component: FuncionariosComponent },
   {
     path: 'comprar-milhas',
     component: ComprarMilhasComponent,
