@@ -139,4 +139,8 @@ export class VooService {
       })
     );
   }
+
+  cadastrarVoo(voo: Voo): Observable<Voo> {
+    return this.http.post<Voo>(this.apiUrl, voo);
+  }
 }

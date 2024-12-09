@@ -1,0 +1,125 @@
+<div class="container my-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h3>Cadastrar Voo</h3>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formCadastroVoo" (ngSubmit)="cadastrarVoo()">
+          <!-- Código do Voo -->
+          <div class="mb-3">
+            <label for="codigo" class="form-label">Código do Voo</label>
+            <input
+              type="text"
+              id="codigo"
+              class="form-control"
+              formControlName="codigo"
+              placeholder="Exemplo: ABCD1234"
+            />
+            <div *ngIf="formCadastroVoo.get('codigo')?.invalid && formCadastroVoo.get('codigo')?.touched" class="text-danger">
+              O código do voo é obrigatório e deve seguir o formato TADS0000.
+            </div>
+          </div>
+  
+          <!-- Data e Hora -->
+          <div class="mb-3">
+            <label for="dataHora" class="form-label">Data/Hora</label>
+            <input
+              type="text"
+              id="dataHora"
+              class="form-control"
+              formControlName="dataHora"
+              
+              placeholder="dd/mm/aaaa hh:mm"
+            />
+            <div *ngIf="formCadastroVoo.get('dataHora')?.hasError('formatoInvalido') && formCadastroVoo.get('dataHora')?.touched" class="text-danger">
+             Este campo é obrigatório. O formato deve ser: dd/mm/aaaa hh:mm.
+            </div>
+            <!-- <div *ngIf="formCadastroVoo.get('dataHora')?.hasError('required')" class="text-danger">
+              Este campo é obrigatório.
+            </div> -->
+          </div>
+  
+          <!-- Origem -->
+          <div class="mb-3">
+            <label for="origem" class="form-label">Aeroporto de Origem</label>
+            <input
+              type="text"
+              id="origem"
+              class="form-control"
+              formControlName="origem"
+              placeholder="Exemplo: GRU"
+            />
+            <div *ngIf="formCadastroVoo.get('origem')?.invalid && formCadastroVoo.get('origem')?.touched" class="text-danger">
+              O aeroporto de origem é obrigatório.
+            </div>
+          </div>
+  
+          <!-- Destino -->
+          <div class="mb-3">
+            <label for="destino" class="form-label">Aeroporto de Destino</label>
+            <input
+              type="text"
+              id="destino"
+              class="form-control"
+              formControlName="destino"
+              placeholder="Exemplo: GIG"
+            />
+            <div *ngIf="formCadastroVoo.get('destino')?.invalid && formCadastroVoo.get('destino')?.touched" class="text-danger">
+              O aeroporto de destino é obrigatório.
+            </div>
+          </div>
+  
+          <!-- Valor da Passagem -->
+          <div class="mb-3">
+            <label for="valorPassagem" class="form-label">Valor da Passagem (R$)</label>
+            <input
+            type="text"
+            id="valorPassagem"
+            class="form-control"
+            formControlName="valorPassagem"
+            mask="separator.2" 
+            thousandSeparator="."
+            decimalMarker=","
+            placeholder="Exemplo: 1.234,56"
+            (input)="onValorPassagemChange()"
+            />
+            <div *ngIf="formCadastroVoo.get('valorPassagem')?.invalid && formCadastroVoo.get('valorPassagem')?.touched" class="text-danger">
+              O valor da passagem é obrigatório e deve ser maior que 0.
+            </div>
+            <p *ngIf="valorMilhas !== null"><strong>Equivalente em Milhas:</strong> {{ valorMilhas }}</p>
+          </div>
+  
+          <!-- Quantidade de Poltronas -->
+          <div class="mb-3">
+            <label for="quantidadePoltronas" class="form-label">Quantidade de Poltronas</label>
+            <input
+              type="number"
+              id="quantidadePoltronas"
+              class="form-control"
+              formControlName="quantidadePoltronas"
+              min="1"
+            />
+            <div *ngIf="formCadastroVoo.get('quantidadePoltronas')?.invalid && formCadastroVoo.get('quantidadePoltronas')?.touched" class="text-danger">
+              A quantidade de poltronas é obrigatória e deve ser maior que 0.
+            </div>
+          </div>
+  
+          <!-- Mensagens -->
+          <div *ngIf="mensagemErro" class="alert alert-danger">
+            {{ mensagemErro }}
+          </div>
+          <div *ngIf="mensagemSucesso" class="alert alert-success">
+            {{ mensagemSucesso }}
+          </div>
+  
+          <!-- Botão -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary" [disabled]="formCadastroVoo.invalid">
+              Cadastrar Voo
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

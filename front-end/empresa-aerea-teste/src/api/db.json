@@ -545,6 +545,28 @@
       "poltronasOcupadas": 90,
       "status": "REALIZADO",
       "id": "0c48"
+    },
+    {
+      "id": "6348",
+      "codigo": "TADS1564",
+      "dataHora": "2024-12-10T13:30:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 1200,
+      "quantidadePoltronas": 5,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "5ef8",
+      "codigo": "TEST1234",
+      "dataHora": "2025-08-07T13:30:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 200,
+      "quantidadePoltronas": 12,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
     }
   ],
   "transacoes_milhas": [

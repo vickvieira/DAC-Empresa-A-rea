@@ -1,6 +1,6 @@
 export type EstadoVoo = 'CONFIRMADO' | 'CANCELADO' | 'REALIZADO';
 export interface Voo {
-  length: number;
+  // length: number;
   codigo: string;
   dataHora: string;
   origem: string;
@@ -9,7 +9,7 @@ export interface Voo {
   quantidadePoltronas: number;
   poltronasOcupadas: number;
   status: EstadoVoo;
-  id: string;
+  id?: string;
 
   // mais coisa ?
 }
