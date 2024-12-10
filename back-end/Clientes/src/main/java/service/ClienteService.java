@@ -1,7 +1,7 @@
 package service;
 
-import dto.ClientesDTO;
-import dto.MilhasDTO;
+import DTO.ClientesDTO;
+import DTO.MilhasDTO;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,39 +10,36 @@ import repository.ClienteRepository;
 import repository.MilhasRepository;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ClienteService {
 
-	@Autowired
+    @Autowired
     private final ClienteRepository clienteRepository;
-	
-	@Autowired
-    private final MilhasRepository milhasRepository;
-	
-	@Autowired
-	RabbitTemplate rabbitTemplate;
 
-    public ClienteService(ClienteRepository clienteRepository, MilhasRepository milhasRepository ) {
+    @Autowired
+    private final MilhasRepository milhasRepository;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    public ClienteService(ClienteRepository clienteRepository, MilhasRepository milhasRepository) {
         this.clienteRepository = clienteRepository;
         this.milhasRepository = milhasRepository;
     }
 
-    
     public void enviaMensagem(String nomeFila, Object mensagem) {
         rabbitTemplate.convertAndSend(nomeFila, mensagem);
 
     }
-    
+
     public ClientesDTO cadastrarCliente(ClientesDTO cliente) {
-    	
+
         ClientesDTO clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
         ClientesDTO clienteExistenteEMAIL = clienteRepository.findByEmail(cliente.getEmail());
 
-        if (clienteExistente  != null && clienteExistenteEMAIL != null) {
+        if (clienteExistente != null && clienteExistenteEMAIL != null) {
             throw new IllegalArgumentException("Já existe um cliente cadastrado com o CPF: " + cliente.getCpf());
         }
 
@@ -60,7 +57,8 @@ public class ClienteService {
         cliente.setMilhas(cliente.getMilhas() + milhasCompradas);
         clienteRepository.save(cliente);
 
-        MilhasDTO transacao = new MilhasDTO(cliente, LocalDateTime.now(), milhasCompradas, "entrada", "COMPRA DE MILHAS");
+        MilhasDTO transacao = new MilhasDTO(cliente, LocalDateTime.now(), milhasCompradas, "entrada",
+                "COMPRA DE MILHAS");
         milhasRepository.save(transacao);
 
         enviaMensagem("fila-milhas", transacao);

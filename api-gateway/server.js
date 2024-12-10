@@ -35,10 +35,18 @@ app.post('/Auth/login', (req, res, next) => {
 app.get('/clientes/:email', (req, res, next) => {
     clienteServiceProxy(req, res, next);
 });
-// Cadastrar cliente
-app.post('/sagaClienteUsuario', (req, res, next) => {
-    sagaClienteUsuarioServiceProxy(req, res, next);
-});
+
+
+
+
+
+
+
+
+// // Cadastrar cliente
+// app.post('/sagaClienteUsuario', (req, res, next) => {
+//     sagaClienteUsuarioServiceProxy(req, res, next);
+// });
 
 
 
