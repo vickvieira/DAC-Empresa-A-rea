@@ -18,152 +18,298 @@ app.use(cors());
 app.use(helmet());
 app.use(logger('dev'));
 
-// Proxy
+//Configurações de portas (back-end\.env):
+// AUTH_PORT=8081
+// CLIENTE_PORT=8082
+// SAGACLIENTEUSUARIO_PORT=8080
+// SAGARESERVACLIENTE_PORT=8083
+// RESERVA_COMMAND_PORT=8084
+// RESERVA_QUERY_PORT=8085
+// FUNCIONARIO_PORT=8086
+// VOOS_PORT=8087
+
+// PROXY
 const authServiceProxy = httpProxy('http://localhost:8081');
-const clienteServiceProxy = httpProxy('http://localhost:8082');
 const sagaClienteUsuarioServiceProxy = httpProxy('http://localhost:8080');
+const clienteServiceProxy = httpProxy('http://localhost:8082');
+const sagaReservaClienteProxy = httpProxy('http://localhost:8083');
+const reservaCommandProxy = httpProxy('http://localhost:8084');
+const reservaQueryProxy = httpProxy('http://localhost:8085');
+const funcionarioProxy = httpProxy('http://localhost:8086');
+const voosProxy = httpProxy('http://localhost:8087');
 
-//ENDPOINTS
 
-// LOGIN
-app.post('/Auth/login', (req, res, next) => {
+// ENDPOINTS
+
+// 1. AUTH
+// 1.1 FAZER LOGIN          
+app.post('/Auth/login', (req, res, next) => {       //Endpoint definido no back em Auth > LoginController.java 
     authServiceProxy(req, res, next);
 });
-
-//CLIENTE
-// Buscar Cliente pelo email
-app.get('/clientes/:email', (req, res, next) => {
-    clienteServiceProxy(req, res, next);
+// 1.2 LOGOUT
+app.post('/Auth/logut', function (req, res) {
+    //Implementar método em back-end\Auth\src\main\java\controller\LoginController.java
+    res.json({ auth: false, token: null });
 });
 
 
+// 2. SAGA CLIENTE USUÁRIO
+// 2.1 Cadastrar cliente            
+app.post('/sagaClienteUsuario', (req, res, next) => {   //Endpoint definido no back em SagaClienteUsuario > SagaController.java 
+    sagaClienteUsuarioServiceProxy(req, res, next);
+});
+// 2.2 Buscar cliente por email
+app.get('/sagaClienteUsuario/:email', (req, res, next) => {
+    //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
+    sagaClienteUsuarioServiceProxy(req, res, next);
+});
+// 2.3 Atualizar cliente por email
+app.put('/sagaClienteUsuario/:email', (req, res, next) => {      //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
+    sagaClienteUsuarioServiceProxy(req, res, next);
+});
+// 2.4 Excluir cliente por email
+app.delete('/sagaClienteUsuario/:email', (req, res, next) => {     //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
+    sagaClienteUsuarioServiceProxy(req, res, next);
+});
 
-
-
-
-
-
-// // Cadastrar cliente
-// app.post('/sagaClienteUsuario', (req, res, next) => {
-//     sagaClienteUsuarioServiceProxy(req, res, next);
-// });
-
-
-
-
-
-// // 0.2 - Endpoint para Logout
-// app.post('/logout', function (req, res) {
-//     res.json({ auth: false, token: null });
-// });
-
-// // 1 - Endpoints para ms-usuario (CRUD Usuario)
-// const usuarioServiceProxy = httpProxy('http://localhost:3001');
-// // 1.1 - Endpoint para cadastrar Usuário
-// app.post('/auth', (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-// // 1.2 - Endpoint para recuperar Senha
-// app.post('/auth/recuperar', (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-// // 1.3 - Endpoint para buscar Usuário por ID
-// app.get('/auth/id/:id', verifyJWT, (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-
-// });
-// // 1.5 - Endpoint para buscar Usuário por CPF
-// app.get('/auth/cpf/:cpf', verifyJWT, (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-
-// // 1.6 - Endpoint para atualizar Usuário por CPF
-// app.put('/auth/:cpf', verifyJWT, async (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-
-// // 1.7 - Endpoint para deletar Usuário por ID
-// app.delete('/auth/id/:id', verifyJWT, (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-// // 1.8 - Endpoint para deletar Usuário por Login
-// app.delete('/auth/login/:login', verifyJWT, (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-// // 1.9 - Endpoint para deletar Usuário por CPF
-// app.delete('/auth/cpf/:cpf', verifyJWT, (req, res, next) => {
-//     usuarioServiceProxy(req, res, next);
-// });
-
-// // 2 - Endpoints para ms-mensagens (CRUD Avaliação)
-// const mensagemServiceProxy = httpProxy('http://localhost:3002');
-
-// // 2.1 - Endpoint para registrar Avaliação
-// app.post('/quest', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 2.2 - Endpoint para listar todas Avaliações
-// app.get('/quest', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 2.3 - Endpoint para buscar Avaliação por ID (da avaliação)
-// app.get('/quest/id/:id', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 2.4 - Endpoint para buscar Avaliação por CPF
-// app.get('/quest/cpf/:cpf', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 2.5 - Endpoint para atualizar Avaliação por ID (da avaliação)
-// app.put('/quest/:id', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-
-// // 3 - Endpoints para ms-mensagens (CRUD Favoritos)
-// // 3.1 - Endpoint para cadastrar Endereço Favorito
-// app.post('/favoritos', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.2 - Endpoint para listar Endereço Favorito pelo seu ID
-// app.get('/favoritos/id/:id', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.3 - Endpoint para listar Endereços Favoritos pelo CPF do Usuario
-// app.get('/favoritos/cpf/:cpf', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.4 - Endpoint para listar Endereço Favorito pelo ID Google
-// app.get('/favoritos/idGoogle/:idGoogle', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.5 - Endpoint para atualizar Endereço Favorito pelo seu ID
-// app.put('/favoritos/:id', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.6 - Endpoint para excluir Endereço Favorito pelo seu ID
-// app.delete('/favoritos/id/:id', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.7 - Endpoint para excluir Endereços Favoritos pelo CPF do Usuario
-// app.delete('/favoritos/cpf/:cpf', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-// // 3.8 - Endpoint para excluir Endereço Favorito pelo ID Google
-// app.delete('/favoritos/idGoogle/:idGoogle', verifyJWT, (req, res, next) => {
-//     mensagemServiceProxy(req, res, next);
-// });
-
-// // 4  - Endpoint para ms-parking (Consultar Vagas de Estacionamento e suas Probabilidades)
-// const parkingServiceProxy = httpProxy('http://localhost:5000');
-// // 4.1 - Endpoint que envia um 'location(lng, lat)' no body e 
-// // recebe um JSON com uma lista de poligonos/vagas mais proximos e suas informacoes
-// app.post('/parking', verifyJWT, (req, res, next) => {
-//     parkingServiceProxy(req, res, next);
-// });
+//Outros endpoints
 
 // Cria o servidor na porta 3000
 const server = http.createServer(app);
 server.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
+
+
+
+
+
+
+
+/////////////////////////////////////////////////
+/* 
+const authServiceProxy = httpProxy('http://localhost:3004', {
+    changeOrigin: true,
+    proxyReqPathResolver: function (req) {
+    // Modifica o caminho da requisição para /api/v1/auth/login
+    return '/api/v1/auth/login';
+    },
+    proxyReqBodyDecorator: function(bodyContent, srcReq) {
+        try {
+            retBody = {};
+            retBody.login = bodyContent.email;
+            retBody.password = bodyContent.senha;
+            bodyContent = retBody;
+        }
+        catch(e) {
+            console.log('- ERRO: ' + e);
+        }
+        return bodyContent;
+    },
+    proxyReqOptDecorator: function(proxyReqOpts, srcReq) {
+        proxyReqOpts.headers['Content-Type'] = 'application/json';
+        proxyReqOpts.method = 'POST';
+        return proxyReqOpts;
+    },
+    userResDecorator: function(proxyRes, proxyResData, userReq, userRes) {
+        if (proxyRes.statusCode == 200) {
+            var str = Buffer.from(proxyResData).toString('utf-8');
+            var objBody = JSON.parse(str);
+            const login = objBody.user.login;
+            const role = objBody.user.role;
+            const token = jwt.sign({ login, role }, process.env.SECRET, {
+                expiresIn: 10000000000000000000
+            });
+            userRes.status(200);
+            userRes.setHeader('Content-Type', 'application/json');
+            return JSON.stringify({ auth: true, token: token, data: objBody });
+        } else {
+            userRes.status(401);
+            userRes.setHeader('Content-Type', 'application/json');
+            return JSON.stringify({ message: 'Login/Senha inválidos!' });
+        }
+    }
+});
+
+app.post('/login', (req, res, next) => {
+    authServiceProxy(req, res, next);
+});
+
+app.post('/logout', function (req, res) {
+    res.json({ auth: false, token: null });
+});
+
+// SAGA 1
+// Requisição de autocadastro de cliente (Sem autenticação)
+
+const sagaClientProxy = httpProxy('http://localhost:3005');
+
+app.post('/register', (req, res, next) => {
+    sagaClientProxy(req, res, next);
+});
+
+// Requisições aos serviços, já autenticados
+  
+// Requisições para transaction
+const transactionServiceProxy = httpProxy('http://localhost:3010', {
+    changeOrigin: true,
+    proxyReqPathResolver: function (req) {
+        return '/transaction';
+    },
+});
+
+app.post('/transaction', verifyJWT, (req, res, next) => {
+    transactionServiceProxy(req, res, next);
+});
+
+// Requisições para account
+const accountServiceProxy = httpProxy('http://localhost:3011', {
+    changeOrigin: true,
+    proxyReqPathResolver: function (req) {
+        return req.originalUrl;
+    },
+});
+
+app.get('/account', verifyJWT, (req, res, next) => {
+    accountServiceProxy(req, res, next);
+});
+
+app.get('/account/:id', verifyJWT, (req, res, next) => {
+    accountServiceProxy(req, res, next);
+});
+
+app.get('/transaction/account/:id', verifyJWT, (req, res, next) => {
+    accountServiceProxy(req, res, next);
+});
+
+app.get('/account/manager-report', verifyJWT, (req, res, next) => {
+    accountServiceProxy(req, res, next);
+});
+ 
+app.get('/account/by-user/:userId', verifyJWT, (req, res, next) => {
+    const userId = req.params.userId;
+
+    http.get(`http://localhost:3002/api/client/${userId}`, (response) => {
+        let data = ''
+
+        response.on('data', (chunk) => {
+            data += chunk
+        })
+
+        response.on('end', () => {
+            const clientData = JSON.parse(data)
+
+            const cpf = clientData.cpf
+
+            if (!cpf) {
+                return res.status(404).json({ error: 'CPF não encontrado' })
+            }
+
+            http.get(`http://localhost:3011/account/client/${cpf}`, (response) => {
+                let accountData = '';
+
+                response.on('data', (chunk) => {
+                    accountData += chunk
+                })
+
+                response.on('end', () => {
+                    res.setHeader('Content-Type', 'application/json')
+                    res.send(accountData)
+                })
+            }).on('error', (err) => {
+                console.error('Erro ao pegar a conta:', err)
+                res.status(500).json({ error: 'Erro ao pegar a conta' })
+            })
+        })
+    }).on('error', (err) => {
+        console.error('Erro ao pegar CPF do cliente:', err)
+        res.status(500).json({ error: 'Erro ao pegar cpf do cliente' })
+    })
+})
+
+// Requisições para manager
+
+// SAGAS 2 E 3
+const sagaManagerProxy = httpProxy('http://localhost:3006');
+
+// SAGA 2 - Inserção de gerente
+app.post('/manager', verifyJWT, (req, res, next) => {
+    sagaManagerProxy(req, res, next);
+});
+
+// SAGA 3 - Remoção de gerente
+app.delete('/manager/:email', verifyJWT, (req, res, next) => {
+    sagaManagerProxy(req, res, next);
+});
+
+// GET e PUT (Sem SAGA)
+const managerServiceProxy = httpProxy('http://localhost:3003', {
+    changeOrigin: true,
+    proxyReqPathResolver: function (req) {
+        return req.url.replace(/^\/manager/, '/api/manager');
+    },
+});
+
+app.get('/manager', verifyJWT, (req, res, next) => {
+    managerServiceProxy(req, res, next);
+});
+
+app.put('/manager/:email', verifyJWT, (req, res, next) => {
+    managerServiceProxy(req, res, next);
+});
+
+// Requisições para o cliente
+const clientPathRewriteMap = {
+    '/client/name': '/api/client/name',
+    '/client/cpf': '/api/client/cpf',
+    '/client/situation': '/api/client/situation'
+};
+
+const clientServiceProxy = httpProxy('http://localhost:3002', {
+    changeOrigin: true,
+    proxyReqPathResolver: function (req) {
+        const path = Object.keys(clientPathRewriteMap).find(key => req.url.startsWith(key));
+        return path ? `${clientPathRewriteMap[path]}${req.url.replace(path, '')}` 
+        : req.url.replace(/^\/client/, '/api/client');
+    },
+});
+
+app.get('/client', verifyJWT, (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+app.get('/client/:id', verifyJWT, (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+app.get('/client/email/:email', (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+app.get('/client/cpf/:cpf', verifyJWT, (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+app.get('/client/search/:search', verifyJWT, (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+app.post('/client', verifyJWT, (req, res, next) => {
+    clientServiceProxy(req, res, next);
+});
+
+// SAGA 4
+// Atualização de perfil de cliente
+
+const sagaProfileUpdateProxy = httpProxy('http://localhost:3007');
+
+app.put('/client/:id', verifyJWT, (req, res, next) => {
+    sagaProfileUpdateProxy(req, res, next);
+});
+
+// Cria o servidor na porta 3000
+const server = http.createServer(app);
+server.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});
+*/
