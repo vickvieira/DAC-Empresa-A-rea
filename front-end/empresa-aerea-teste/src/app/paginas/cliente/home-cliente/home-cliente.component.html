@@ -21,37 +21,31 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let reserva of reservasFiltradas">
+      <tr *ngFor="let reserva of reservasComDetalhes">
         <th scope="row">{{ reserva.codigo }}</th>
-        <td>{{ reserva.voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ reserva.voo.origem }}</td>
-        <td>{{ reserva.voo.destino }}</td>
-
+        <td *ngIf="reserva.voo; else carregando">
+          {{ reserva.voo.dataHora | date: 'dd/MM/yyyy HH:mm' }}
+        </td>
+        <ng-template #carregando>
+          <span>Carregando...</span>
+        </ng-template>
+        <td>{{ reserva.voo?.origem || '---' }}</td>
+        <td>{{ reserva.voo?.destino || '---' }}</td>
         <td>
-          <a class="link-danger text-decoration-none btn btn-link" (click)="modalCancelarReserva(reserva)"
-            *ngIf="reserva.status !== 'Voo cancelado'&& reserva.status !== 'Reserva cancelada' && reserva.status !== 'Voo realizado'">
+          <a
+            class="link-danger text-decoration-none btn btn-link"
+            (click)="modalCancelarReserva(reserva)"
+            *ngIf="['AGUARDANDO_CHECKIN'].includes(reserva.status)"
+          >
             <i class="bi bi-x-circle"></i> Cancelar reserva
           </a>
           
-          <a class="link-success text-decoration-none btn btn-link"
-            *ngIf="reserva.status == 'Voo cancelado'|| reserva.status == 'Reserva cancelada' || reserva.status == 'Voo realizado'">
-            <i class="bi bi-check"></i> {{reserva.status}}
+          <a
+            class="link-success text-decoration-none btn btn-link"
+            *ngIf="!['AGUARDANDO_CHECKIN'].includes(reserva.status)"
+          >
+            <i class="bi bi-check"></i> {{ reserva.status }}
           </a>
-          
-        </td>
-
-        <td>
-          <a class="link-primary text-decoration-none btn btn-link" (click)="toggleVisualizar(reserva)">
-            <i class="bi bi-eye"></i> Detalhes
-          </a>
-        </td>
-
-        <td *ngIf="expandedReserva === reserva" colspan="2" class="p-3">
-          <div>
-            <strong>Valor Gasto:</strong> {{ reserva.valorGasto | currency:'BRL' }}<br>
-            <strong>Milhas Utilizadas:</strong> {{ reserva.milhasUtilizadas }}<br>
-            <strong>Status:</strong> {{ reserva.status }}
-          </div>
         </td>
       </tr>
     </tbody>

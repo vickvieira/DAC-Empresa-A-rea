@@ -21,7 +21,11 @@ export class BuscarVoosComponent {
   mensagemErro: string = '';
   voosFiltrados: Voo[] = [];
 
-  constructor(private vooService: VooService, private router: Router, private authService: AuthService) {}
+  constructor(
+    private vooService: VooService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // não é para aparecer nenhum voo no carregamento? se for o caso deixar o ngOnInit vazio ou se não:
@@ -38,8 +42,9 @@ export class BuscarVoosComponent {
         const origemMatch = !origem || voo.origem === origem;
         const destinoMatch = !destino || voo.destino === destino;
         const dataMatch = dataVoo >= dataAtual;
+        const confirmadoMatch = voo.status == 'CONFIRMADO';
 
-        return origemMatch && destinoMatch && dataMatch;
+        return origemMatch && destinoMatch && dataMatch && confirmadoMatch;
       });
 
       if (this.voosFiltrados.length === 0) {
@@ -60,4 +65,3 @@ export class BuscarVoosComponent {
     }
   }
 }
-

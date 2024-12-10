@@ -6,62 +6,95 @@ import { Observable, of, pipe, throwError } from 'rxjs';
 import { catchError, map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MilhasService {
   apiUrl = 'http://localhost:3000/milhas';
   apiUrlTransacoes = 'http://localhost:3000/transacoes_milhas';
 
-
   httpOption = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+      'Content-Type': 'application/json',
+    }),
+  };
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   getMilhasByClienteId(clienteId: number): Observable<number> {
-    console.log("getMilhasByClienteId " + clienteId)
-    return this.http.get<Milhas[]>(`${this.apiUrl}?id=${clienteId}`)
+    console.log('getMilhasByClienteId ' + clienteId);
+    return this.http
+      .get<Milhas[]>(`${this.apiUrl}?id=${clienteId}`)
       .pipe(
-        map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
+        map((milhasArray) =>
+          milhasArray.length > 0 ? milhasArray[0].saldo : 0
+        )
       );
   }
 
   atualizarMilhas(clienteId: number, milhasDelta: number): Observable<Milhas> {
-    return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`).pipe(
-      switchMap((milhasArray: Milhas[]) => {
-        if (milhasArray.length === 0) {
-          return throwError('Milhas do cliente não encontradas');
-        }
+    return this.http
+      .get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+      .pipe(
+        switchMap((milhasArray: Milhas[]) => {
+          if (milhasArray.length === 0) {
+            throw new Error(`Milhas do cliente ${clienteId} não encontradas.`);
+          }
 
-        const milhasCliente = milhasArray[0];
-        const novoSaldo = milhasCliente.saldo + milhasDelta;
+          const milhasCliente = milhasArray[0];
+          const novoSaldo = milhasCliente.saldo + milhasDelta;
 
-        const milhasAtualizadas: Milhas = { ...milhasCliente, saldo: novoSaldo };
-        return this.http.put<Milhas>(`${this.apiUrl}/${milhasCliente.id}`, milhasAtualizadas);
-      })
-    );
+          const milhasAtualizadas: Milhas = {
+            ...milhasCliente,
+            saldo: novoSaldo,
+          };
+          return this.http.put<Milhas>(
+            `${this.apiUrl}/${milhasCliente.id}`,
+            milhasAtualizadas
+          );
+        }),
+        tap((milhasAtualizadas) => {
+          console.log(
+            `[DEBUG] Milhas atualizadas para cliente ${clienteId}:`,
+            milhasAtualizadas
+          );
+        }),
+        catchError((err) => {
+          console.error(
+            `[ERROR] Falha ao atualizar milhas do cliente ${clienteId}:`,
+            err
+          );
+          throw err;
+        })
+      );
   }
 
-  atualizarMilhasString(clienteId: string, milhasDelta: number): Observable<Milhas> {
+  atualizarMilhasString(
+    clienteId: string,
+    milhasDelta: number
+  ): Observable<Milhas> {
     // Primeiro, obter o saldo atual de milhas do cliente
-    return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`).pipe(
-      switchMap((milhasArray: Milhas[]) => {
-        if (milhasArray.length === 0) {
-          throw new Error('Milhas do cliente não encontradas');
-        }
+    return this.http
+      .get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+      .pipe(
+        switchMap((milhasArray: Milhas[]) => {
+          if (milhasArray.length === 0) {
+            throw new Error('Milhas do cliente não encontradas');
+          }
 
-        const milhasCliente = milhasArray[0];
-        const novoSaldo = milhasCliente.saldo + milhasDelta;
+          const milhasCliente = milhasArray[0];
+          const novoSaldo = milhasCliente.saldo + milhasDelta;
 
-        // Atualizar o saldo no servidor
-        const milhasAtualizadas: Milhas = { ...milhasCliente, saldo: novoSaldo };
-        return this.http.put<Milhas>(`${this.apiUrl}/${milhasCliente.id}`, milhasAtualizadas);
-      })
-    );
+          // Atualizar o saldo no servidor
+          const milhasAtualizadas: Milhas = {
+            ...milhasCliente,
+            saldo: novoSaldo,
+          };
+          return this.http.put<Milhas>(
+            `${this.apiUrl}/${milhasCliente.id}`,
+            milhasAtualizadas
+          );
+        })
+      );
   }
 
   /*
@@ -73,26 +106,24 @@ export class MilhasService {
 
   //precisa arrumar esse aqui ainda
 
-
   private log(message: string) {
     console.log(`erro: ${message}`);
   }
-
-
 
   getExtratoPorClienteId(term: string): Observable<ExtratoMilhas[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<ExtratoMilhas[]>(`${this.apiUrlTransacoes}/?clienteId=${term}`).pipe(
-      tap(x => x.length),
-
-    );
+    return this.http
+      .get<ExtratoMilhas[]>(`${this.apiUrlTransacoes}/?clienteId=${term}`)
+      .pipe(tap((x) => x.length));
   }
 
-
   getTodosExtratos(): Observable<ExtratoMilhas[]> {
-    return this.http.get<ExtratoMilhas[]>(this.apiUrlTransacoes, this.httpOption)
+    return this.http.get<ExtratoMilhas[]>(
+      this.apiUrlTransacoes,
+      this.httpOption
+    );
   }
 
   /*
@@ -104,40 +135,122 @@ export class MilhasService {
   }
   */
 
-  
   atualizarSaldoMilhas(novoSaldo: Milhas): Observable<Milhas> {
-    console.log("atualizar stringfy" + JSON.stringify(novoSaldo));
-    console.log("url:" + this.apiUrl + "/" + novoSaldo.id);
+    console.log('atualizar stringfy' + JSON.stringify(novoSaldo));
+    console.log('url:' + this.apiUrl + '/' + novoSaldo.id);
 
     //return this.http.put<Milhas>(this.apiUrl + "/" + novoSaldo.id,
     //JSON.stringify(novoSaldo), this.httpOption)
 
-    return this.http.put<Milhas>(this.apiUrl + "/" + novoSaldo.id,
-      JSON.stringify(novoSaldo), this.httpOption)
-
-
+    return this.http.put<Milhas>(
+      this.apiUrl + '/' + novoSaldo.id,
+      JSON.stringify(novoSaldo),
+      this.httpOption
+    );
   }
 
   getMilhasByClienteIdString(clienteId: string): Observable<number> {
-    return this.http.get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+    return this.http
+      .get<ExtratoMilhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
       .pipe(
-        map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
+        map((milhasArray) =>
+          milhasArray.length > 0 ? milhasArray[0].saldo : 0
+        )
       );
   }
 
   inserirCompraMilhas(extratoMilhas: ExtratoMilhas): Observable<ExtratoMilhas> {
-    return this.http.post<ExtratoMilhas>(this.apiUrlTransacoes,
-      JSON.stringify(extratoMilhas), this.httpOption)
+    console.log('[DEBUG] Enviando transação para o backend:', extratoMilhas);
+
+    return this.http
+      .post<ExtratoMilhas>(
+        this.apiUrlTransacoes,
+        JSON.stringify(extratoMilhas),
+        this.httpOption
+      )
+      .pipe(
+        tap((transacaoCriada) =>
+          console.log(
+            '[DEBUG] Transação registrada com sucesso:',
+            transacaoCriada
+          )
+        ),
+        catchError((error) => {
+          console.error(
+            '[ERROR] Falha ao registrar transação no backend:',
+            error
+          );
+          throw error;
+        })
+      );
   }
 
   /*  
-    getIdByClienteId(clienteId: string): Observable<string> {
-      return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
-        .pipe(
-          map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
-        );
-    }
-  */
+  getIdByClienteId(clienteId: string): Observable<string> {
+    return this.http.get<Milhas[]>(`${this.apiUrl}?clienteId=${clienteId}`)
+    .pipe(
+      map(milhasArray => milhasArray.length > 0 ? milhasArray[0].saldo : 0)
+      );
+      }
+      */
   // mais metodos
 
+  //reembolso de milhas para o caso de cancelamento do voo,
+  //mas talvez seria o caso de centralizar o reembolso do cancelamento de reserva pelo cliente aqui tb
+  reembolsarMilhas(
+    clienteId: number,
+    descricao: string,
+    quantidade: number
+  ): Observable<any> {
+    if (quantidade <= 0) {
+      console.log(
+        `[DEBUG] Nenhuma milha para reembolsar. Cliente: ${clienteId}`
+      );
+      return of(null); // Retorna um Observable vazio para evitar erros
+    }
+
+    console.log(
+      `[DEBUG] Reembolsando ${quantidade} milhas para o cliente ${clienteId}. Descrição: ${descricao}`
+    );
+
+    // Atualiza o saldo de milhas do cliente
+    return this.atualizarMilhas(clienteId, quantidade).pipe(
+      switchMap((milhasAtualizadas) => {
+        console.log(`[DEBUG] Saldo atualizado:`, milhasAtualizadas);
+
+        // Registra a operação no extrato
+        const extrato: ExtratoMilhas = {
+          clienteId: clienteId.toString(),
+          dataHora: new Date().toISOString(),
+          saldo: milhasAtualizadas.saldo, // Novo saldo após a operação
+          operacao: quantidade, // Valor positivo porque é um reembolso
+          descricao: descricao,
+        };
+
+        console.log('[DEBUG] Registrando no extrato:', extrato);
+
+        return this.inserirCompraMilhas(extrato).pipe(
+          tap(() =>
+            console.log(
+              `[DEBUG] Reembolso registrado no extrato para o cliente ${clienteId}.`
+            )
+          ),
+          catchError((error) => {
+            console.error(
+              `[ERROR] Falha ao registrar reembolso no extrato do cliente ${clienteId}:`,
+              error
+            );
+            throw error;
+          })
+        );
+      }),
+      catchError((error) => {
+        console.error(
+          `[ERROR] Falha ao reembolsar milhas para o cliente ${clienteId}:`,
+          error
+        );
+        return throwError(() => new Error('Erro ao reembolsar milhas.'));
+      })
+    );
+  }
 }
