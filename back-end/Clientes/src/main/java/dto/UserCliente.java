@@ -1,9 +1,6 @@
-package dto;
+package DTO;
 
 import java.io.Serializable;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
 public class UserCliente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,7 +8,8 @@ public class UserCliente implements Serializable {
     private ClientesDTO clienteDTO;
     private UserRequisitionDTO userRequisitionDTO;
 
-    public UserCliente() {}
+    public UserCliente() {
+    }
 
     public UserCliente(ClientesDTO clienteDTO, UserRequisitionDTO userRequisitionDTO) {
         this.clienteDTO = clienteDTO;
@@ -27,17 +25,17 @@ public class UserCliente implements Serializable {
         this.clienteDTO = clienteDTO;
     }
 
-	public UserRequisitionDTO getUserRequisitionDTO() {
-		return userRequisitionDTO;
-	}
+    public UserRequisitionDTO getUserRequisitionDTO() {
+        return userRequisitionDTO;
+    }
 
-	public void setUserRequisitionDTO(UserRequisitionDTO userRequisitionDTO) {
-		this.userRequisitionDTO = userRequisitionDTO;
-	}
+    public void setUserRequisitionDTO(UserRequisitionDTO userRequisitionDTO) {
+        this.userRequisitionDTO = userRequisitionDTO;
+    }
 
-	@Override
-	public String toString() {
-		return "UserCliente [clienteDTO=" + clienteDTO + ", userRequisitionDTO=" + userRequisitionDTO + "]";
-	}
+    @Override
+    public String toString() {
+        return "UserCliente [clienteDTO=" + clienteDTO + ", userRequisitionDTO=" + userRequisitionDTO + "]";
+    }
 
 }

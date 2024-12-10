@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 import java.io.Serializable;
 
@@ -26,14 +26,12 @@ public class UserRequisitionDTO implements Serializable {
         this.email = email;
     }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-    
-    
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
 }
