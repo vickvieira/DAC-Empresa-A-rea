@@ -12,6 +12,7 @@ import { ComprarMilhasComponent } from './paginas/cliente/comprar-milhas/comprar
 import { CancelarReservaComponent } from './paginas/cliente/cancelar-reserva/cancelar-reserva.component';
 import { CadastrarVooComponent } from './paginas/funcionario/cadastrar-voo/cadastrar-voo.component';
 import { FuncionariosComponent } from './paginas/funcionario/funcionarios/funcionarios.component';
+import { ConsultarReservaComponent } from './paginas/cliente/consultar-reserva/consultar-reserva.component';
 
 export const routes: Routes = [
   {
@@ -58,4 +59,9 @@ export const routes: Routes = [
     component: CancelarReservaComponent,
     canActivate: [authClienteGuard],
   },
+  {
+    path: 'consultar-reserva',
+    component: ConsultarReservaComponent,
+    canActivate: [authClienteGuard],
+  }
 ];

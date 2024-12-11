@@ -25,7 +25,7 @@ export class ReservaService {
     private http: HttpClient,
     private milhasService: MilhasService,
     private vooService: VooService
-  ) {}
+  ) { }
 
   // Método para gerar o código de reserva único
   private gerarCodigoReserva(): string {
@@ -304,6 +304,54 @@ export class ReservaService {
       })
     );
   }
+
+  
+  getReservaPorCodigoReserva(codigoReserva: string): Observable<Reserva[]> {
+    return this.http
+      .get<Reserva[]>(this.apiUrl)
+      .pipe(
+        map((reservas) =>
+          reservas.filter((reserva) => reserva.codigo === codigoReserva)
+        )
+      );
+  }
+  
+
+  confirmarCheckin(reserva: Reserva): Observable<Reserva> {
+    console.log('[DEBUG] Confirmar Checkin:', reserva);
+
+    // Remove campos não relacionados antes de enviar
+    const reservaAtualizada: Partial<Reserva> = {
+      id: reserva.id,
+      codigo: reserva.codigo,
+      clienteId: reserva.clienteId,
+      vooCodigo: reserva.vooCodigo,
+      dataHoraReserva: reserva.dataHoraReserva,
+      status: 'CHECKED_IN',
+      valorGasto: reserva.valorGasto,
+      milhasUtilizadas: reserva.milhasUtilizadas,
+    };
+
+    console.log('[DEBUG] Enviando atualização de reserva:', reservaAtualizada);
+
+    return this.http
+      .put<Reserva>(`${this.apiUrl}/${reserva.id}`, reservaAtualizada)
+      .pipe(
+        tap((reservaAtualizada) =>
+          console.log(
+            '[DEBUG] Reserva atualizada no backend:',
+            reservaAtualizada
+          )
+        ),
+        catchError((err) => {
+          console.error('[ERROR] Falha ao cancelar reserva:', err);
+          throw err;
+        })
+      );
+  }
+
+
+
 }
 
 // mais metodos

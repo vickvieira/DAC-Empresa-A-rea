@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>Consultar Reserva</h2>
+
+    <div class="form-group">
+        <label for="codigoReserva">Insira o codigo da reserva:</label>
+        <input type="text" id="codigoReserva" class="form-control" />
+
+        <button (click)="consultarReserva()" class="btn btn-primary">
+            Buscar
+        </button>
+    </div>
+
+    <table class="table table-striped mt-2" [hidden]="!reserva">
+        <thead>
+            <tr>
+                <th scope="col">Código da Reserva</th>
+                <th scope="col">Codigo do Voo</th>
+                <th scope="col">Data e Hora da Reserva</th>
+                <th scope="col">Data e Hora do Voo</th>
+                <th scope="col">Aeroporto de Origem</th>
+                <th scope="col">Aeroporto de Destino</th>
+                <th scope="col">Milhas Utilizadas</th>
+                <th scope="col">Status do Voo</th>
+                <th scope="col">Ações Possiveis:</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <td>{{reserva?.codigo}}</td>
+            <td>{{reserva?.vooCodigo}}</td>
+            <td>{{reserva?.dataHoraReserva | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{voo?.dataHora | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{voo?.origem}}</td>
+            <td>{{voo?.destino}}</td>
+            <td>{{reserva?.milhasUtilizadas}}</td>
+            <td>{{voo?.status}}</td>
+            <td *ngIf="reserva">
+                <a class="link-danger text-decoration-none btn btn-link" (click)="modalCancelarReserva(reserva)"
+                    *ngIf="['AGUARDANDO_CHECKIN'].includes(reserva.status)">
+                    <i class="bi bi-x-circle"></i> Cancelar reserva
+                </a>
+
+            </td>
+            <td *ngIf="reserva">
+                <a class="link-success text-decoration-none btn btn-link" (click)="modalFazerCheckin(reserva)"
+                    *ngIf="['AGUARDANDO_CHECKIN'].includes(reserva.status)">
+                    <i class="bi bi-check"></i> Fazer Checkin
+                </a>
+            </td>
+
+        </tbody>
+    </table>
+</div>
