@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,13 +23,14 @@ public class MilhasDTO implements Serializable {
     @Column(name = "quantidade_milhas", nullable = false)
     private Double quantidadeMilhas;
 
-    @Column(name = "tipo_transacao", nullable = false, length = 10) 
+    @Column(name = "tipo_transacao", nullable = false, length = 10)
     private String tipoTransacao;
 
     @Column(name = "descricao", length = 255)
     private String descricao;
 
-    public MilhasDTO() {}
+    public MilhasDTO() {
+    }
 
     public MilhasDTO(Long cliente, LocalDateTime dataHoraTransacao, Double quantidadeMilhas, String tipoTransacao, String descricao) {
         this.cliente = cliente;

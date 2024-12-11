@@ -1,8 +1,7 @@
-package dto;
+package DTO;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-
 
 @Entity
 @Table(name = "clientes")
@@ -48,11 +47,12 @@ public class ClientesDTO implements Serializable {
     private Double milhas;
 
     // Construtor padrão
-    public ClientesDTO() {}
+    public ClientesDTO() {
+    }
 
     // Construtor com parâmetros
     public ClientesDTO(String nome, String email, String cpf, String telefone, String tipo, String ruaNumero,
-                       String complemento, String cep, String cidade, String estado, Double milhas) {
+            String complemento, String cep, String cidade, String estado, Double milhas) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;

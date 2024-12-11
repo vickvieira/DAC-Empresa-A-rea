@@ -11,39 +11,36 @@ import repository.ClienteRepository;
 import repository.MilhasRepository;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ClienteService {
 
-	@Autowired
+    @Autowired
     private final ClienteRepository clienteRepository;
-	
-	@Autowired
-    private final MilhasRepository milhasRepository;
-	
-	@Autowired
-	RabbitTemplate rabbitTemplate;
 
-    public ClienteService(ClienteRepository clienteRepository, MilhasRepository milhasRepository ) {
+    @Autowired
+    private final MilhasRepository milhasRepository;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    public ClienteService(ClienteRepository clienteRepository, MilhasRepository milhasRepository) {
         this.clienteRepository = clienteRepository;
         this.milhasRepository = milhasRepository;
     }
 
-    
     public void enviaMensagem(String nomeFila, Object mensagem) {
         rabbitTemplate.convertAndSend(nomeFila, mensagem);
 
     }
-    
+
     public ClientesDTO cadastrarCliente(ClientesDTO cliente) {
-    	
+
         ClientesDTO clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
         ClientesDTO clienteExistenteEMAIL = clienteRepository.findByEmail(cliente.getEmail());
 
-        if (clienteExistente  != null && clienteExistenteEMAIL != null) {
+        if (clienteExistente != null && clienteExistenteEMAIL != null) {
             throw new IllegalArgumentException("Já existe um cliente cadastrado com o CPF: " + cliente.getCpf());
         }
 

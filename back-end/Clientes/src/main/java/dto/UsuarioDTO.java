@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 import java.io.Serializable;
 
@@ -10,7 +10,8 @@ public class UsuarioDTO implements Serializable {
     private String tipo;
     private String salt;
 
-    public UsuarioDTO() {}
+    public UsuarioDTO() {
+    }
 
     public UsuarioDTO(String email, String senha, String tipo, String salt) {
         this.email = email;
