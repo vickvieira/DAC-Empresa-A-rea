@@ -30,6 +30,8 @@ public class VooService {
 
         vooDTO.setAeroportoOrigem(origem.getCodigo());
         vooDTO.setAeroportoDestino(destino.getCodigo());
+        vooDTO.setDataHora(LocalDateTime.now());
+        vooDTO.setStatus("CONFIRMADO");
 
         return vooRepository.save(vooDTO);
     }
@@ -40,7 +42,6 @@ public class VooService {
             throw new IllegalArgumentException("Os parâmetros aeroportoOrigem e aeroportoDestino são obrigatórios.");
         }
 
-        // Obter a data/hora atual
         LocalDateTime agora = LocalDateTime.now();
         return vooRepository.findByAeroportoOrigemAndAeroportoDestinoAndDataHoraAfter(aeroportoOrigem, aeroportoDestino, agora);
     }

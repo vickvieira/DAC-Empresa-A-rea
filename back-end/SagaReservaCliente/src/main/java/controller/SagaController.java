@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import constantes.RabbitmqConstantes;
+import dto.VooDTO;
 import service.SagaService;
 import models.SagaReservaRequisition;
 
@@ -41,4 +42,27 @@ public class SagaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+    
+    @PostMapping("/cancelarVoo")
+    private ResponseEntity<Object> cancelarVoo(@RequestBody VooDTO voo) {
+        try {
+            System.out.print(voo.toString());
+            sagaService.enviaMensagem(RabbitmqConstantes.VOO_CANCELA_VOO, voo);
+            return ResponseEntity.ok("Voo enviado com sucesso para a fila de cancelamento.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    
+    @PostMapping("/realizaVoo")
+    private ResponseEntity<Object> realizaVoo(@RequestBody VooDTO voo) {
+        try {
+            System.out.print(voo.toString());
+            sagaService.enviaMensagem(RabbitmqConstantes.FILA_REALIZA_VOO, voo);
+            return ResponseEntity.ok("Voo enviado com sucesso para a fila de Realizcao.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    
 }

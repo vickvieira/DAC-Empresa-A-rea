@@ -31,6 +31,9 @@ public class VooDTO implements Serializable {
 
     @Column(name = "quantidade_poltronas_ocupadas", nullable = false)
     private Integer quantidadePoltronasOcupadas;
+    
+    @Column(name = "status")
+    private String status;
 
     public VooDTO() {}
 
@@ -101,4 +104,14 @@ public class VooDTO implements Serializable {
     public void setQuantidadePoltronasOcupadas(Integer quantidadePoltronasOcupadas) {
         this.quantidadePoltronasOcupadas = quantidadePoltronasOcupadas;
     }
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
+    
 }
