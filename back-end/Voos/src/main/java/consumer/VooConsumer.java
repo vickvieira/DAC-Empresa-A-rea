@@ -101,4 +101,31 @@ public class VooConsumer  {
 	            e.printStackTrace();
 	        }
 	    }
+	    
+	    @RabbitListener(queues = RabbitmqConstantes.FILA_REALIZA_VOO)
+	    public void consumidorRealizaVoo(VooDTO vooRequisicao) {
+    	try {
+            if (vooRequisicao == null || vooRequisicao.getCodigoVoo() == null) {
+                System.out.println("Código do voo é nulo ou inválido.");
+                return;
+            }
+            VooDTO voo = vooService.buscarVooPorCodigo(vooRequisicao.getCodigoVoo());
+            if (voo == null) {
+                System.out.println("Voo não encontrado: " + vooRequisicao.getCodigoVoo());
+                return;
+            }
+            
+            System.out.println("Status atual do voo: " + voo.getStatus());
+            voo.setStatus("REALIZADO");
+            vooService.atualizarVoo(voo);
+
+            rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_REALIZA_VOO_ATUALIZA, voo);
+            System.out.println("Voo cancelado com sucesso e mensagem enviada para a fila: " + RabbitmqConstantes.FILA_REALIZA_VOO_ATUALIZA);
+
+	        } catch (Exception e) {
+	            System.err.println("Erro ao processar cancelamento do voo: " + e.getMessage());
+	            e.printStackTrace();
+	        }
+            
+	    }
 }

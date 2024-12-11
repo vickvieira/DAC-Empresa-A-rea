@@ -98,4 +98,9 @@ public class SagaConsumer {
     	List<ClienteMilhas> milhas = reservaService.cancelaVooERetornaClientesEMilhas(codigoVoo);
     	 rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO_ATUALIZA, milhas);
     }
+    
+    @RabbitListener(queues = RabbitmqConstantes.FILA_REALIZA_VOO_RESERVA)
+    public void consumidorRealizaVoo(String codigoVoo) {
+    	reservaService.realizaVoo(codigoVoo);
+    }
 }

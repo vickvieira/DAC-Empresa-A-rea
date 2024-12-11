@@ -107,4 +107,13 @@ public class SagaConsumer  {
 	        }
 	    }
 	    
+	    @RabbitListener(queues = RabbitmqConstantes.FILA_REALIZA_VOO_ATUALIZA)
+	    public void consumidorREALIZAVooReservaAtt(VooDTO voo) {
+	        try {
+	           rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_REALIZA_VOO_RESERVA, voo.getCodigoVoo());
+	        } catch (Exception e) {
+	            System.err.println("Erro ao processar mensagem de cancelamento de voo: " + e.getMessage());
+	        }
+	    }
+	    
 }

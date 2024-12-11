@@ -10,8 +10,8 @@ public class RabbitmqConstantes {
 
     public static final String FILA_CANCELA_RESERVA = "FILA_CANCELA_RESERVA";
     public static final String FILA_CANCELA_RESERVA_ATUALIZADA = "FILA_CANCELA_RESERVA_ATUALIZADA";
-    
-	  public static final String FILA_CANCELA_RESERVA_VOO = "FILA_CANCELA_RESERVA_VOO";
-	  public static final String FILA_CANCELA_RESERVA_VOO_ATUALIZA = "FILA_CANCELA_RESERVA_VOO_ATUALIZA";
+    public static final String FILA_CANCELA_RESERVA_VOO = "FILA_CANCELA_RESERVA_VOO";
+	public static final String FILA_CANCELA_RESERVA_VOO_ATUALIZA = "FILA_CANCELA_RESERVA_VOO_ATUALIZA";
+	public static final String FILA_REALIZA_VOO_RESERVA = "FILA_REALIZA_VOO_RESERVA";
 }
 

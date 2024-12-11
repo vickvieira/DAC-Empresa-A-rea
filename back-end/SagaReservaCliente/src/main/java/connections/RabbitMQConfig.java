@@ -34,6 +34,7 @@ public class RabbitMQConfig {
 
     @PostConstruct
     private void adicionaFilas() {
+        // Criação das filas existentes
         Queue filaReserva = this.fila(RabbitmqConstantes.FILA_RESERVA);
         Queue filaVoo = this.fila(RabbitmqConstantes.FILA_VOO);
         Queue filaVooAtualizado = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
@@ -51,8 +52,14 @@ public class RabbitMQConfig {
         Queue filaVooCancelaVooAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_voo_ATUALIZADA);
         Queue filaVariosClientes = this.fila(RabbitmqConstantes.FILA_VARIOS_CLIENTES);
 
+        // Criação das novas filas
+        Queue filaRealizaVoo = this.fila(RabbitmqConstantes.FILA_REALIZA_VOO);
+        Queue filaRealizaVooAtualiza = this.fila(RabbitmqConstantes.FILA_REALIZA_VOO_ATUALIZA);
+        Queue filaRealizaVooReserva = this.fila(RabbitmqConstantes.FILA_REALIZA_VOO_RESERVA);
+
         DirectExchange troca = this.trocaDireta();
 
+        // Configuração das bindings existentes
         Binding ligacaoReserva = this.relacionamento(filaReserva, troca);
         Binding ligacaoVoo = this.relacionamento(filaVoo, troca);
         Binding ligacaoVooAtualizado = this.relacionamento(filaVooAtualizado, troca);
@@ -70,6 +77,12 @@ public class RabbitMQConfig {
         Binding ligacaoVooCancelaVooAtualizada = this.relacionamento(filaVooCancelaVooAtualizada, troca);
         Binding ligacaoVariosClientes = this.relacionamento(filaVariosClientes, troca);
 
+        // Configuração das bindings para as novas filas
+        Binding ligacaoRealizaVoo = this.relacionamento(filaRealizaVoo, troca);
+        Binding ligacaoRealizaVooAtualiza = this.relacionamento(filaRealizaVooAtualiza, troca);
+        Binding ligacaoRealizaVooReserva = this.relacionamento(filaRealizaVooReserva, troca);
+
+        // Declarar as filas existentes
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
         this.amqpAdmin.declareQueue(filaVooAtualizado);
@@ -87,8 +100,15 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareQueue(filaVooCancelaVooAtualizada);
         this.amqpAdmin.declareQueue(filaVariosClientes);
 
+        // Declarar as novas filas
+        this.amqpAdmin.declareQueue(filaRealizaVoo);
+        this.amqpAdmin.declareQueue(filaRealizaVooAtualiza);
+        this.amqpAdmin.declareQueue(filaRealizaVooReserva);
+
+        // Declarar a exchange
         this.amqpAdmin.declareExchange(troca);
 
+        // Declarar os bindings existentes
         this.amqpAdmin.declareBinding(ligacaoReserva);
         this.amqpAdmin.declareBinding(ligacaoVoo);
         this.amqpAdmin.declareBinding(ligacaoVooAtualizado);
@@ -105,5 +125,10 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareBinding(ligacaoVooCancelaVoo);
         this.amqpAdmin.declareBinding(ligacaoVooCancelaVooAtualizada);
         this.amqpAdmin.declareBinding(ligacaoVariosClientes);
+
+        // Declarar os bindings para as novas filas
+        this.amqpAdmin.declareBinding(ligacaoRealizaVoo);
+        this.amqpAdmin.declareBinding(ligacaoRealizaVooAtualiza);
+        this.amqpAdmin.declareBinding(ligacaoRealizaVooReserva);
     }
 }

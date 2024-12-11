@@ -91,5 +91,76 @@ public class ReservaService {
 
         return clientesMilhas;
     }
-   
+
+    public void realizaVoo(String codigoVoo) {
+        List<ReservaDTO> reservas = reservaRepository.findByCodigoVoo(codigoVoo);
+
+        if (reservas.isEmpty()) {
+            System.out.println("Nenhuma reserva encontrada para o voo: " + codigoVoo);
+            return;
+        }
+
+        for (ReservaDTO reserva : reservas) {
+            HistoricoAlteracaoDTO historico = new HistoricoAlteracaoDTO();
+            historico.setCodigoReserva(reserva.getCodigoReserva());
+            historico.setDataHoraAlteracao(LocalDateTime.now());
+            historico.setEstadoOrigem(reserva.getEstadoReserva());
+
+            if ("EMB".equals(reserva.getEstadoReserva())) {
+                reserva.setEstadoReserva("REAL");
+                historico.setEstadoDestino("REAL");
+            } else {
+                reserva.setEstadoReserva("NREAL");
+                historico.setEstadoDestino("NREAL");
+            }
+
+            reservaRepository.save(reserva);
+
+            historicoRepository.save(historico);
+
+            CQRSModel requisicaoCQRS = new CQRSModel();
+            requisicaoCQRS.setReserva(reserva);
+            requisicaoCQRS.setHistoricoAlteracoes(historico);
+
+            rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_atualizaReservaQ, requisicaoCQRS);
+
+            System.out.println("Reserva " + reserva.getCodigoReserva() + " atualizada para " + reserva.getEstadoReserva() +
+                    " e histórico salvo.");
+        }
+
+        System.out.println("Processamento do voo " + codigoVoo + " concluído.");
+    }
+    
+    public boolean validarReservaVoo(String codigoVoo, String codigoReserva) {
+        ReservaDTO reserva = reservaRepository.findByCodigoReserva(codigoReserva);
+
+        return reserva != null && codigoVoo.equals(reserva.getCodigoVoo());
+    }
+    
+    public void realizarEmbarque(String codigoReserva) {
+        ReservaDTO reserva = reservaRepository.findByCodigoReserva(codigoReserva);
+
+        if (reserva == null) {
+            throw new IllegalArgumentException("Reserva não encontrada.");
+        }
+
+        HistoricoAlteracaoDTO historico = new HistoricoAlteracaoDTO();
+        historico.setCodigoReserva(reserva.getCodigoReserva());
+        historico.setDataHoraAlteracao(LocalDateTime.now());
+        historico.setEstadoOrigem(reserva.getEstadoReserva());
+
+        reserva.setEstadoReserva("EMB");
+        reservaRepository.save(reserva);
+
+        historico.setEstadoDestino("EMB");
+        historicoRepository.save(historico);
+
+        CQRSModel requisicaoCQRS = new CQRSModel();
+        requisicaoCQRS.setReserva(reserva);
+        requisicaoCQRS.setHistoricoAlteracoes(historico);
+
+        rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_atualizaReservaQ, requisicaoCQRS);
+
+        System.out.println("Reserva " + codigoReserva + " atualizada para EMB e histórico salvo.");
+    }
 }

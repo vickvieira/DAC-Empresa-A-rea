@@ -22,5 +22,9 @@ public class RabbitmqConstantes {
 	  
 	  public static final String FILA_VARIOS_CLIENTES = "FILA_VARIOS_CLIENTES";
 
+	  //para realizar voo
+	  public static final String FILA_REALIZA_VOO = "FILA_REALIZA_VOO";
+	  public static final String FILA_REALIZA_VOO_ATUALIZA = "FILA_REALIZA_VOO_ATUALIZA";
+	  public static final String FILA_REALIZA_VOO_RESERVA = "FILA_REALIZA_VOO_RESERVA";
 
-	}
+}

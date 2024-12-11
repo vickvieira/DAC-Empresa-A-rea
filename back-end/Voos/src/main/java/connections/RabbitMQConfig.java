@@ -34,44 +34,47 @@ public class RabbitMQConfig {
 
     @PostConstruct
     private void adicionaFilas() {
-        // Filas existentes
         Queue filaReserva = this.fila(RabbitmqConstantes.FILA_RESERVA);
         Queue filaVoo = this.fila(RabbitmqConstantes.FILA_VOO);
         Queue filaVooAtualizado = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
 
-        // Novas filas
+        Queue filaRealizaVoo = this.fila(RabbitmqConstantes.FILA_REALIZA_VOO);
+        Queue filaRealizaVooAtualiza = this.fila(RabbitmqConstantes.FILA_REALIZA_VOO_ATUALIZA);
+
         Queue filaVooCancelaVoo = this.fila(RabbitmqConstantes.VOO_CANCELA_VOO);
         Queue filaVooCancelaVooAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_voo_ATUALIZADA);
 
         DirectExchange troca = this.trocaDireta();
 
-        // Bindings para filas existentes
         Binding ligacaoReserva = this.relacionamento(filaReserva, troca);
         Binding ligacaoVoo = this.relacionamento(filaVoo, troca);
         Binding ligacaoVooAtualizado = this.relacionamento(filaVooAtualizado, troca);
 
-        // Bindings para novas filas
+        Binding ligacaoRealizaVoo = this.relacionamento(filaRealizaVoo, troca);
+        Binding ligacaoRealizaVooAtualiza = this.relacionamento(filaRealizaVooAtualiza, troca);
+
         Binding ligacaoVooCancelaVoo = this.relacionamento(filaVooCancelaVoo, troca);
         Binding ligacaoVooCancelaVooAtualizada = this.relacionamento(filaVooCancelaVooAtualizada, troca);
 
-        // Declaração de filas existentes
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
         this.amqpAdmin.declareQueue(filaVooAtualizado);
 
-        // Declaração de novas filas
+        this.amqpAdmin.declareQueue(filaRealizaVoo);
+        this.amqpAdmin.declareQueue(filaRealizaVooAtualiza);
+
         this.amqpAdmin.declareQueue(filaVooCancelaVoo);
         this.amqpAdmin.declareQueue(filaVooCancelaVooAtualizada);
 
-        // Declaração de exchange
         this.amqpAdmin.declareExchange(troca);
 
-        // Declaração de bindings para filas existentes
         this.amqpAdmin.declareBinding(ligacaoReserva);
         this.amqpAdmin.declareBinding(ligacaoVoo);
         this.amqpAdmin.declareBinding(ligacaoVooAtualizado);
 
-        // Declaração de bindings para novas filas
+        this.amqpAdmin.declareBinding(ligacaoRealizaVoo);
+        this.amqpAdmin.declareBinding(ligacaoRealizaVooAtualiza);
+
         this.amqpAdmin.declareBinding(ligacaoVooCancelaVoo);
         this.amqpAdmin.declareBinding(ligacaoVooCancelaVooAtualizada);
     }
