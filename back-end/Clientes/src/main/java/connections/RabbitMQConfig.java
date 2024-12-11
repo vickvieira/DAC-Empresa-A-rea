@@ -4,16 +4,7 @@ import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.support.converter.AllowedListDeserializingMessageConverter;
-import org.springframework.amqp.support.converter.DefaultClassMapper;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.amqp.support.converter.SimpleMessageConverter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
 import constantes.RabbitmqConstantes;
 import jakarta.annotation.PostConstruct;
@@ -21,9 +12,10 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class RabbitMQConfig {
     private static final String NOME_EXCHANGE = "SagaClienteUsuario";
+    private static final String NOME_EXCHANGE_RESERVA = "SagaClienteReserva";
 
     private final AmqpAdmin amqpAdmin;
-    
+
     public RabbitMQConfig(AmqpAdmin amqpAdmin) {
         this.amqpAdmin = amqpAdmin;
     }
@@ -32,10 +24,9 @@ public class RabbitMQConfig {
         return new Queue(nomeFila, true, false, false);
     }
 
-    private DirectExchange trocaDireta() {
-        return new DirectExchange(NOME_EXCHANGE);
+    private DirectExchange trocaDireta(String exchangeName) {
+        return new DirectExchange(exchangeName);
     }
-
 
     private Binding relacionamento(Queue fila, DirectExchange troca) {
         return new Binding(
@@ -45,31 +36,44 @@ public class RabbitMQConfig {
 
     @PostConstruct
     private void adicionaFilas() {
+        // Exchange SagaClienteUsuario
         Queue filaCadastro = this.fila(RabbitmqConstantes.FILA_CADASTRO);
         Queue filaCliente = this.fila(RabbitmqConstantes.FILA_CLIENTE);
         Queue filaCadastrado = this.fila(RabbitmqConstantes.FILA_CLIENTE_CADASTRADO);
         Queue filaEmail = this.fila(RabbitmqConstantes.FILA_ENVIAR_EMAIL);
         Queue filaRollback = this.fila(RabbitmqConstantes.FILA_ROLLBACK);
-        
-        DirectExchange troca = this.trocaDireta();
 
-        Binding ligacaoUsuario = this.relacionamento(filaCadastro, troca);
-        Binding ligacaoCliente = this.relacionamento(filaCliente, troca);
-        Binding ligacaoCadastrado =  this.relacionamento(filaCadastrado, troca);
-        Binding ligacaoEmail =  this.relacionamento(filaEmail, troca);
-        Binding ligacaoRollback =  this.relacionamento(filaRollback, troca);
-        
+        DirectExchange trocaUsuario = this.trocaDireta(NOME_EXCHANGE);
+
+        Binding ligacaoUsuario = this.relacionamento(filaCadastro, trocaUsuario);
+        Binding ligacaoCliente = this.relacionamento(filaCliente, trocaUsuario);
+        Binding ligacaoCadastrado = this.relacionamento(filaCadastrado, trocaUsuario);
+        Binding ligacaoEmail = this.relacionamento(filaEmail, trocaUsuario);
+        Binding ligacaoRollback = this.relacionamento(filaRollback, trocaUsuario);
+
         this.amqpAdmin.declareQueue(filaCadastro);
         this.amqpAdmin.declareQueue(filaCliente);
         this.amqpAdmin.declareQueue(filaCadastrado);
         this.amqpAdmin.declareQueue(filaEmail);
         this.amqpAdmin.declareQueue(filaRollback);
-        this.amqpAdmin.declareExchange(troca);
+        this.amqpAdmin.declareExchange(trocaUsuario);
 
         this.amqpAdmin.declareBinding(ligacaoUsuario);
         this.amqpAdmin.declareBinding(ligacaoCliente);
         this.amqpAdmin.declareBinding(ligacaoCadastrado);
         this.amqpAdmin.declareBinding(ligacaoEmail);
         this.amqpAdmin.declareBinding(ligacaoRollback);
+
+        // Exchange SagaClienteReserva
+        Queue filaClienteReserva = this.fila(RabbitmqConstantes.FILA_CLIENTE_RESERVA);
+
+        DirectExchange trocaReserva = this.trocaDireta(NOME_EXCHANGE_RESERVA);
+
+        Binding ligacaoClienteReserva = this.relacionamento(filaClienteReserva, trocaReserva);
+
+        this.amqpAdmin.declareQueue(filaClienteReserva);
+        this.amqpAdmin.declareExchange(trocaReserva);
+
+        this.amqpAdmin.declareBinding(ligacaoClienteReserva);
     }
 }

@@ -40,22 +40,40 @@ public class RabbitMQConfig {
         Queue filaReserva = this.fila(RabbitmqConstantes.FILA_RESERVA);
         Queue filaVoo = this.fila(RabbitmqConstantes.FILA_VOO);
         Queue filaVooAtualizadoSaga = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
+        Queue filaReservaAtualizada = this.fila(RabbitmqConstantes.FILA_RESERVA_ATUALIZADA);
+
+        // cancelamento
+        Queue filaCancelaReserva = this.fila(RabbitmqConstantes.FILA_CANCELA_RESERVA);
+        Queue filaCancelaReservaAtualizada = this.fila(RabbitmqConstantes.FILA_CANCELA_RESERVA_ATUALIZADA);
 
         DirectExchange trocaSaga = this.trocaDireta(NOME_EXCHANGE);
 
         Binding ligacaoReserva = this.relacionamento(filaReserva, trocaSaga);
         Binding ligacaoVoo = this.relacionamento(filaVoo, trocaSaga);
         Binding ligacaoVooAtualizadoSaga = this.relacionamento(filaVooAtualizadoSaga, trocaSaga);
+        Binding ligacaoReservaAtualizada = this.relacionamento(filaReservaAtualizada, trocaSaga);
+
+        //cancelamento
+        Binding ligacaoCancelaReserva = this.relacionamento(filaCancelaReserva, trocaSaga);
+        Binding ligacaoCancelaReservaAtualizada = this.relacionamento(filaCancelaReservaAtualizada, trocaSaga);
 
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
         this.amqpAdmin.declareQueue(filaVooAtualizadoSaga);
+        this.amqpAdmin.declareQueue(filaReservaAtualizada);
+
+        this.amqpAdmin.declareQueue(filaCancelaReserva);
+        this.amqpAdmin.declareQueue(filaCancelaReservaAtualizada);
 
         this.amqpAdmin.declareExchange(trocaSaga);
 
         this.amqpAdmin.declareBinding(ligacaoReserva);
         this.amqpAdmin.declareBinding(ligacaoVoo);
         this.amqpAdmin.declareBinding(ligacaoVooAtualizadoSaga);
+        this.amqpAdmin.declareBinding(ligacaoReservaAtualizada);
+
+        this.amqpAdmin.declareBinding(ligacaoCancelaReserva);
+        this.amqpAdmin.declareBinding(ligacaoCancelaReservaAtualizada);
 
         // CQRS Exchange
         Queue filaAtualizaReservaQ = this.fila(RabbitmqConstantes.FILA_atualizaReservaQ);

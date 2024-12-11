@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import constantes.RabbitmqConstantes;
 import dto.UserCliente;
+import models.ClienteReserva;
 import service.ClienteService;
 //import service.SagaService;
 
@@ -26,6 +27,17 @@ public class ClienteConsumer {
         	System.err.println("Erro cliente: já existente " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Erro inesperado ao cadastrar cliente: " + e.getMessage());
+        }
+    }
+    
+    @RabbitListener(queues = RabbitmqConstantes.FILA_CLIENTE_RESERVA)
+    public void consumidor(ClienteReserva clienteReserva) {
+        try {
+            System.out.println("Recebendo mensagem para o cliente: " + clienteReserva.getIdCliente());
+            clienteService.adicionarMilhasERegistrarEvento(clienteReserva);
+            System.out.println("Milhas adicionadas e evento registrado com sucesso para o cliente: " + clienteReserva.getIdCliente());
+        } catch (Exception e) {
+            System.err.println("Erro inesperado ao processar mensagem: " + e.getMessage());
         }
     }
 }

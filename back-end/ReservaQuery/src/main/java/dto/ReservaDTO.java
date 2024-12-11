@@ -22,12 +22,12 @@ public class ReservaDTO implements Serializable {
 
     @Column(name = "data_hora_reserva", nullable = false)
     private LocalDateTime dataHoraReserva;
-
+    
     @Column(name = "valor_pago")
     private double valorPago;
 
     @Column(name = "milhas_gastas")
-    private int milhasGastas;
+    private double milhasGastas;
 
     @Column(name = "quantidade_poltronas_reservadas", nullable = false)
     private int quantidadePoltronasReservadas;
@@ -40,7 +40,7 @@ public class ReservaDTO implements Serializable {
 
     public ReservaDTO() {}
 
-    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas, double valorPago, int milhasGastas, Long idCliente) {
+    public ReservaDTO(String codigoReserva, String codigoVoo, LocalDateTime dataHoraReserva, String estadoReserva, int quantidadePoltronasReservadas, double valorPago, double milhasGastas, Long idCliente) {
         this.codigoReserva = codigoReserva;
         this.codigoVoo = codigoVoo;
         this.dataHoraReserva = dataHoraReserva;
@@ -92,11 +92,11 @@ public class ReservaDTO implements Serializable {
         this.valorPago = valorPago;
     }
 
-    public int getMilhasGastas() {
+    public double getMilhasGastas() {
         return milhasGastas;
     }
 
-    public void setMilhasGastas(int milhasGastas) {
+    public void setMilhasGastas(double milhasGastas) {
         this.milhasGastas = milhasGastas;
     }
 

@@ -13,7 +13,7 @@ public class ReservaDTO implements Serializable {
     private String codigoVoo;
     private LocalDateTime dataHoraReserva;
     private double valorPago;
-    private int milhasGastas;
+    private double milhasGastas;
     private int quantidadePoltronasReservadas;
     private String estadoReserva;
     private Long idCliente;
@@ -70,11 +70,11 @@ public class ReservaDTO implements Serializable {
         this.valorPago = valorPago;
     }
 
-    public int getMilhasGastas() {
+    public double getMilhasGastas() {
         return milhasGastas;
     }
 
-    public void setMilhasGastas(int milhasGastas) {
+    public void setMilhasGastas(double milhasGastas) {
         this.milhasGastas = milhasGastas;
     }
 
@@ -101,4 +101,5 @@ public class ReservaDTO implements Serializable {
     public void setClienteId(Long clienteId) {
         this.idCliente = clienteId;
     }
+
 }

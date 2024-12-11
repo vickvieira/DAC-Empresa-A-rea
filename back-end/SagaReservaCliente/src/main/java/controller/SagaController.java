@@ -30,4 +30,15 @@ public class SagaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+    
+    @PostMapping("/cancelarReserva")
+    private ResponseEntity<Object> cancelaReserva(@RequestBody SagaReservaRequisition reserva) {
+        try {
+        	System.out.print(reserva.toString());
+            sagaService.enviaMensagem(RabbitmqConstantes.VOO_CANCELA, reserva);
+            return ResponseEntity.ok("Reserva enviada com sucesso para a fila de processamento.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
