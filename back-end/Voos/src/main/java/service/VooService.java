@@ -63,4 +63,8 @@ public class VooService {
     public void atualizarVoo(VooDTO voo) {
         vooRepository.save(voo);
     }
+    
+    public List<VooDTO> buscarTodosVoos() {
+        return vooRepository.findAll();
+    }
 }
