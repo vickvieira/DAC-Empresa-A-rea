@@ -165,3 +165,17 @@ services:
     depends_on:
       - postgres
       - rabbitmq
+
+  sagafuncionarioauth:
+    build:
+      context: ./SagaFuncionarioAuth
+    container_name: sagafuncionarioauth
+    restart: always
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_AMQP_DESERIALIZATION_TRUST_ALL=true
+    depends_on:
+      - rabbitmq

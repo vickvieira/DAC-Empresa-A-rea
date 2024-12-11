@@ -14,7 +14,7 @@ public class SagaConsumer {
 	@Autowired
 	private SagaService sagaService;
 	
-	@RabbitListener(queues = RabbitmqConstantes.FILA_CLIENTE_CADASTRADO)
+	@RabbitListener(queues = RabbitmqConstantes.FILA_CADASTRO_FUNC_ATUALIZADO)
 	private void consumidor(UserCliente user) {
 	    try {
 	        System.out.print("Saga cliente cadastrado");

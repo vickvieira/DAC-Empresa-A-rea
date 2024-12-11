@@ -10,6 +10,8 @@ import dto.UsuarioDTO;
 import models.LoginRequisition;
 
 import java.security.SecureRandom;
+import java.util.List;
+
 import password.PasswordUtils;
 
 
@@ -32,19 +34,21 @@ public class AuthService {
     
     public UserRequisitionDTO logar(LoginRequisition login) throws Exception {
         UsuarioDTO usuario = usuarioRepository.findByEmail(login.getEmail());
+        System.out.println("AAAAAAAAAAAA");
 
         if (usuario == null) {
             throw new Exception("E-mail não encontrado.");
         }
 
         String hashedInputPassword = PasswordUtils.hashPassword(login.getSenha(), usuario.getSalt());
-
+        System.out.println(hashedInputPassword);
+        System.out.println(usuario.getSenha());
         if (!hashedInputPassword.equals(usuario.getSenha())) {
             throw new Exception("Senha incorreta.");
         }
 
         System.out.println("Usuário logado com sucesso: " + usuario.getEmail());
-        return new UserRequisitionDTO(usuario.getEmail(), usuario.getTipo());
+        return new UserRequisitionDTO(usuario.getEmail(), usuario.getTipo(), usuario.getAtivo());
     }
     
     public void cadastrarUsuario(UserRequisitionDTO login) throws Exception {
@@ -57,7 +61,7 @@ public class AuthService {
         String salt = PasswordUtils.generateSalt();
         String hashedPassword = PasswordUtils.hashPassword(senhaString, salt);
 
-        UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt);
+        UsuarioDTO novoUser = new UsuarioDTO(login.getEmail(), hashedPassword, login.getTipo(), salt, true);
         usuarioRepository.save(novoUser);
 
         String assunto = "Bem-vindo ao sistema!";
@@ -70,5 +74,26 @@ public class AuthService {
         emailService.enviarEmail(login.getEmail(), assunto, mensagem);
 
         System.out.println("Usuário cadastrado e e-mail enviado com sucesso: " + novoUser.getEmail());
+    }
+    
+    public List<UsuarioDTO> buscarTodosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+    
+    public void inativarCadastro(String email) {
+        UsuarioDTO usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new IllegalArgumentException("Usuário não encontrado com o e-mail: " + email);
+        }
+
+        if (!usuario.getAtivo()) {
+            throw new IllegalArgumentException("Usuário já está inativo.");
+        }
+
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
+
+        System.out.println("Usuário inativado: " + email);
     }
 }

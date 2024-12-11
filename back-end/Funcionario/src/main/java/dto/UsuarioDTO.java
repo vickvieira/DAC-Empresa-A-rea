@@ -2,19 +2,13 @@ package dto;
 
 import java.io.Serializable;
 
-public class UsuarioDTO implements Serializable{
+public class UsuarioDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String id;
-
     private String email;
-
     private String senha;
-
     private String tipo;
-
     private String salt;
-    
     private Boolean ativo;
 
     public UsuarioDTO() {}
@@ -25,24 +19,8 @@ public class UsuarioDTO implements Serializable{
         this.tipo = tipo;
         this.salt = salt;
     }
-    
-    public UsuarioDTO(String email, String senha, String tipo, String salt, Boolean ativo) {
-        this.email = email;
-        this.senha = senha;
-        this.tipo = tipo;
-        this.salt = salt;
-        this.ativo = ativo;
-    }
 
     // Getters e Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -74,10 +52,11 @@ public class UsuarioDTO implements Serializable{
     public void setSalt(String salt) {
         this.salt = salt;
     }
+    
+    
 
-    
-    
-    public Boolean getAtivo() {
+
+	public Boolean getAtivo() {
 		return ativo;
 	}
 
@@ -88,8 +67,7 @@ public class UsuarioDTO implements Serializable{
 	@Override
     public String toString() {
         return "UsuarioDTO{" +
-                "id='" + id + '\'' +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", tipo='" + tipo + '\'' +
                 ", salt='" + salt + '\'' +
