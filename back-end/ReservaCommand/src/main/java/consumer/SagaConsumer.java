@@ -1,6 +1,7 @@
 package consumer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import constantes.RabbitmqConstantes;
 import models.SagaReservaRequisition;
 import models.CQRSModel;
+import models.ClienteMilhas;
 import service.ReservaService;
 import dto.ReservaDTO;
 import dto.EstadoReservaDTO;
@@ -88,5 +90,12 @@ public class SagaConsumer {
         } catch (Exception e) {
             System.err.println("Erro ao processar cancelamento de reserva: " + e.getMessage());
         }
+    }
+    
+    
+    @RabbitListener(queues = RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO)
+    public void consumidorCancelaVoo(String codigoVoo) {
+    	List<ClienteMilhas> milhas = reservaService.cancelaVooERetornaClientesEMilhas(codigoVoo);
+    	 rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO_ATUALIZA, milhas);
     }
 }

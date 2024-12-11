@@ -8,4 +8,7 @@ public class RabbitmqConstantes {
 	  
 	  public static final String VOO_CANCELA = "VOO_CANCELA";
 	  public static final String VOO_CANCELA_ATUALIZADA = "VOO_CANCELA_ATUALIZADA";
+	  
+	  public static final String VOO_CANCELA_VOO = "VOO_CANCELA_VOO";
+	  public static final String VOO_CANCELA_voo_ATUALIZADA = "VOO_CANCELA_voo_ATUALIZADA";
 	}

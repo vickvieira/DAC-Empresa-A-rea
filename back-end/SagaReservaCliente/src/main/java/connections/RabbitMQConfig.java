@@ -45,6 +45,12 @@ public class RabbitMQConfig {
         Queue filaVooCancela = this.fila(RabbitmqConstantes.VOO_CANCELA);
         Queue filaVooCancelaAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_ATUALIZADA);
 
+        Queue filaCancelaReservaVoo = this.fila(RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO);
+        Queue filaCancelaReservaVooAtualiza = this.fila(RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO_ATUALIZA);
+        Queue filaVooCancelaVoo = this.fila(RabbitmqConstantes.VOO_CANCELA_VOO);
+        Queue filaVooCancelaVooAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_voo_ATUALIZADA);
+        Queue filaVariosClientes = this.fila(RabbitmqConstantes.FILA_VARIOS_CLIENTES);
+
         DirectExchange troca = this.trocaDireta();
 
         Binding ligacaoReserva = this.relacionamento(filaReserva, troca);
@@ -58,6 +64,12 @@ public class RabbitMQConfig {
         Binding ligacaoVooCancela = this.relacionamento(filaVooCancela, troca);
         Binding ligacaoVooCancelaAtualizada = this.relacionamento(filaVooCancelaAtualizada, troca);
 
+        Binding ligacaoCancelaReservaVoo = this.relacionamento(filaCancelaReservaVoo, troca);
+        Binding ligacaoCancelaReservaVooAtualiza = this.relacionamento(filaCancelaReservaVooAtualiza, troca);
+        Binding ligacaoVooCancelaVoo = this.relacionamento(filaVooCancelaVoo, troca);
+        Binding ligacaoVooCancelaVooAtualizada = this.relacionamento(filaVooCancelaVooAtualizada, troca);
+        Binding ligacaoVariosClientes = this.relacionamento(filaVariosClientes, troca);
+
         this.amqpAdmin.declareQueue(filaReserva);
         this.amqpAdmin.declareQueue(filaVoo);
         this.amqpAdmin.declareQueue(filaVooAtualizado);
@@ -68,6 +80,12 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareQueue(filaCancelaReservaAtualizada);
         this.amqpAdmin.declareQueue(filaVooCancela);
         this.amqpAdmin.declareQueue(filaVooCancelaAtualizada);
+
+        this.amqpAdmin.declareQueue(filaCancelaReservaVoo);
+        this.amqpAdmin.declareQueue(filaCancelaReservaVooAtualiza);
+        this.amqpAdmin.declareQueue(filaVooCancelaVoo);
+        this.amqpAdmin.declareQueue(filaVooCancelaVooAtualizada);
+        this.amqpAdmin.declareQueue(filaVariosClientes);
 
         this.amqpAdmin.declareExchange(troca);
 
@@ -81,5 +99,11 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareBinding(ligacaoCancelaReservaAtualizada);
         this.amqpAdmin.declareBinding(ligacaoVooCancela);
         this.amqpAdmin.declareBinding(ligacaoVooCancelaAtualizada);
+
+        this.amqpAdmin.declareBinding(ligacaoCancelaReservaVoo);
+        this.amqpAdmin.declareBinding(ligacaoCancelaReservaVooAtualiza);
+        this.amqpAdmin.declareBinding(ligacaoVooCancelaVoo);
+        this.amqpAdmin.declareBinding(ligacaoVooCancelaVooAtualizada);
+        this.amqpAdmin.declareBinding(ligacaoVariosClientes);
     }
 }

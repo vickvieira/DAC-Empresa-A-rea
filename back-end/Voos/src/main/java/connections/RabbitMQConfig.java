@@ -40,8 +40,8 @@ public class RabbitMQConfig {
         Queue filaVooAtualizado = this.fila(RabbitmqConstantes.FILA_VOO_ATUALIZADO);
 
         // Novas filas
-        Queue filaVooCancela = this.fila(RabbitmqConstantes.VOO_CANCELA);
-        Queue filaVooCancelaAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_ATUALIZADA);
+        Queue filaVooCancelaVoo = this.fila(RabbitmqConstantes.VOO_CANCELA_VOO);
+        Queue filaVooCancelaVooAtualizada = this.fila(RabbitmqConstantes.VOO_CANCELA_voo_ATUALIZADA);
 
         DirectExchange troca = this.trocaDireta();
 
@@ -51,8 +51,8 @@ public class RabbitMQConfig {
         Binding ligacaoVooAtualizado = this.relacionamento(filaVooAtualizado, troca);
 
         // Bindings para novas filas
-        Binding ligacaoVooCancela = this.relacionamento(filaVooCancela, troca);
-        Binding ligacaoVooCancelaAtualizada = this.relacionamento(filaVooCancelaAtualizada, troca);
+        Binding ligacaoVooCancelaVoo = this.relacionamento(filaVooCancelaVoo, troca);
+        Binding ligacaoVooCancelaVooAtualizada = this.relacionamento(filaVooCancelaVooAtualizada, troca);
 
         // Declaração de filas existentes
         this.amqpAdmin.declareQueue(filaReserva);
@@ -60,8 +60,8 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareQueue(filaVooAtualizado);
 
         // Declaração de novas filas
-        this.amqpAdmin.declareQueue(filaVooCancela);
-        this.amqpAdmin.declareQueue(filaVooCancelaAtualizada);
+        this.amqpAdmin.declareQueue(filaVooCancelaVoo);
+        this.amqpAdmin.declareQueue(filaVooCancelaVooAtualizada);
 
         // Declaração de exchange
         this.amqpAdmin.declareExchange(troca);
@@ -72,7 +72,7 @@ public class RabbitMQConfig {
         this.amqpAdmin.declareBinding(ligacaoVooAtualizado);
 
         // Declaração de bindings para novas filas
-        this.amqpAdmin.declareBinding(ligacaoVooCancela);
-        this.amqpAdmin.declareBinding(ligacaoVooCancelaAtualizada);
+        this.amqpAdmin.declareBinding(ligacaoVooCancelaVoo);
+        this.amqpAdmin.declareBinding(ligacaoVooCancelaVooAtualizada);
     }
 }

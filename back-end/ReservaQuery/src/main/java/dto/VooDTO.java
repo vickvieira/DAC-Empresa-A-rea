@@ -15,7 +15,8 @@ public class VooDTO implements Serializable {
     private Double valorPassagem;
     private Integer quantidadePoltronasTotal;
     private Integer quantidadePoltronasOcupadas;
-
+    private String status;
+    
     public VooDTO() {}
 
     public VooDTO(String codigoVoo, LocalDateTime dataHora, String aeroportoOrigem, String aeroportoDestino,
@@ -85,4 +86,14 @@ public class VooDTO implements Serializable {
     public void setQuantidadePoltronasOcupadas(Integer quantidadePoltronasOcupadas) {
         this.quantidadePoltronasOcupadas = quantidadePoltronasOcupadas;
     }
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
+    
 }

@@ -1,15 +1,18 @@
 package consumer;
 
 
+import java.util.List;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import constantes.RabbitmqConstantes;
+import dto.VooDTO;
 import models.ClienteReserva;
 import models.SagaReservaRequisition;
-
+import models.ClienteMilhas;
 @Component
 public class SagaConsumer  {
 
@@ -64,7 +67,7 @@ public class SagaConsumer  {
 	            System.out.println("Processando reserva: " + requisition.getReserva().getCodigoReserva());
 
 	            ClienteReserva clienteReserva = new ClienteReserva(
-	                "Reserva realizada",
+	                "Reserva Cancelada",
 	                requisition.getIdCliente(),
 	                requisition.getReserva().getMilhasGastas()
 	            );
@@ -73,6 +76,34 @@ public class SagaConsumer  {
 
 	        } catch (Exception e) {
 	            System.err.println("Erro ao processar reserva: " + e.getMessage());
+	        }
+	    }
+	    
+	    @RabbitListener(queues = RabbitmqConstantes.VOO_CANCELA_voo_ATUALIZADA)
+	    public void consumidorCancelaVooAtt(VooDTO voo) {
+	        try {
+	            System.out.println("Recebeu voo: " + voo.getCodigoVoo());
+	            rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO, voo.getCodigoVoo());
+
+	        } catch (Exception e) {
+	            System.err.println("Erro ao processar cancelamento de voo: " + e.getMessage());
+	        }
+	    }
+	    
+	    @RabbitListener(queues = RabbitmqConstantes.FILA_CANCELA_RESERVA_VOO_ATUALIZA)
+	    public void consumidorCancelaVooReservaAtt(List<ClienteMilhas> clientesMilhas) {
+	        try {
+	            for (ClienteMilhas clienteMilhas : clientesMilhas) {
+	                ClienteReserva clienteReserva = new ClienteReserva(
+	                    "Reserva Voo Cancelado",
+	                    clienteMilhas.getIdCliente(),
+	                    clienteMilhas.getMilhas()
+	                );
+
+	                rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_CLIENTE_RESERVA, clienteReserva);
+	            }
+	        } catch (Exception e) {
+	            System.err.println("Erro ao processar mensagem de cancelamento de voo: " + e.getMessage());
 	        }
 	    }
 	    

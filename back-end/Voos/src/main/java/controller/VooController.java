@@ -4,6 +4,7 @@ import dto.AeroportoDTO;
 import dto.VooDTO;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.VooService;
@@ -39,6 +40,19 @@ public class VooController {
         List<VooDTO> voos = vooService.buscarVoos(aeroportoOrigem, aeroportoDestino);
 
         return ResponseEntity.ok(voos);
+    }
+    
+    @GetMapping("/getVooByCodigo/{codigoVoo}")
+    public ResponseEntity<VooDTO> buscarVooPorCodigo(@PathVariable String codigoVoo) {
+        try {
+            VooDTO voo = vooService.buscarVooPorCodigo(codigoVoo);
+            if (voo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.ok(voo);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
     
     @PostMapping("/aeroportos")
