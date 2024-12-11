@@ -3,6 +3,7 @@ package controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import dto.HistoricoAlteracaoDTO;
 import dto.ReservaDTO;
 import service.ReservaService;
 
@@ -18,10 +19,10 @@ public class ReservaController {
         this.reservaService = reservaService;
     }
 
-    @GetMapping("/historico/{clienteId}")
-    public ResponseEntity<List<ReservaDTO>> getListHistoricoReserva(@PathVariable Long clienteId) {
+    @GetMapping("/historico/{codigoReserva}")
+    public ResponseEntity<List<HistoricoAlteracaoDTO>> getListHistoricoReserva(@PathVariable String codigoReserva) {
         try {
-            List<ReservaDTO> historicoReservas = reservaService.buscarHistoricoReservas(clienteId);
+            List<HistoricoAlteracaoDTO> historicoReservas = reservaService.buscarHistoricoReservas(codigoReserva);
             return ResponseEntity.ok(historicoReservas);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);

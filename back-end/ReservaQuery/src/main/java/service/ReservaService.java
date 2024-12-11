@@ -47,8 +47,8 @@ public class ReservaService {
         return historicoAlteracaoRepository.save(historico);
     }
 
-    public List<ReservaDTO> buscarHistoricoReservas(Long clienteId) {
-        return reservaRepository.findByIdCliente(clienteId);
+    public List<HistoricoAlteracaoDTO> buscarHistoricoReservas(String codigoReserva) {
+        return historicoAlteracaoRepository.findByCodigoReserva(codigoReserva);
     }
     
     public ReservaDTO buscarPorCodigoReserva(String codigoReserva) {
