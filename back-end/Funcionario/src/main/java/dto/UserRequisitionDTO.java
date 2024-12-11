@@ -9,7 +9,17 @@ public class UserRequisitionDTO implements Serializable {
     private String tipo;
     private Boolean ativo;
 
-    // Construtor vazio
+
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	// Construtor vazio
     public UserRequisitionDTO() {
     }
 
@@ -27,21 +37,14 @@ public class UserRequisitionDTO implements Serializable {
         this.email = email;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-	public Boolean getAtivo() {
-		return ativo;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
-
     
+    
+
 }
