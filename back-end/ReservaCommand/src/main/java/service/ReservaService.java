@@ -163,4 +163,30 @@ public class ReservaService {
 
         System.out.println("Reserva " + codigoReserva + " atualizada para EMB e histórico salvo.");
     }
+    
+    public void realizarCheckin(String codigoReserva) {
+        ReservaDTO reserva = reservaRepository.findByCodigoReserva(codigoReserva);
+
+        if (reserva == null) {
+            throw new IllegalArgumentException("Reserva não encontrada.");
+        }
+        HistoricoAlteracaoDTO historico = new HistoricoAlteracaoDTO();
+        historico.setCodigoReserva(reserva.getCodigoReserva());
+        historico.setDataHoraAlteracao(LocalDateTime.now());
+        historico.setEstadoOrigem(reserva.getEstadoReserva());
+
+        reserva.setEstadoReserva("CIN");
+        reservaRepository.save(reserva);
+
+        historico.setEstadoDestino("CIN");
+        historicoRepository.save(historico);
+
+        CQRSModel requisitionCQRS = new CQRSModel();
+        requisitionCQRS.setReserva(reserva);
+        requisitionCQRS.setHistoricoAlteracoes(historico);
+
+        rabbitTemplate.convertAndSend(RabbitmqConstantes.FILA_atualizaReservaQ, requisitionCQRS);
+
+        System.out.println("Check-in realizado para a reserva " + codigoReserva + " e enviado para RabbitMQ.");
+    }
 }

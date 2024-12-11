@@ -66,4 +66,14 @@ public class VooController {
         List<AeroportoDTO> aeroportos = vooService.buscarAeroportos();
         return ResponseEntity.ok(aeroportos);
     }
+    
+    @GetMapping("/todos")
+    public ResponseEntity<List<VooDTO>> buscarTodosVoos() {
+        try {
+            List<VooDTO> voos = vooService.buscarTodosVoos();
+            return ResponseEntity.ok(voos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }
