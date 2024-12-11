@@ -23,10 +23,10 @@ public class ClientesDTO implements Serializable {
     @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(name = "telefone", length = 15) // Pode ser ajustado conforme o formato do telefone
+    @Column(name = "telefone", length = 15)
     private String telefone;
 
-    @Column(name = "tipo", length = 50) // Limite de tamanho para evitar entradas excessivas
+    @Column(name = "tipo", length = 50)
     private String tipo;
 
     @Column(name = "rua_numero", length = 200)

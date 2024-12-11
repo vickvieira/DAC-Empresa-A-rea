@@ -14,5 +14,7 @@ public interface ReservaRepository extends JpaRepository<ReservaDTO, String> {
     List<ReservaDTO> findByEstadoReserva(String estadoReserva);
 
     List<ReservaDTO> findByIdCliente(Long idCliente);
+    
+    ReservaDTO findByCodigoReserva(String codigoReserva);
 
 }

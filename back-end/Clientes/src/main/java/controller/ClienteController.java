@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import dto.ClientesDTO;
 import dto.MilhasDTO;
+import models.ComprarMilhasRequest;
 import service.ClienteService;
 
 import java.util.List;
@@ -18,20 +19,21 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @PostMapping
-    public ResponseEntity<ClientesDTO> criarCliente(@RequestBody ClientesDTO clienteDTO) {
-        ClientesDTO clienteCriado = clienteService.cadastrarCliente(clienteDTO);
-        return ResponseEntity.ok(clienteCriado);
+    
+    @GetMapping
+    public ResponseEntity<List<ClientesDTO>> getClientes() {
+        List<ClientesDTO> clientes = clienteService.buscarTodosClientes();
+        return ResponseEntity.ok(clientes);
     }
     
-    @PostMapping("/{id}/comprar-milhas")
-    public ResponseEntity<String> comprarMilhas(@PathVariable Long id, @RequestParam double valor) {
-        clienteService.comprarMilhas(id, valor);
+    @PostMapping("/comprar-milhas")
+    public ResponseEntity<String> comprarMilhas(@RequestBody ComprarMilhasRequest request) {
+        clienteService.comprarMilhas(request.getClienteId(), request.getValor());
         return ResponseEntity.ok("Milhas compradas com sucesso!");
     }
-    
-    @GetMapping("/{id}/extrato-milhas")
-    public ResponseEntity<List<MilhasDTO>> consultarExtratoMilhas(@PathVariable Long id) {
+
+    @GetMapping("/extrato-milhas/{id}")
+    public ResponseEntity<List<MilhasDTO>> consultarExtratoMilhas(@PathVariable("id") Long id) {
         List<MilhasDTO> extrato = clienteService.consultarExtratoMilhas(id);
         return ResponseEntity.ok(extrato);
     }

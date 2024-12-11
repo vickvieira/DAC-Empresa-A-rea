@@ -14,9 +14,8 @@ public class MilhasDTO implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
-    private ClientesDTO cliente;
+    private Long cliente;
 
     @Column(name = "data_hora_transacao", nullable = false)
     private LocalDateTime dataHoraTransacao;
@@ -32,7 +31,7 @@ public class MilhasDTO implements Serializable {
 
     public MilhasDTO() {}
 
-    public MilhasDTO(ClientesDTO cliente, LocalDateTime dataHoraTransacao, Double quantidadeMilhas, String tipoTransacao, String descricao) {
+    public MilhasDTO(Long cliente, LocalDateTime dataHoraTransacao, Double quantidadeMilhas, String tipoTransacao, String descricao) {
         this.cliente = cliente;
         this.dataHoraTransacao = dataHoraTransacao;
         this.quantidadeMilhas = quantidadeMilhas;
@@ -49,11 +48,11 @@ public class MilhasDTO implements Serializable {
         this.id = id;
     }
 
-    public ClientesDTO getCliente() {
+    public Long getCliente() {
         return cliente;
     }
 
-    public void setCliente(ClientesDTO cliente) {
+    public void setCliente(Long cliente) {
         this.cliente = cliente;
     }
 

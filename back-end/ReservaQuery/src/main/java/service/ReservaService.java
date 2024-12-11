@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,22 @@ public class ReservaService {
     
     public HistoricoAlteracaoDTO cadastrarHistoricoAlteracao(HistoricoAlteracaoDTO historico) {
         return historicoAlteracaoRepository.save(historico);
+    }
+
+    public List<ReservaDTO> buscarHistoricoReservas(Long clienteId) {
+        return reservaRepository.findByIdCliente(clienteId);
+    }
+    
+    public ReservaDTO buscarPorCodigoReserva(String codigoReserva) {
+        ReservaDTO reserva = reservaRepository.findByCodigoReserva(codigoReserva);
+        if (reserva == null) {
+            throw new IllegalArgumentException("Reserva não encontrada: " + codigoReserva);
+        }
+        return reserva;
+    }
+
+    public List<ReservaDTO> buscarReservasPorCliente(Long clienteId) {
+        return reservaRepository.findByIdCliente(clienteId);
     }
 
 }
