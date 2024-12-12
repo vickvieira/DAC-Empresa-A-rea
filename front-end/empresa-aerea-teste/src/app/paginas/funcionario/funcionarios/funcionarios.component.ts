@@ -10,11 +10,17 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { Funcionario } from '../../../models/funcionario.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmacaoExclusaoComponent } from '../../../componentes/confirmacao-exclusao/confirmacao-exclusao.component';
+import { NavbarFuncComponent } from '../../../componentes/navbar-func/navbar-func.component';
 
 @Component({
   selector: 'app-funcionarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NavbarFuncComponent,
+  ],
   providers: [provideNgxMask()],
   templateUrl: './funcionarios.component.html',
   styleUrls: ['./funcionarios.component.css'],

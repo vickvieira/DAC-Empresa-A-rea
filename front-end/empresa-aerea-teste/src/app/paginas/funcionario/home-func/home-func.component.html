@@ -1,3 +1,4 @@
+<app-navbar-func></app-navbar-func>
 <div class="container my-4">
   <h2 class="text-center">Voos nas Próximas 48 Horas</h2>
   <table class="table table-striped table-hover mt-4">
@@ -16,19 +17,20 @@
         <td>{{ voo.destino }}</td>
         <td>
           <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarEmbarqueModal"
-            (click)="abrirModal(voo.codigo)">
-            Confirmar Embarque
-          </button>
-          <button class="btn btn-danger btn-sm mx-2" (click)="cancelarVoo(voo.codigo)"
-            [disabled]="voo.status !== 'CONFIRMADO'">
-            Cancelar Voo
-          </button>
-          <button class="btn btn-primary btn-sm" (click)="realizarVoo(voo.codigo)"
-            [disabled]="voo.status !== 'CONFIRMADO'">
-            Realizar Voo
-          </button>
-
-        </td>
+          (click)="abrirModal(voo.codigo)">
+          Confirmar Embarque
+        </button>
+        <button class="btn btn-danger btn-sm mx-2" (click)="cancelarVoo(voo.codigo)"
+        [disabled]="voo.status !== 'CONFIRMADO'">
+        Cancelar Voo
+      </button>
+      <button class="btn btn-primary btn-sm" (click)="realizarVoo(voo.codigo)"
+      [disabled]="voo.status !== 'CONFIRMADO'">
+      Realizar Voo
+    </button>
+    
+  </td>
+  <td>{{ voo.codigo }}</td>
       </tr>
     </tbody>
   </table>
