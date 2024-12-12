@@ -34,23 +34,20 @@ export class AutCadComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
-//ajustado p o novo método adicionarUsuario do login.service
+
   onSubmit(): void {
     if (this.formGroup.valid) {
-      this.loginService.adicionarUsuario(this.formGroup.value).subscribe({
-        next: () => {
-          this.toastr.success('Cadastro enviado para processamento.', 'Sucesso');
+      console.log('Formulário enviado', this.formGroup.value);
+      
+      this.loginService.adicionarUsuario(this.formGroup.value).subscribe(response => {
           this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          const errorMessage = err.error?.message || 'Erro ao enviar o cadastro.';
-          this.toastr.error(errorMessage, 'Erro');
-        },
+          this.formGroup.reset();
+      }, error => {
+        const errorMessage = error.error?.message || 'Erro ao adicionar usuário. Tente novamente mais tarde.';
+        this.toastr.error(errorMessage, 'Erro');
       });
     } else {
       this.toastr.error('Erro ao preencher o cadastro.', 'Erro');
     }
   }
-  
 }
