@@ -1,0 +1,12 @@
+# Arquivos de configuração
+*.env
+
+# Arquivos de log
+*.log
+
+# Diretórios gerados automaticamente
+node_modules/
+
+# dist
+
+dist

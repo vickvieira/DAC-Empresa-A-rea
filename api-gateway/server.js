@@ -43,11 +43,6 @@ const voosProxy = httpProxy('http://localhost:8087');
 app.post('/Auth/login', (req, res, next) => {       //Endpoint definido no back em Auth > LoginController.java 
     authServiceProxy(req, res, next);
 });
-// 1.2 LOGOUT
-app.post('/Auth/logut', function (req, res) {
-    //Implementar método em back-end\Auth\src\main\java\controller\LoginController.java
-    res.json({ auth: false, token: null });
-});
 
 
 // 2. SAGA CLIENTE USUÁRIO
