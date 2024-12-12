@@ -81,12 +81,16 @@ export class LoginService {
       cidade: formCliente.cidade,
       estado: formCliente.estado,
       tipo: 'CLIENTE',
+      milhas: 0,
     },
     userRequisitionDTO: {
       email: formCliente.email,
       tipo: 'CLIENTE',
-    }
+    },
+    mensagem: '',
+    status: '',
   };
+  
 
   return this.http.post<any>(`${this.apiUrl}/sagaClienteUsuario`, payload, this.httpOptions).pipe(
     tap(() => console.log('Cadastro enviado para o Saga com sucesso.')),
