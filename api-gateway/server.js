@@ -30,9 +30,7 @@ const authServiceProxy = httpProxy('http://localhost:8081');
 const sagaClienteUsuarioServiceProxy = httpProxy('http://localhost:8080');
 const clienteServiceProxy = httpProxy('http://localhost:8082');
 const sagaReservaClienteProxy = httpProxy('http://localhost:8083');
-const reservaCommandProxy = httpProxy('http://localhost:8084');
 const reservaQueryProxy = httpProxy('http://localhost:8085');
-const funcionarioProxy = httpProxy('http://localhost:8086');
 const voosProxy = httpProxy('http://localhost:8087');
 
 
@@ -56,6 +54,8 @@ app.get('/clientes', (req, res, next) => {   //Endpoint definido no back em Clie
 app.get('/clientes/:id', (req, res, next) => {   //Endpoint definido no back em Clientes > ClienteController
     clienteServiceProxy(req, res, next);
 });
+
+
 
 
 ///////// VOOS /////////
@@ -89,8 +89,24 @@ app.post('/sagaClienteUsuario', (req, res, next) => {   //Endpoint definido no b
 });
 
 
+//////// SAGA RESERVA CLIENTE ////////
+
+// CADASTRAR RESERVA
+app.post('/sagaReservaCliente', (req, res, next) => {   //Endpoint definido no back em SagaReserva|Cliente > SagaController 
+    sagaReservaClienteProxy(req, res, next);
+});
 
 
+//CANCELAR RESERVA
+app.post('/sagaReservaCliente/cancelarReserva/:reserva', (req, res, next) => {   //Endpoint definido no back em SagaReserva|Cliente > SagaController 
+    sagaReservaClienteProxy(req, res, next);
+});
+
+// RESERVA QUERY
+//CONSULTAR RESERVA
+app.get('reservaquery/getReserva/:codigoReserva', (req, res, next) => {   //Endpoint definido no back em ReservaQuery > ReservaController 
+    reservaQueryProxy(req, res, next);
+});
 
 // Cria o servidor na porta 3001
 const server = http.createServer(app);
