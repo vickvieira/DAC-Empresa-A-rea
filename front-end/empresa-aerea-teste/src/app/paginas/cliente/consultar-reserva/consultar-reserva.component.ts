@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReservaService } from '../../../services/reserva.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
@@ -9,8 +9,8 @@ import { VooService } from '../../../services/voo.service';
 import { EMPTY, Observable, switchMap } from 'rxjs';
 import { HomeClienteComponent } from '../home-cliente/home-cliente.component';
 import { CancelarReservaComponent } from '../cancelar-reserva/cancelar-reserva.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmarCheckinReservaComponent } from '../confirmar-checkin-reserva/confirmar-checkin-reserva.component';
 
 @Component({
   selector: 'app-consultar-reserva',
@@ -30,11 +30,12 @@ export class ConsultarReservaComponent {
   error: string | null = null;
   constructor(
     private reservaService: ReservaService,
-    private router: Router,
-    private authService: AuthService,
+    //private router: Router,
+    //private authService: AuthService,
     private vooService: VooService,
     private modalService: NgbModal,
     //private homeCliente: HomeClienteComponent
+    //private confirmarCheckin: ConfirmarCheckinReservaComponent
   ) { }
 
   ngOnInit(): void {
@@ -142,9 +143,68 @@ export class ConsultarReservaComponent {
   }
 
   modalFazerCheckin(reserva: Reserva) {
-    //falta fazer 
-    alert("aqui irá confirmar checkin")
+    //this.confirmarCheckin.modalFazerCheckin(reserva);
+    //this.modalService.open(NgbdModal2Content, { size: 'lg' });
+    this.confirmarCheckin(reserva);
+  }
+
+  confirmarCheckin(reserva: Reserva): void {
+    console.log('[DEBUG] Confirmar checkin:', reserva);
+
+    this.reservaService.confirmarCheckin(reserva).subscribe({
+      next: (reservaAtualizada) => {
+        console.log(
+          '[DEBUG] Checkin confirmado com sucesso:',
+          reservaAtualizada
+        );
+
+        // Reembolsa as milhas, se aplicável
+
+
+        this.open(); // Modal de confirmação
+        //this.activeModal.dismiss(); // Fecha o modal atual
+      },
+      error: (err) => {
+        console.error('[ERROR] Falha ao cancelar reserva:', err);
+        alert('Erro ao cancelar a reserva. Tente novamente.');
+      },
+    });
+  }
+  
+  open() {
+    this.modalService.open(NgbdModal2Content, { size: 'lg' });
   }
 
 }
+@Component({
+  standalone: true,
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmar Check-in</h4>
+    </div>
+    <div class="modal-body">
+      <p>Seu Check-in foi confirmado!</p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="fecharModalEAtualizarPagina()"
+      >
+        Close
+      </button>
+    </div>
+  `,
 
+})
+export class NgbdModal2Content {
+  activeModal = inject(NgbActiveModal);
+
+  fecharModalEAtualizarPagina() {
+    this.activeModal.close();
+    //this.atualizarPagina();
+  }
+  atualizarPagina(): void {
+    window.location.reload();
+  }
+}
