@@ -6,10 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const http = require('http');
 const httpProxy = require('express-http-proxy');
-const jwt = require('jsonwebtoken');
 const logger = require('morgan');
-const { emitWarning } = require('process');
-require("dotenv-safe").config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -74,8 +71,8 @@ app.delete('/sagaClienteUsuario/:email', (req, res, next) => {     //Implementar
 
 //Outros endpoints
 
-// Cria o servidor na porta 3000
+// Cria o servidor na porta 3001
 const server = http.createServer(app);
-server.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+server.listen(3001, () => {
+    console.log('Servidor rodando na porta 3001');
 });
