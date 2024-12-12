@@ -9,6 +9,31 @@
       "id": "22ff",
       "email": "laisa@email.com",
       "senha": "laisa"
+    },
+    {
+      "id": "1820",
+      "email": "vkvieira@yahoo.com",
+      "senha": "senha"
+    },
+    {
+      "id": "6bf4",
+      "email": "vkvieira@yahoo.com",
+      "senha": "senha"
+    },
+    {
+      "id": "401f",
+      "email": "victoriavieira@ufpr.br",
+      "senha": "senh"
+    },
+    {
+      "id": "c362",
+      "email": "victoriavieira@ufpr.br",
+      "senha": "senh"
+    },
+    {
+      "id": "52ec",
+      "email": "victoriavieira@ufpr.br",
+      "senha": "senh"
     }
   ],
   "usuarios": [],
@@ -52,12 +77,52 @@
       "cpf": "98805414050",
       "telefone": "4187563214",
       "tipo": "C"
+    },
+    {
+      "id": "beed",
+      "nome": "Victoria Kunz Vieira",
+      "email": "vkvieira@yahoo.com",
+      "cpf": "11111111111",
+      "telefone": "41999999999",
+      "tipo": "C"
+    },
+    {
+      "id": "52b9",
+      "nome": "Victoria Kunz Vieira",
+      "email": "vkvieira@yahoo.com",
+      "cpf": "09896769940",
+      "telefone": "41999999999",
+      "tipo": "C"
+    },
+    {
+      "id": "7be7",
+      "nome": "Victoria Kunz Vieira",
+      "email": "victoriavieira@ufpr.br",
+      "cpf": "09896977740",
+      "telefone": "41999999999",
+      "tipo": "C"
+    },
+    {
+      "id": "4bb6",
+      "nome": "Victoria Kunz Vieira",
+      "email": "victoriavieira@ufpr.br",
+      "cpf": "09896855520",
+      "telefone": "41999999999",
+      "tipo": "C"
+    },
+    {
+      "id": "7f08",
+      "nome": "Victoria Kunz Vieira",
+      "email": "victoriavieira@ufpr.br",
+      "cpf": "09896769940",
+      "telefone": "41999999999",
+      "tipo": "C"
     }
   ],
   "milhas": [
     {
       "id": "1",
-      "saldo": 91436
+      "saldo": 93740
     },
     {
       "clienteId": 2,
@@ -71,16 +136,6 @@
     }
   ],
   "reservas": [
-    {
-      "id": "1cec",
-      "codigo": "RES1234",
-      "dataHoraReserva": "2024-09-15T14:00:00",
-      "clienteId": "1",
-      "vooCodigo": "XYZ1234",
-      "valorGasto": 1090.5,
-      "milhasUtilizadas": 3200,
-      "status": "CANCELADO_VOO"
-    },
     {
       "id": "f4cd",
       "codigo": "RES5678",
@@ -122,36 +177,6 @@
       "status": "AGUARDANDO_CHECKIN"
     },
     {
-      "id": "c2be",
-      "codigo": "ZDP617",
-      "dataHoraReserva": "2024-11-07T04:21:15.387Z",
-      "clienteId": "1",
-      "vooCodigo": "XYZ1234",
-      "valorGasto": 1090.5,
-      "milhasUtilizadas": 100,
-      "status": "CANCELADO_RESERVA"
-    },
-    {
-      "id": "7fcd",
-      "codigo": "MTP686",
-      "dataHoraReserva": "2024-11-07T04:22:30.503Z",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "valorGasto": 3001.8,
-      "milhasUtilizadas": 900,
-      "status": "CANCELADO_VOO"
-    },
-    {
-      "id": "0bae",
-      "codigo": "KRV957",
-      "dataHoraReserva": "2024-11-07T04:24:00.154Z",
-      "clienteId": "1",
-      "vooCodigo": "DEF9101",
-      "valorGasto": 1900,
-      "milhasUtilizadas": 2,
-      "status": "EMBARCADO"
-    },
-    {
       "id": "53c5",
       "codigo": "XVL904",
       "clienteId": "1",
@@ -180,16 +205,6 @@
       "valorGasto": 750.2,
       "milhasUtilizadas": 700,
       "status": "EMBARCADO"
-    },
-    {
-      "id": "13c9",
-      "codigo": "TWZ403",
-      "dataHoraReserva": "2024-11-07T04:35:58.792Z",
-      "clienteId": "1",
-      "vooCodigo": "ABC5678",
-      "valorGasto": 750.2,
-      "milhasUtilizadas": 1,
-      "status": "CANCELADO_VOO"
     },
     {
       "id": "12fr",
@@ -221,88 +236,6 @@
       "status": "AGUARDANDO_CHECKIN"
     },
     {
-      "id": "7f3b",
-      "codigo": "FOF814",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "dataHoraReserva": "2024-12-08T20:14:21.097Z",
-      "status": "CANCELADO_VOO",
-      "valorGasto": 1000.6,
-      "milhasUtilizadas": 0
-    },
-    {
-      "id": "e08d",
-      "codigo": "FXT304",
-      "dataHoraReserva": "2024-12-08T20:21:52.652Z",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "valorGasto": 1000.6,
-      "milhasUtilizadas": 0,
-      "status": "CANCELADO_VOO"
-    },
-    {
-      "id": "f1ac",
-      "codigo": "TQA356",
-      "dataHoraReserva": "2024-12-08T20:23:50.500Z",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "valorGasto": 1000.6,
-      "milhasUtilizadas": 1,
-      "status": "CANCELADO_VOO"
-    },
-    {
-      "id": "8213",
-      "codigo": "PVC380",
-      "dataHoraReserva": "2024-12-08T20:24:48.146Z",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "valorGasto": 1000.6,
-      "milhasUtilizadas": 0,
-      "status": "CANCELADO_VOO",
-      "voo": {
-        "codigo": "JKL6789",
-        "dataHora": "2024-12-25T20:00:00",
-        "origem": "GIG",
-        "destino": "CWB",
-        "valorPassagem": 1000.6,
-        "quantidadePoltronas": 170,
-        "poltronasOcupadas": 90,
-        "status": "CONFIRMADO",
-        "id": "0c42"
-      }
-    },
-    {
-      "id": "e509",
-      "codigo": "GWH536",
-      "clienteId": "1",
-      "vooCodigo": "JKL6789",
-      "dataHoraReserva": "2024-12-08T20:30:16.343Z",
-      "status": "CANCELADO_VOO",
-      "valorGasto": 2001.2,
-      "milhasUtilizadas": 2,
-      "voo": {
-        "codigo": "JKL6789",
-        "dataHora": "2024-12-25T20:00:00",
-        "origem": "GIG",
-        "destino": "CWB",
-        "valorPassagem": 1000.6,
-        "quantidadePoltronas": 170,
-        "poltronasOcupadas": 90,
-        "status": "CONFIRMADO",
-        "id": "0c42"
-      }
-    },
-    {
-      "id": "6d9f",
-      "codigo": "XGU279",
-      "clienteId": "1",
-      "vooCodigo": "GHI2345",
-      "dataHoraReserva": "2024-12-08T21:30:12.703Z",
-      "status": "REALIZADO",
-      "valorGasto": 2401.5,
-      "milhasUtilizadas": 999
-    },
-    {
       "id": "97c6",
       "codigo": "DJD924",
       "clienteId": "1",
@@ -328,7 +261,7 @@
       "clienteId": "1",
       "vooCodigo": "GHI2345",
       "dataHoraReserva": "2024-12-08T22:44:14.233Z",
-      "status": "AGUARDANDO_CHECKIN",
+      "status": "CANCELADO_RESERVA",
       "valorGasto": 1200.75,
       "milhasUtilizadas": 0
     },
@@ -343,34 +276,34 @@
       "milhasUtilizadas": 1234
     },
     {
-      "id": "1193",
-      "codigo": "VLE519",
+      "id": "3bc5",
+      "codigo": "TYO282",
       "clienteId": "1",
-      "vooCodigo": "GHI2345",
-      "dataHoraReserva": "2024-12-08T22:45:39.457Z",
-      "status": "AGUARDANDO_CHECKIN",
-      "valorGasto": 44427.75,
-      "milhasUtilizadas": 10
+      "vooCodigo": "TAIS1234",
+      "dataHoraReserva": "2024-12-12T00:57:11.655Z",
+      "status": "CANCELADO_VOO",
+      "valorGasto": 444,
+      "milhasUtilizadas": 800
     },
     {
-      "id": "6072",
-      "codigo": "WXA890",
+      "id": "a898",
+      "codigo": "LVO851",
       "clienteId": "1",
-      "vooCodigo": "GHI2345",
-      "dataHoraReserva": "2024-12-08T22:45:53.467Z",
-      "status": "AGUARDANDO_CHECKIN",
-      "valorGasto": 44427.75,
-      "milhasUtilizadas": 10
+      "vooCodigo": "TAIS1234",
+      "dataHoraReserva": "2024-12-12T02:22:13.737Z",
+      "status": "CANCELADO_VOO",
+      "valorGasto": 444,
+      "milhasUtilizadas": 1000
     },
     {
-      "id": "cb6f",
-      "codigo": "ULJ442",
+      "id": "e5e4",
+      "codigo": "VNX723",
       "clienteId": "1",
-      "vooCodigo": "GHI2345",
-      "dataHoraReserva": "2024-12-08T22:46:39.516Z",
-      "status": "AGUARDANDO_CHECKIN",
-      "valorGasto": 48030,
-      "milhasUtilizadas": 2
+      "vooCodigo": "OLAI5210",
+      "dataHoraReserva": "2024-12-12T02:37:40.104Z",
+      "status": "REALIZADO",
+      "valorGasto": 1578,
+      "milhasUtilizadas": 2000
     }
   ],
   "endereco": [
@@ -436,6 +369,51 @@
       "cidade": "cidade",
       "estado": "estado",
       "cep": "80000-000"
+    },
+    {
+      "id": "9b1f",
+      "rua": "Jaca",
+      "numero": "2",
+      "complemento": "Casa",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "cep": "88888-120"
+    },
+    {
+      "id": "b19a",
+      "rua": "Jaca",
+      "numero": "2",
+      "complemento": "Casa",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "cep": "83327-120"
+    },
+    {
+      "id": "2977",
+      "rua": "Jaca",
+      "numero": "2",
+      "complemento": "Casa",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "cep": "83327-455"
+    },
+    {
+      "id": "9804",
+      "rua": "Jaca",
+      "numero": "2",
+      "complemento": "Casa",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "cep": "83327-120"
+    },
+    {
+      "id": "8c7c",
+      "rua": "Jaca",
+      "numero": "2",
+      "complemento": "Casa",
+      "cidade": "Curitiba",
+      "estado": "Paraná",
+      "cep": "83327-120"
     }
   ],
   "aeroportos": [
@@ -493,7 +471,7 @@
     },
     {
       "codigo": "DEF9101",
-      "dataHora": "2024-12-07T08:00:00",
+      "dataHora": "2024-12-12T08:00:00",
       "origem": "CWB",
       "destino": "GIG",
       "valorPassagem": 950,
@@ -504,7 +482,7 @@
     },
     {
       "codigo": "GHI2345",
-      "dataHora": "2024-12-09T15:30:00",
+      "dataHora": "2024-12-26T15:30:00",
       "origem": "GRU",
       "destino": "BSB",
       "valorPassagem": 1200.75,
@@ -521,8 +499,19 @@
       "valorPassagem": 1000.6,
       "quantidadePoltronas": 170,
       "poltronasOcupadas": 90,
-      "status": "CANCELADO",
+      "status": "CONFIRMADO",
       "id": "0c42"
+    },
+    {
+      "codigo": "JKG6789",
+      "dataHora": "2024-12-25T20:00:00",
+      "origem": "GIG",
+      "destino": "CWB",
+      "valorPassagem": 1000.6,
+      "quantidadePoltronas": 170,
+      "poltronasOcupadas": 90,
+      "status": "CONFIRMADO",
+      "id": "0c48"
     },
     {
       "codigo": "TESTE6789",
@@ -565,6 +554,116 @@
       "destino": "GRU",
       "valorPassagem": 200,
       "quantidadePoltronas": 12,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "37ca",
+      "codigo": "TADS1234",
+      "dataHora": "2024-12-127T13:30:00",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 250,
+      "quantidadePoltronas": 25,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "7b4d",
+      "codigo": "TAIS1234",
+      "dataHora": "2024-12-12T13:30:00",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 222,
+      "quantidadePoltronas": 150,
+      "poltronasOcupadas": 4,
+      "status": "CANCELADO"
+    },
+    {
+      "id": "915d",
+      "codigo": "OLAR5666",
+      "dataHora": "2024-12-25T15:12:00",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 8888,
+      "quantidadePoltronas": 888,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "91rd",
+      "codigo": "OLAI5666",
+      "dataHora": "2024-12-12T15:12:00",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 8888,
+      "quantidadePoltronas": 888,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "67ed",
+      "codigo": "OLAI5210",
+      "dataHora": "2024-12-12T13:30:00.000Z",
+      "origem": "CWB",
+      "destino": "BSB",
+      "valorPassagem": 789,
+      "quantidadePoltronas": 567,
+      "poltronasOcupadas": 2,
+      "status": "REALIZADO"
+    },
+    {
+      "id": "ae94",
+      "codigo": "DEUS1234",
+      "dataHora": "2025-12-25T15:12:00",
+      "origem": "CWB",
+      "destino": "GIG",
+      "valorPassagem": 555,
+      "quantidadePoltronas": 555,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "f53e",
+      "codigo": "VICK1234",
+      "dataHora": "2024-12-13T16:33:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 222,
+      "quantidadePoltronas": 12,
+      "poltronasOcupadas": 0,
+      "status": "CANCELADO"
+    },
+    {
+      "id": "4314",
+      "codigo": "VICT1123",
+      "dataHora": "2024-12-13T10:20:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 777,
+      "quantidadePoltronas": 77,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "0c1d",
+      "codigo": "TADS1234",
+      "dataHora": "2025-12-13T16:33:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 12000,
+      "quantidadePoltronas": 12,
+      "poltronasOcupadas": 0,
+      "status": "CONFIRMADO"
+    },
+    {
+      "id": "509c",
+      "codigo": "TADS1234",
+      "dataHora": "2024-12-13T16:30:00.000Z",
+      "origem": "CWB",
+      "destino": "GRU",
+      "valorPassagem": 555,
+      "quantidadePoltronas": 66,
       "poltronasOcupadas": 0,
       "status": "CONFIRMADO"
     }
@@ -697,6 +796,46 @@
       "operacao": 10000,
       "saldo": 91436,
       "descricao": "Cancelamento da reserva AFJ110"
+    },
+    {
+      "id": "7181",
+      "clienteId": "beed",
+      "dataHora": "2024-12-12T01:32:30.955Z",
+      "operacao": 50000,
+      "saldo": 50000,
+      "descricao": "compra de milhas"
+    },
+    {
+      "id": "a8fd",
+      "clienteId": "1",
+      "dataHora": "2024-12-12T02:20:32.966Z",
+      "operacao": 4,
+      "saldo": 91440,
+      "descricao": "compra de milhas"
+    },
+    {
+      "id": "3580",
+      "clienteId": "1",
+      "dataHora": "2024-12-12T02:36:05.234Z",
+      "operacao": 500,
+      "saldo": 91940,
+      "descricao": "compra de milhas"
+    },
+    {
+      "id": "8d62",
+      "clienteId": "1",
+      "dataHora": "2024-12-12T02:43:27.007Z",
+      "saldo": 93740,
+      "operacao": 800,
+      "descricao": "Cancelamento do voo TAIS1234"
+    },
+    {
+      "id": "fc48",
+      "clienteId": "1",
+      "dataHora": "2024-12-12T02:43:27.009Z",
+      "saldo": 93940,
+      "operacao": 1000,
+      "descricao": "Cancelamento do voo TAIS1234"
     }
   ]
 }

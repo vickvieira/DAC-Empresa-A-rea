@@ -14,11 +14,17 @@ import { AeroportoService } from '../../../services/aeroporto.service';
 import { EstadoVoo } from '../../../models/voo.model';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { NavbarFuncComponent } from '../../../componentes/navbar-func/navbar-func.component';
 
 @Component({
   selector: 'app-cadastrar-voo',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    NavbarFuncComponent,
+  ],
   providers: [provideNgxMask()],
   templateUrl: './cadastrar-voo.component.html',
   styleUrl: './cadastrar-voo.component.css',

@@ -4,11 +4,12 @@ import { VooService } from '../../../services/voo.service';
 import { ReservaService } from '../../../services/reserva.service';
 import { FormsModule } from '@angular/forms';
 import { MilhasService } from '../../../services/milhas.service';
+import { NavbarFuncComponent } from '../../../componentes/navbar-func/navbar-func.component';
 
 @Component({
   selector: 'app-home-func',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarFuncComponent],
   templateUrl: './home-func.component.html',
   styleUrls: ['./home-func.component.css'],
 })
@@ -25,9 +26,10 @@ export class HomeFuncComponent implements OnInit {
 
   ngOnInit(): void {
     const dataInicial = new Date();
-    const dataFinal = new Date(dataInicial.getTime() + 5000 * 60 * 60 * 1000); // 48 horas adiante
-    //faço o get de todos os voos e depois filtro os das últimas 48hrs direto no front... não é o ideal mas tava dando muito BO tentar filtrar do json-server
+    const dataFinal = new Date(dataInicial.getTime() + 48 * 60 * 60 * 1000); // 5000 horas adiante
+    //faço o get de todos os voos e depois filtro os das últimas 5000hrs direto no front... não é o ideal mas tava dando muito BO tentar filtrar do json-server
     this.vooService.getVoos().subscribe((voos) => {
+      console.log(voos);
       this.voos = voos
         .filter((voo: any) => {
           const dataVoo = new Date(voo.dataHora);
