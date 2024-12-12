@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg"
+    style="background-color: #6610f2;">
+    <div class="container-fluid">
+
+        <a class="navbar-brand text-white" href="/funcionario">
+            <i class="bi bi-airplane"></i>
+            Empresa Aérea <!-- Vai para a Página inicial -->
+
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#"
+                        role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Voos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/cadastrar-voo"><i
+                                    class="bi bi-bookmark-check"></i> Cadastrar Voo</a></li>
+                        <li><a class="dropdown-item" href="/funcionario"><i
+                                    class="bi bi-search"></i> Voos próximas 48h</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href=""
+                        role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/funcionarios" (click)="goExtrato()"> <i
+                                    class="bi bi-card-checklist"></i>
+                                Gerenciamento funcionario</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+
+        <a class="navbar-brand text-white" href="#">
+            <i class="bi bi-person-circle"></i>
+        </a>
+
+        <button class="btn btn-outline-light ms-2" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+    </div>
+</nav>
