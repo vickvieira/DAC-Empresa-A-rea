@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable,of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { ClienteService } from './cliente.service'; // Importar o ClienteService
 import { Login } from '../models/login.models';
 import { Cliente } from '../models/cliente.model';
 import { Endereco } from '../models/endereco.models';
 import { EnderecoService } from './endereco.service';
-import { map, catchError } from 'rxjs/operators';  // Importe o map e catchError corretamente
+import { map, catchError, tap } from 'rxjs/operators';  // Importe o map e catchError corretamente
 
 
 @Injectable({
@@ -14,7 +14,12 @@ import { map, catchError } from 'rxjs/operators';  // Importe o map e catchError
 })
 export class LoginService {
 
-  private apiUrl = 'http://localhost:3000/login'; // URL para o json-server
+  private apiUrl = 'http://localhost:3001'; // URL para API Gateway
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'content-type': 'application/json'
+    })
+  };
   constructor(private http: HttpClient, private clienteService: ClienteService, private enderecoService: EnderecoService) { }
 
   // Método para adicionar um usuário e salvar o cliente
@@ -24,7 +29,6 @@ export class LoginService {
     const login: Login = {
       email: formCliente.email,
       senha: "senha"
-      // Se houver mais campos, adicione aqui
     };
 
     const cliente: Cliente = {
@@ -62,21 +66,52 @@ export class LoginService {
         console.error('Erro ao salvar o cliente:', error);
       }
     );
-    return this.http.post<any>(this.apiUrl, login);
+    return this.http.post<any>(this.apiUrl, login);     //alterar p/ endpoint agaClienteUsuario
   }
 
   login(email: string, senha: string): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      map(users => {
-        const user = users.find(u => u.email === email && u.senha === senha);
-        if (user) {
-          return { success: true, user };
-        } else {
-          return { success: false, message: 'Email ou senha incorretos' };
-        }
-      }),
-      catchError(() => of({ success: false, message: 'Erro ao conectar com o servidor' }))
+    const login = { email, senha };
+
+    console.log('Enviando requisição para login:', login);
+
+    return this.http.post<any>(`${this.apiUrl}/Auth/login`, JSON.stringify(login), this.httpOptions).pipe(
+      tap((response: any) => console.log('Resposta recebida do backend:', response)), // Log para depuração
+      catchError(error => {
+        console.error('Erro ao conectar com o servidor:', error);
+        return of({ success: false, message: 'Erro ao conectar com o servidor' });
+      })
     );
   }
 
+
 }
+
+
+
+// public login(auth: Auth): Observable<User> {
+//   return this.http.post<any>(`${this.BASE_URL}/login`, JSON.stringify(auth), this.httpOptions)
+//     .pipe(
+//       map(response => {
+//         const userData = response.data.user;
+//         const token = response.token; // Extrai o token da resposta
+
+//         // Armazena o token em localStorage
+//         localStorage.setItem('authToken', token);
+
+//         // Cria e retorna o objeto User
+//         return new User(
+//           undefined,
+//           undefined,
+//           userData.login,
+//           undefined,
+//           userData.role
+//         );
+//       }),
+//       catchError(error => {
+//         if (error.error && error.error.message) {
+//           return throwError(error.error.message);
+//         }
+//         return throwError('Erro ao fazer login. Tente novamente mais tarde.');
+//       })
+//     );
+// }

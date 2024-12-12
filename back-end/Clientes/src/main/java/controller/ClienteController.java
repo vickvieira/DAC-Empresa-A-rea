@@ -19,13 +19,22 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    
     @GetMapping
     public ResponseEntity<List<ClientesDTO>> getClientes() {
         List<ClientesDTO> clientes = clienteService.buscarTodosClientes();
         return ResponseEntity.ok(clientes);
     }
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientesDTO> buscarClientePorId(@PathVariable Long id) {
+        try {
+            ClientesDTO cliente = clienteService.buscarClientePorId(id);
+            return ResponseEntity.ok(cliente);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
     @PostMapping("/comprar-milhas")
     public ResponseEntity<String> comprarMilhas(@RequestBody ComprarMilhasRequest request) {
         clienteService.comprarMilhas(request.getClienteId(), request.getValor());
