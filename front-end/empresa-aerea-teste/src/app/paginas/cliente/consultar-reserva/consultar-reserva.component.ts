@@ -126,7 +126,7 @@ export class ConsultarReservaComponent {
       .subscribe({
         next: (fetchedVoo) => {
           this.voo = fetchedVoo;
-          console.log('Voo found:', this.voo);
+          console.log('Voo encontrado:', this.voo);
         },
         error: (err) => {
           this.error = 'Erro: ' + err.message;

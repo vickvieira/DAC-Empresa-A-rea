@@ -13,6 +13,7 @@ import { CancelarReservaComponent } from './paginas/cliente/cancelar-reserva/can
 import { CadastrarVooComponent } from './paginas/funcionario/cadastrar-voo/cadastrar-voo.component';
 import { FuncionariosComponent } from './paginas/funcionario/funcionarios/funcionarios.component';
 import { ConsultarReservaComponent } from './paginas/cliente/consultar-reserva/consultar-reserva.component';
+import { ConfirmarCheckinReservaComponent } from './paginas/cliente/confirmar-checkin-reserva/confirmar-checkin-reserva.component';
 
 export const routes: Routes = [
   {
@@ -57,6 +58,11 @@ export const routes: Routes = [
   {
     path: 'cancelar-reserva',
     component: CancelarReservaComponent,
+    canActivate: [authClienteGuard],
+  },
+  {
+    path: 'confirmar-checkin',
+    component: ConfirmarCheckinReservaComponent,
     canActivate: [authClienteGuard],
   },
   {
