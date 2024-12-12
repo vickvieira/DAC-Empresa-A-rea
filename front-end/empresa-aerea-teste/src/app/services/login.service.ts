@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { ClienteService } from './cliente.service'; // Importar o ClienteService
 import { Login } from '../models/login.models';
 import { Cliente } from '../models/cliente.model';
@@ -23,51 +23,83 @@ export class LoginService {
   constructor(private http: HttpClient, private clienteService: ClienteService, private enderecoService: EnderecoService) { }
 
   // Método para adicionar um usuário e salvar o cliente
-  adicionarUsuario(formCliente: any): Observable<any> {
-    // Primeiro faz o POST para adicionar o usuário
-    // Inicializa a variável login corretamente
-    const login: Login = {
-      email: formCliente.email,
-      senha: "senha"
-    };
+  // adicionarUsuario(formCliente: any): Observable<any> {
+  //   // Primeiro faz o POST para adicionar o usuário
+  //   // Inicializa a variável login corretamente
+  //   const login: Login = {
+  //     email: formCliente.email,
+  //     senha: "senha"
+  //   };
 
-    const cliente: Cliente = {
+  //   const cliente: Cliente = {
+  //     nome: formCliente.nome,
+  //     email: formCliente.email,
+  //     cpf: formCliente.cpf,
+  //     telefone: formCliente.telefone,
+  //     tipo: 'C'
+  //   }
+
+  //   const endereco: Endereco = {
+  //     rua: formCliente.rua,
+  //     numero: formCliente.numero,
+  //     complemento: formCliente.complemento,
+  //     cidade: formCliente.cidade,
+  //     estado: formCliente.estado,
+  //     cep: formCliente.cep
+  //   }
+
+  //   this.clienteService.addCliente(cliente).subscribe(
+  //     response => {
+  //       console.log('Cliente salvo com sucesso:', response);
+  //       this.enderecoService.addEndereco(endereco).subscribe(
+  //         response => {
+  //           // Aqui você pode verificar a resposta do servidor
+  //           console.log('Endereço salvo com sucesso:', response);
+  //         },
+  //         error => {
+  //           // Aqui você pode capturar e debugar o erro, caso ocorra
+  //           console.error('Erro ao salvar o endereço:', error);
+  //         }
+  //       );
+  //     },
+  //     error => {
+  //       console.error('Erro ao salvar o cliente:', error);
+  //     }
+  //   );
+  //   return this.http.post<any>(this.apiUrl, login);     //alterar p/ endpoint agaClienteUsuario
+  // }
+  adicionarUsuario(formCliente: any): Observable<any> {
+  const payload = {
+    clienteDTO: {
       nome: formCliente.nome,
       email: formCliente.email,
       cpf: formCliente.cpf,
       telefone: formCliente.telefone,
-      tipo: 'C'
-    }
-
-    const endereco: Endereco = {
-      rua: formCliente.rua,
-      numero: formCliente.numero,
+      ruaNumero: `${formCliente.rua} ${formCliente.numero}`,
       complemento: formCliente.complemento,
+      cep: formCliente.cep,
       cidade: formCliente.cidade,
       estado: formCliente.estado,
-      cep: formCliente.cep
-    }
+      tipo: 'CLIENTE',
+      milhas: 0,
+    },
+    userRequisitionDTO: {
+      email: formCliente.email,
+      tipo: 'CLIENTE',
+    },
+    mensagem: '',
+    status: '',
+  };
+  
 
-    this.clienteService.addCliente(cliente).subscribe(
-      response => {
-        console.log('Cliente salvo com sucesso:', response);
-        this.enderecoService.addEndereco(endereco).subscribe(
-          response => {
-            // Aqui você pode verificar a resposta do servidor
-            console.log('Endereço salvo com sucesso:', response);
-          },
-          error => {
-            // Aqui você pode capturar e debugar o erro, caso ocorra
-            console.error('Erro ao salvar o endereço:', error);
-          }
-        );
-      },
-      error => {
-        console.error('Erro ao salvar o cliente:', error);
-      }
-    );
-    return this.http.post<any>(this.apiUrl, login);     //alterar p/ endpoint agaClienteUsuario
-  }
+  return this.http.post<any>(`${this.apiUrl}/sagaClienteUsuario`, payload, this.httpOptions).pipe(
+    tap(() => console.log('Cadastro enviado para o Saga com sucesso.')),
+    catchError((err) => {
+      console.error('Erro ao processar cadastro:', err);
+      return throwError(() => new Error('Erro ao processar seu cadastro. Tente novamente mais tarde.'));
+    })
+  );
+}
 
   login(email: string, senha: string): Observable<any> {
     const login = { email, senha };
