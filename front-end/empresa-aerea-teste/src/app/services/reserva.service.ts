@@ -197,6 +197,18 @@ export class ReservaService {
       );
   }
 
+  getReservasProntasParaCheckin(): Observable<Reserva[]> {
+    return this.http
+      .get<Reserva[]>(this.apiUrl)
+      .pipe(
+        map((reservas) =>
+          reservas.filter((reserva) => reserva.status === 'AGUARDANDO_CHECKIN')
+        )
+      );
+  }
+
+
+
   atualizarReservasParaCancelamento(codigoVoo: string): Observable<Reserva[]> {
     return this.getReservasPorCodigoVoo(codigoVoo).pipe(
       switchMap((reservas) => {
