@@ -30,46 +30,83 @@ const authServiceProxy = httpProxy('http://localhost:8081');
 const sagaClienteUsuarioServiceProxy = httpProxy('http://localhost:8080');
 const clienteServiceProxy = httpProxy('http://localhost:8082');
 const sagaReservaClienteProxy = httpProxy('http://localhost:8083');
-const reservaCommandProxy = httpProxy('http://localhost:8084');
 const reservaQueryProxy = httpProxy('http://localhost:8085');
-const funcionarioProxy = httpProxy('http://localhost:8086');
 const voosProxy = httpProxy('http://localhost:8087');
 
 
 // ENDPOINTS
 
-// 1. AUTH
-// 1.1 FAZER LOGIN          
-app.post('/Auth/login', (req, res, next) => {       //Endpoint definido no back em Auth > LoginController.java 
+///////// MS-AUTH /////////
+// FAZER LOGIN          
+app.post('/Auth/login', (req, res, next) => {       //Endpoint definido no back em Auth > LoginController
     authServiceProxy(req, res, next);
 });
-// 1.2 LOGOUT
-app.post('/Auth/logut', function (req, res) {
-    //Implementar método em back-end\Auth\src\main\java\controller\LoginController.java
-    res.json({ auth: false, token: null });
+
+
+//////////. MS-CLIENTE /////////
+
+// BUSCAR TODOS OS CLIENTES
+app.get('/clientes', (req, res, next) => {   //Endpoint definido no back em Clientes > ClienteController
+    clienteServiceProxy(req, res, next);
+});
+
+//BUSCAR CLIENTE POR ID
+app.get('/clientes/:id', (req, res, next) => {   //Endpoint definido no back em Clientes > ClienteController
+    clienteServiceProxy(req, res, next);
 });
 
 
-// 2. SAGA CLIENTE USUÁRIO
-// 2.1 Cadastrar cliente            
-app.post('/sagaClienteUsuario', (req, res, next) => {   //Endpoint definido no back em SagaClienteUsuario > SagaController.java 
-    sagaClienteUsuarioServiceProxy(req, res, next);
+
+
+///////// VOOS /////////
+//BUSCAR TODOS OS VOOS
+app.get('/voos/todos', (req, res, next) => {   //Endpoint definido no back em Voos > VoosController
+    voosProxy(req, res, next);
 });
-// 2.2 Buscar cliente por email
-app.get('/sagaClienteUsuario/:email', (req, res, next) => {
-    //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
-    sagaClienteUsuarioServiceProxy(req, res, next);
+
+//BUSCAR VOO POR CODIGO
+app.get('/voos/getVooByCodigo/:codigoVoo', (req, res, next) => {   //Endpoint definido no back em Voos > VoosController
+    voosProxy(req, res, next);
 });
-// 2.3 Atualizar cliente por email
-app.put('/sagaClienteUsuario/:email', (req, res, next) => {      //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
-    sagaClienteUsuarioServiceProxy(req, res, next);
+
+// BUSCAR VOO POR ORIGEM E DESTINO
+app.get('/voos', (req, res, next) => {   // Endpoint definido no back em Voos > VoosController
+    const { aeroportoOrigem, aeroportoDestino } = req.query;
+
+    if (!aeroportoOrigem || !aeroportoDestino) {
+        return res.status(400).json({ error: "Os parâmetros 'aeroportoOrigem' e 'aeroportoDestino' são obrigatórios." });
+    }
+
+    voosProxy(req, res, next);
 });
-// 2.4 Excluir cliente por email
-app.delete('/sagaClienteUsuario/:email', (req, res, next) => {     //Implementar método em back-end\SagaClienteUsuario\src\main\java\controller\SagaController.java
+
+
+///////// SAGA CLIENTE USUÁRIO /////////
+
+// Cadastrar cliente            
+app.post('/sagaClienteUsuario', (req, res, next) => {   //Endpoint definido no back em SagaClienteUsuario > SagaController 
     sagaClienteUsuarioServiceProxy(req, res, next);
 });
 
-//Outros endpoints
+
+//////// SAGA RESERVA CLIENTE ////////
+
+// CADASTRAR RESERVA
+app.post('/sagaReservaCliente', (req, res, next) => {   //Endpoint definido no back em SagaReserva|Cliente > SagaController 
+    sagaReservaClienteProxy(req, res, next);
+});
+
+
+//CANCELAR RESERVA
+app.post('/sagaReservaCliente/cancelarReserva/:reserva', (req, res, next) => {   //Endpoint definido no back em SagaReserva|Cliente > SagaController 
+    sagaReservaClienteProxy(req, res, next);
+});
+
+// RESERVA QUERY
+//CONSULTAR RESERVA
+app.get('reservaquery/getReserva/:codigoReserva', (req, res, next) => {   //Endpoint definido no back em ReservaQuery > ReservaController 
+    reservaQueryProxy(req, res, next);
+});
 
 // Cria o servidor na porta 3001
 const server = http.createServer(app);

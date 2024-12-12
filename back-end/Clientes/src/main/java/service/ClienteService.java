@@ -3,7 +3,6 @@ package service;
 import dto.ClientesDTO;
 import dto.MilhasDTO;
 import models.ClienteReserva;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +46,11 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+    public ClientesDTO buscarClientePorId(Long id) {
+        return clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente com ID " + id + " não encontrado."));
+    }
+
     public void comprarMilhas(Long clienteId, Double valor) {
         final double PROPORCAO = 5.0; // 1 milha por R$ 5,00
 
@@ -58,7 +62,8 @@ public class ClienteService {
         cliente.setMilhas(cliente.getMilhas() + milhasCompradas);
         clienteRepository.save(cliente);
 
-        MilhasDTO transacao = new MilhasDTO(cliente.getId(), LocalDateTime.now(), milhasCompradas, "entrada", "COMPRA DE MILHAS");
+        MilhasDTO transacao = new MilhasDTO(cliente.getId(), LocalDateTime.now(), milhasCompradas, "entrada",
+                "COMPRA DE MILHAS");
         milhasRepository.save(transacao);
 
         enviaMensagem("fila-milhas", transacao);
@@ -71,11 +76,12 @@ public class ClienteService {
 
         return milhasRepository.findByCliente(cliente);
     }
-    
+
     public void adicionarMilhasERegistrarEvento(ClienteReserva clienteReserva) {
-    	
+
         ClientesDTO cliente = clienteRepository.findById(clienteReserva.getIdCliente())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + clienteReserva.getIdCliente()));
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Cliente não encontrado: " + clienteReserva.getIdCliente()));
 
         cliente.setMilhas(cliente.getMilhas() + clienteReserva.getMilhas());
         clienteRepository.save(cliente);
@@ -84,12 +90,10 @@ public class ClienteService {
                 cliente.getId(),
                 LocalDateTime.now(),
                 clienteReserva.getMilhas(),
-                "CREDIT", 
-                clienteReserva.getEvento()
-        );
+                "CREDIT",
+                clienteReserva.getEvento());
         milhasRepository.save(eventoMilhas);
     }
-
 
     public List<ClientesDTO> buscarTodosClientes() {
         return clienteRepository.findAll();
